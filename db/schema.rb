@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 20190328172531) do
     t.string "lname"
     t.integer "ssn"
     t.string "bdate"
-    t.integer "manager_ssn"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -66,7 +65,7 @@ ActiveRecord::Schema.define(version: 20190328172531) do
   end
 
   create_table "requests", force: :cascade do |t|
-    t.integer "authorization_form_id"
+    t.integer "trip_id"
     t.decimal "amount"
     t.string "department_id"
     t.datetime "created_at", null: false
