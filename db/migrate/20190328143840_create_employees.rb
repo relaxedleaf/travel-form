@@ -7,7 +7,7 @@ class CreateEmployees < ActiveRecord::Migration[5.1]
       t.string :lname
       t.integer :ssn
       t.string :bdate
-      t.intege :manager_ssn
+      t.integer :manager_ssn
 
       t.timestamps
     end
