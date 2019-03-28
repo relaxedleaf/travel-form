@@ -1,0 +1,47 @@
+<%= form_with(model: receipt, local: true) do |form| %>
+  <% if receipt.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(receipt.errors.count, "error") %> prohibited this receipt from being saved:</h2>
+
+      <ul>
+      <% receipt.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :image %>
+    <%= form.text_field :image, id: :receipt_image %>
+  </div>
+
+  <div class="field">
+    <%= form.label :reimbursement_form_id %>
+    <%= form.number_field :reimbursement_form_id, id: :receipt_reimbursement_form_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :location %>
+    <%= form.text_field :location, id: :receipt_location %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cost %>
+    <%= form.text_field :cost, id: :receipt_cost %>
+  </div>
+
+  <div class="field">
+    <%= form.label :receipt_date %>
+    <%= form.text_field :receipt_date, id: :receipt_receipt_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :expense_type_id %>
+    <%= form.number_field :expense_type_id, id: :receipt_expense_type_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

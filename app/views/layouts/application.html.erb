@@ -1,14 +1,103 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>ClassProject</title>
-    <%= csrf_meta_tags %>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
+    <title><%= yield :title %></title>
+
+    <%= csrf_meta_tag %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+      <!-- Custom fonts for this template-->
+
+    <%= stylesheet_link_tag :googleapi, "https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"%>
+    <%= stylesheet_link_tag :application, "https://use.fontawesome.com/releases/v5.8.0/css/all.css"%>
+    <!-- Custom styles for this template-->
+    <%= stylesheet_link_tag "sb-admin-2.min.css" %>
+    
+    <%= stylesheet_link_tag "custom.css" %>
+    
   </head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body id="page-top">
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <%= render "inc/sb-admin/sidebar" %>
+    <!-- End of Sidebar -->
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+      <!-- Main Content -->
+      <div id="content">
+
+        <!-- Topbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white static-top topbar mb-4 shadow">
+
+          <!-- Sidebar Toggle (Topbar) -->
+          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+            <i class="fa fa-bars"></i>
+          </button>
+          
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <!-- Topbar Navbar -->
+          <%= render "inc/sb-admin/topbar"%>
+        </nav>
+        <!-- End of Topbar -->
+
+
+
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+          <% flash.each do |key, value| %>
+            <% if key == "notice" %>
+              <div class="alert alert-info"><%= value.html_safe %></div>
+            <% elsif key == "alert" %>
+              <div class="alert alert-danger"><%= value.html_safe %></div>
+            <% else %>
+              <div class="alert alert-<%= key %>"><%= value.html_safe %></div>
+            <% end %>
+          <% end %>
+          <%= yield %>
+        </div>
+        <!-- /.container-fluid -->
+
+      </div>
+      <!-- End of Main Content -->
+
+      <!-- Footer -->
+      <%= render "inc/sb-admin/footer"%>
+      <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
+
+  </div>
+  <!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  <!-- Logout Modal-->
+  <%= render "inc/sb-admin/logoutModal" %>
+
+
+  <!-- Custom scripts for all pages-->
+  <%= javascript_include_tag "sb-admin/sb-admin-2.min.js" %>
+
+</body>
+
 </html>

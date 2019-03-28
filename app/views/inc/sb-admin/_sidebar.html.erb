@@ -1,0 +1,56 @@
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+<!-- Sidebar - Brand -->
+<%= link_to employees_path, { :class => "sidebar-brand d-flex align-items-center justify-content-center"} do %>
+  <div class="sidebar-brand-icon rotate-n-15">
+    <i class="fas fa-hand-point-up"></i>
+  </div>
+  <div class="sidebar-brand-text mx-3">Cra-ra</div>
+<% end %>
+
+<!-- Divider -->
+<hr class="sidebar-divider my-0">
+
+<!-- Nav Item - Livestock index -->
+<li class="nav-item <%= current_class?(employees_path) %>">
+  <%= link_to employees_path, { :class => "nav-link"} do %>
+    <i class="fas fa-tachometer-alt"></i>
+    <span>Dashboard</span></a>
+  <% end %>
+</li>
+
+<!-- Nav Item - Tank -->
+<li class="nav-item <%= current_class?(authorization_forms_path) %>">
+  <%= link_to authorization_forms_path, { :class => "nav-link"} do %>
+    <i class="fas fa-paper-plane"></i>
+    <span>Travel Form</span></a>
+  <% end %>
+</li>
+
+<!-- Nav Item - Livestock create bulk -->
+<li class="nav-item <%= current_class?(reimbursement_forms_path) %>">
+  <%= link_to reimbursement_forms_path, { :class => "nav-link"} do %>
+    <i class="fas fa-backward"></i>
+    <span>Reimbursement Form</span></a>
+  <% end %>
+</li>
+
+
+
+<!-- Divider -->
+<hr class="sidebar-divider">
+
+<!-- Heading -->
+<div class="sidebar-heading">
+  Getting Started
+</div>
+
+ <!--Nav Item - About -->
+<li class="nav-item <%= current_class?("/pages/about") %>">
+  <%= link_to "/pages/about", { :class => "nav-link"} do %>
+    <i class="fas fa-question-circle"></i>
+    <span>About</span></a>
+  <% end %>
+</li>
+
+</ul>
