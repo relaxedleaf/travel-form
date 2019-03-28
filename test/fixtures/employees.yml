@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  department_id: 1
+  email: MyString
+  fname: MyString
+  lname: MyString
+  ssn: 1
+  bdate: MyString
+  manager_ssn: 
+
+two:
+  department_id: 1
+  email: MyString
+  fname: MyString
+  lname: MyString
+  ssn: 1
+  bdate: MyString
+  manager_ssn: 
