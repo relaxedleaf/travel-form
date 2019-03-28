@@ -4,4 +4,7 @@ class AuthorizationForm < ApplicationRecord
     belongs_to :status
     
     has_many :wishes
+    
+    
+    validates :status_id, :employee_id, :trip_id, presence: true
 end
