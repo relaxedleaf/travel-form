@@ -4,7 +4,7 @@ class CreateDepartments < ActiveRecord::Migration[5.1]
       t.string :name
       t.decimal :total_budget
       t.integer :manager_ssn
-
+      
       t.timestamps
     end
   end
