@@ -1,0 +1,32 @@
+<%= form_with(model: authorization_form, local: true) do |form| %>
+  <% if authorization_form.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(authorization_form.errors.count, "error") %> prohibited this authorization_form from being saved:</h2>
+
+      <ul>
+      <% authorization_form.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :status_id %>
+    <%= form.number_field :status_id, id: :authorization_form_status_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :employee_id %>
+    <%= form.number_field :employee_id, id: :authorization_form_employee_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :trip_id %>
+    <%= form.number_field :trip_id, id: :authorization_form_trip_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Trip:</strong>
+  <%= @request.trip_id %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @request.amount %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @request.department_id %>
+</p>
+
+<%= link_to 'Edit', edit_request_path(@request) %> |
+<%= link_to 'Back', requests_path %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  image: MyString
+  reimbursement_form_id: 1
+  location: MyString
+  cost: 9.99
+  receipt_date: MyString
+  expense_type_id: 1
+
+two:
+  image: MyString
+  reimbursement_form_id: 1
+  location: MyString
+  cost: 9.99
+  receipt_date: MyString
+  expense_type_id: 1
