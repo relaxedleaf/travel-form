@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Test from "./components/Test"
+import App from "./components/App"
 
 document.addEventListener("DOMContentLoaded", () => {
     const authorization_form = document.querySelector("#authorization_form");
-    const message = authorization_form.getAttribute("message");
-    ReactDOM.render(<Test message={message}/>, authorization_form);
+    ReactDOM.render(<App />, authorization_form);
 });
