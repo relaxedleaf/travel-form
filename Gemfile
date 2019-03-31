@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'devise'
 gem 'carrierwave'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap', '~> 4.3.1'
