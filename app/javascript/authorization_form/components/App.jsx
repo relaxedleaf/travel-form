@@ -26,7 +26,7 @@ export default class App extends React.Component {
             
             </table>
             <div className="text-center">
-                <a className="btn btn-primary" href="authorization_forms/new">Create Form</a>
+                <a className="btn btn-primary" href="trips/new">Create Form</a>
             </div>
         </div>
         

@@ -24,3 +24,21 @@ Department.create!(
     total_budget: 1000,
     manager_ssn: 323456789
     )
+
+Status.delete_all
+Status.create!(
+    name: 'Pending'
+    )
+    
+ExpenseType.delete_all
+ExpenseType.create!(
+    name: 'Hotel'
+    )
+
+ExpenseType.create!(
+    name: 'Transportation'
+    )
+
+ExpenseType.create!(
+    name: 'Food'
+    )
