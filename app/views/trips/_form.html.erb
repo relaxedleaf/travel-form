@@ -45,7 +45,9 @@
         <%= render 'request_fields', :f => r%>
     <% end %>
     <div class='links'>
-      <%= link_to_add_association 'add request', form, :requests %>
+      <%= link_to_add_association form, :requests do %>
+            <i class="fas fa-plus-circle"></i>
+      <% end %>
     </div>
   </div>
   <hr/>
@@ -65,11 +67,14 @@
         <%= render 'wish_fields', :f => wish%>
       <% end %>
       <div class='links'>
-        <%= link_to_add_association 'Add request', auth_form, :wishes %>
+        <%= link_to_add_association auth_form, :wishes do %>
+            <i class="fas fa-plus-circle"></i>
+        <% end %>
       </div>
     </div>
   <% end %>
 
+  <hr/>
 
   <div class="actions">
     <%= form.submit :class => "btn btn-primary"%>

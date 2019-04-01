@@ -9,6 +9,9 @@
             <%= f.label :cost %>
             <%= f.number_field :cost, id: :wish_cost, class: "form-control"%>
           </div>
-        <%= link_to_remove_association "Remove Wish", f %>
+        <%= link_to_remove_association f, { :class => "float-right"} do %>
+            <i class="fas fa-minus-circle"></i>
+        <% end %>
+
     <% end %>
 </div>
