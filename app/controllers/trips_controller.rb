@@ -15,6 +15,8 @@ class TripsController < ApplicationController
   # GET /trips/new
   def new
     @trip = Trip.new
+    @employee_id = current_employee.id
+    @status_id = Status.where(name: "Pending").take
   end
 
   # GET /trips/1/edit

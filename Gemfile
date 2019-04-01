@@ -19,12 +19,14 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
+gem 'devise'
 gem 'carrierwave'
 gem 'bootstrap-datepicker-rails'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem 'jquery-easing-rails', '~> 0.0.2'
 gem 'will_paginate', '~> 3.1', '>= 3.1.7'
+gem 'webpacker'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'

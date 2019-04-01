@@ -5,5 +5,8 @@ class Trip < ApplicationRecord
     has_many :requests
 
     validates :purpose, :destination, :date_start, :date_end, :employee_id, presence: true
+    
+    accepts_nested_attributes_for :authorization_form
+    accepts_nested_attributes_for :requests
 
 end
