@@ -16,7 +16,11 @@ class TripsController < ApplicationController
   def new
     @trip = Trip.new
     @employee_id = current_employee.id
-    @status_id = Status.where(name: "Pending").take
+    @status_id = Status.where(name: "Pending").take.id
+    
+    @trip.requests.build
+    authorization_form = @trip.build_authorization_form
+    authorization_form.wishes.build
   end
 
   # GET /trips/1/edit
@@ -71,6 +75,8 @@ class TripsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trip_params
-      params.require(:trip).permit(:destination, :purpose, :date_start, :date_end, :employee_id)
+      params.require(:trip).permit(:destination, :purpose, :date_start, :date_end, :employee_id,
+                                   authorization_form_attributes: [:employee_id, :status_id, wishes_attributes: [:expense_type_id, :cost]],
+                                   requests_attributes: [:department_id, :amount])
     end
 end

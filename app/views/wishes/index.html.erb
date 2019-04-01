@@ -15,9 +15,9 @@
   <tbody>
     <% @wishes.each do |wish| %>
       <tr>
-        <td><%= wish.wish_type %></td>
+        <td><%= wish.expense_type_id %></td>
         <td><%= wish.cost %></td>
-        <td><%= wish.trip_id %></td>
+        <td><%= wish.authorization_form_id %></td>
         <td><%= link_to 'Show', wish %></td>
         <td><%= link_to 'Edit', edit_wish_path(wish) %></td>
         <td><%= link_to 'Destroy', wish, method: :delete, data: { confirm: 'Are you sure?' } %></td>

@@ -38,6 +38,18 @@
     <%= form.hidden_field :employee_id, :value => @employee_id %>
   </div>
   
+  <%= form.fields_for :requests, Request.new do |r| %>
+        <div class="form-group">
+          <%= r.label :department %>
+          <%= r.collection_select :department_id, Department.order('name ASC'), :id, :name, {id: :request_department}, {class: "form-control"} %>
+        </div>
+        
+        <div class="form-group">
+          <%= r.label :amount %>
+          <%= r.number_field :amount, id: :request_amount, class: "form-control"%>
+        </div>
+  <% end %>
+  
 
   <%= form.fields_for :authorization_form, AuthorizationForm.new do |auth_form| %>
     <div class="field">
@@ -49,7 +61,7 @@
     </div>
     
     
-      <%= form.fields_for :wish, Wish.new do |wish| %>
+      <%= auth_form.fields_for :wishes, Wish.new do |wish| %>
           <div class="form-group">
             <%= wish.label :expense_type %>
             <%= wish.collection_select :expense_type_id, ExpenseType.order('name ASC'), :id, :name, {id: :wish_expense_type}, {class: "form-control"} %>

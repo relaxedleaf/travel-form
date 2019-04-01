@@ -8,5 +8,4 @@ class Trip < ApplicationRecord
     
     accepts_nested_attributes_for :authorization_form
     accepts_nested_attributes_for :requests
-
 end
