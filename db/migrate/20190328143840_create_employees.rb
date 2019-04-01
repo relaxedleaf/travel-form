@@ -7,6 +7,7 @@ class CreateEmployees < ActiveRecord::Migration[5.1]
       t.string :lname
       t.integer :ssn
       t.string :bdate
+      t.string :sex
 
       t.timestamps
     end

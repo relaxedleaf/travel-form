@@ -12,4 +12,5 @@ class Receipt < ApplicationRecord
     
     validates :cost, numericality: {greater_than_or_equal_to: 0.01}
 
+    accepts_nested_attributes_for :expense_type
 end

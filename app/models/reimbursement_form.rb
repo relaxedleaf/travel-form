@@ -6,5 +6,7 @@ class ReimbursementForm < ApplicationRecord
     has_many :receipts
     
     validates :status_id, :employee_id, :trip_id, presence: true
+    
+    accepts_nested_attributes_for :receipts
 
 end

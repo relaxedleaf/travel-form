@@ -6,7 +6,7 @@ class Employee < ApplicationRecord
     has_many :reimbursement_forms
 
     
-    validates :department_id, :email, :fname, :lname, :ssn, :bdate, presence: true
+    validates :department_id, :email, :fname, :lname, :ssn, :bdate, :sex, presence: true
     validates :email, :ssn, uniqueness: true
     validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}
 
