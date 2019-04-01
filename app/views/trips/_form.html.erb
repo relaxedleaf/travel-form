@@ -1,4 +1,4 @@
-<%= form_with(model: trip, local: true) do |form| %>
+<%= semantic_form_for trip do |form| %>
   <% if trip.errors.any? %>
     <div class="card">
       <div class="card-header bg-danger text-white">
@@ -38,18 +38,17 @@
     <%= form.hidden_field :employee_id, :value => @employee_id %>
   </div>
   
-  <%= form.fields_for :requests, Request.new do |r| %>
-        <div class="form-group">
-          <%= r.label :department %>
-          <%= r.collection_select :department_id, Department.order('name ASC'), :id, :name, {id: :request_department}, {class: "form-control"} %>
-        </div>
-        
-        <div class="form-group">
-          <%= r.label :amount %>
-          <%= r.number_field :amount, id: :request_amount, class: "form-control"%>
-        </div>
-  <% end %>
-  
+  <hr/>
+  <div class="requests">
+    <%= form.label :requests %>
+    <%= form.semantic_fields_for :requests, Request.new do |r| %>
+        <%= render 'request_fields', :f => r%>
+    <% end %>
+    <div class='links'>
+      <%= link_to_add_association 'add request', form, :requests %>
+    </div>
+  </div>
+  <hr/>
 
   <%= form.fields_for :authorization_form, AuthorizationForm.new do |auth_form| %>
     <div class="field">
