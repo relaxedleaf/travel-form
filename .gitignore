@@ -30,8 +30,11 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+<<<<<<< HEAD
 /public/packs
 /public/packs-test
 /node_modules
 yarn-debug.log*
 .yarn-integrity
+=======
+>>>>>>> db2e52c3127618eccdf6b58fa29e9000bb5565e5

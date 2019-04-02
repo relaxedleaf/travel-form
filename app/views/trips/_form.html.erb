@@ -1,42 +1,69 @@
 <%= form_with(model: trip, local: true) do |form| %>
   <% if trip.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(trip.errors.count, "error") %> prohibited this trip from being saved:</h2>
-
-      <ul>
-      <% trip.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <div class="card">
+      <div class="card-header bg-danger text-white">
+        <%= pluralize(trip.errors.count, "error") %> prohibited this trip from being saved:
+      </div>
+      <div class="card-body">
+        <ul>
+        <% trip.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :destination %>
-    <%= form.text_field :destination, id: :trip_destination %>
+    <%= form.text_field :destination, id: :trip_destination, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :purpose %>
-    <%= form.text_field :purpose, id: :trip_purpose %>
+    <%= form.text_field :purpose, id: :trip_purpose, class: "form-control" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= form.label :date_start %>
-    <%= form.text_field :date_start, id: :trip_date_start %>
+    <%= form.text_field :date_start, data:{ provide:'datepicker' }, id: :trip_date_start, class: "form-control" %>
   </div>
-
-  <div class="field">
+  
+  <div class="form-group">
     <%= form.label :date_end %>
-    <%= form.text_field :date_end, id: :trip_date_end %>
+    <%= form.text_field :date_end, data:{ provide:'datepicker' }, id: :trip_date_end, class: "form-control" %>
   </div>
 
   <div class="field">
-    <%= form.label :employee_id %>
-    <%= form.number_field :employee_id, id: :trip_employee_id %>
+    <%= form.hidden_field :employee_id, :value => @employee_id %>
   </div>
+  
+
+  <%= form.fields_for :authorization_form, AuthorizationForm.new do |auth_form| %>
+    <div class="field">
+      <%= auth_form.hidden_field :employee_id, :value => @employee_id %>
+    </div>
+    
+    <div class="field">
+      <%= auth_form.hidden_field :status_id, :value => @status_id %>
+    </div>
+    
+    
+      <%= form.fields_for :wish, Wish.new do |wish| %>
+          <div class="form-group">
+            <%= wish.label :expense_type %>
+            <%= wish.collection_select :expense_type_id, ExpenseType.order('name ASC'), :id, :name, {id: :wish_expense_type}, {class: "form-control"} %>
+          </div>
+        
+          <div class="form-group">
+            <%= wish.label :cost %>
+            <%= wish.number_field :cost, id: :wish_cost, class: "form-control"%>
+          </div>
+    <% end %>
+  <% end %>
+
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit :class => "btn btn-primary"%>
   </div>
 <% end %>
