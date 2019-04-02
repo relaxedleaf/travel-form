@@ -10,6 +10,8 @@ class TripsController < ApplicationController
   # GET /trips/1
   # GET /trips/1.json
   def show
+    @wishes = @trip.authorization_form.wishes
+    @requests = @trip.requests
   end
 
   # GET /trips/new

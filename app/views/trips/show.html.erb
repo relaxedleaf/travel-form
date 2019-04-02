@@ -1,29 +1,142 @@
-<p id="notice"><%= notice %></p>
+<%= link_to 'Back', trips_path, class: "btn btn-primary" %>
 
-<p>
-  <strong>Destination:</strong>
-  <%= @trip.destination %>
-</p>
+</br></br>
 
-<p>
-  <strong>Purpose:</strong>
-  <%= @trip.purpose %>
-</p>
+<div class="row">
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Authorization Form Status</div>
+      </div>
+      <div class="card-body">
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.authorization_form.status.name %></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reimbursement Form Status</div>
+      </div>
+      <div class="card-body">
+        <%= @trip.reimbursement_form ? @trip.reimbursement_form.status.name : (link_to "Not yet submitted", new_reimbursement_form_path) %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>Date start:</strong>
-  <%= @trip.date_start %>
-</p>
+</br>
+</br>
 
-<p>
-  <strong>Date end:</strong>
-  <%= @trip.date_end %>
-</p>
+<div class="card border-left-primary shadow h-100 py-2">
+  <div class="card-body">
+    <div class="row no-gutters align-items-center">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Destination</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.destination %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Departure Date</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.date_start %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Return Date</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.date_end %></div>
+      </div>
+      <div class="col-auto">
+        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+      </div>
+    </div>
+    </br>
+    <div class="row">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Purpose</div>
+        <div class="h6 mb-0 font-weight-bold text-gray-800"><%= @trip.purpose %></div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<p>
-  <strong>Employee:</strong>
-  <%= @trip.employee_id %>
-</p>
+</br>
 
-<%= link_to 'Edit', edit_trip_path(@trip) %> |
-<%= link_to 'Back', trips_path %>
+<div class="row">
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Wishes</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Type</th>
+                    <th>Cost</th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+                  <% @wishes.each do |wish| %>
+                    <tr>
+                      <td><%= wish.expense_type.name %></td>
+                      <td><%= number_to_currency wish.cost %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-gift fa-2x text-gray-300"></i>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Requests</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Department</th>
+                    <th>Amount</th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+                  <% @requests.each do |request| %>
+                    <tr>
+                      <td><%= request.department.name %></td>
+                      <td><%= number_to_currency request.amount %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-money-check-alt fa-2x text-gray-300"></i>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!--<%= link_to 'Edit', edit_trip_path(@trip) %> |-->

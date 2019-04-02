@@ -2,34 +2,42 @@
 
 <h1>Trips</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Destination</th>
-      <th>Purpose</th>
-      <th>Date start</th>
-      <th>Date end</th>
-      <th>Employee</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @trips.each do |trip| %>
-      <tr>
-        <td><%= trip.destination %></td>
-        <td><%= trip.purpose %></td>
-        <td><%= trip.date_start %></td>
-        <td><%= trip.date_end %></td>
-        <td><%= trip.employee_id %></td>
-        <td><%= link_to 'Show', trip %></td>
-        <td><%= link_to 'Edit', edit_trip_path(trip) %></td>
-        <td><%= link_to 'Destroy', trip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<% @trips.each do |trip| %>
+  <div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <div class="row container">
+          <div class="col">
+            <h6 class="m-0 font-weight-bold text-primary">Destination: <%= trip.destination%></h6>
+          </div>
+          <div class="col">
+            <h6 class="m-0 font-weight-bold text-primary">Start Date: <%= trip.date_start%></h6>
+          </div>
+          <div class="col">
+            <h6 class="m-0 font-weight-bold text-primary">End Date: <%= trip.date_end%></h6>
+          </div>
+        </div>
+      <div class="dropdown no-arrow">
+        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+          <div class="dropdown-header">Actions:</div>
+          <%= link_to 'Detail', trip, class: "dropdown-item" %>
+          <%= link_to 'Edit', edit_trip_path(trip), class: "dropdown-item" %>
+          <div class="dropdown-divider"></div>
+          <%= link_to 'Delete', trip, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+        </div>
+      </div>
+    </div>
+    <!-- Card Body -->
+    <div class="card-body">
+      <h6 class="m-0 font-weight-bold text-primary">Purpose: </h6>
+      <%= trip.purpose %>
+    </div>
+  </div>
+<% end %>
 <br>
 
-<%= link_to 'New Trip', new_trip_path %>
+<%= link_to 'New Trip', new_trip_path, class: "btn btn-primary"  %>
