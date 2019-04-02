@@ -54,10 +54,21 @@ class ExpenseTypesController < ApplicationController
   # DELETE /expense_types/1
   # DELETE /expense_types/1.json
   def destroy
-    @expense_type.destroy
+    error_messages = []
+    bullet = '&#8226 '
     respond_to do |format|
-      format.html { redirect_to expense_types_url, notice: 'Expense type was successfully destroyed.' }
-      format.json { head :no_content }
+      if @expense_type.destroy
+        format.html { redirect_to expense_types_url }
+        flash[:success] = @expense_type.name + ' was successfully deleted'
+        format.json { head :no_content }
+      else
+        format.html { redirect_to expense_types_url}
+        @expense_type.errors.full_messages.each do |message|
+          error_messages.push(bullet + message)
+        end
+        flash[:warning] = error_messages.join("<br/>")
+        format.json { head :no_content }
+      end
     end
   end
 

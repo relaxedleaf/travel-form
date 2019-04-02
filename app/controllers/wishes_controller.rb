@@ -42,7 +42,7 @@ class WishesController < ApplicationController
   def update
     respond_to do |format|
       if @wish.update(wish_params)
-        format.html { redirect_to @wish, notice: 'Wish was successfully updated.' }
+        format.html { redirect_to trips_path, notice: 'Wish was successfully updated.' }
         format.json { render :show, status: :ok, location: @wish }
       else
         format.html { render :edit }
@@ -69,6 +69,6 @@ class WishesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def wish_params
-      params.require(:wish).permit(:wish_type, :cost, :trip_id)
+      params.require(:wish).permit(:expense_type_id, :cost, :authorization_form_id)
     end
 end
