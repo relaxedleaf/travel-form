@@ -69,6 +69,6 @@ class AuthorizationFormsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def authorization_form_params
-      params.require(:authorization_form).permit(:status_id, :employee_id, :trip_id)
+      params.require(:authorization_form).permit(:status_id, :employee_id, :trip_id, wishes_attributes: [:expense_type_id, :cost])
     end
 end

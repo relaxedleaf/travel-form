@@ -6,9 +6,9 @@ class Employee < ApplicationRecord
   
   belongs_to :department
   
-  has_many :trips
-  has_many :authorization_forms
-  has_many :reimbursement_forms
+  has_many :trips, :dependent => :destroy
+  has_many :authorization_forms, :dependent => :destroy
+  has_many :reimbursement_forms, :dependent => :destroy
   
   validates :department_id, :fname, :lname, :ssn, :bdate, presence: true
   validates :ssn, uniqueness: true

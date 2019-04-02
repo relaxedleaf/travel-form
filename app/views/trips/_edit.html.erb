@@ -37,44 +37,6 @@
   <div class="field">
     <%= form.hidden_field :employee_id, :value => current_employee.id %>
   </div>
-  
-  <hr/>
-  <div class="requests">
-    <%= form.label :requests %>
-    <%= form.semantic_fields_for :requests, Request.new do |r| %>
-        <%= render 'request_fields', :f => r%>
-    <% end %>
-    <div class='links'>
-      <%= link_to_add_association form, :requests do %>
-            <i class="fas fa-plus-circle"></i>
-      <% end %>
-    </div>
-  </div>
-  <hr/>
-
-  <%= form.fields_for :authorization_form, AuthorizationForm.new do |auth_form| %>
-    <div class="field">
-      <%= auth_form.hidden_field :employee_id, :value => current_employee.id %>
-    </div>
-    
-    <div class="field">
-      <%= auth_form.hidden_field :status_id, :value => @status_id %>
-    </div>
-    
-    <div class="wishes">
-      <%= auth_form.label :wishes %>
-      <%= auth_form.semantic_fields_for :wishes, Wish.new do |wish| %>
-        <%= render 'wish_fields', :f => wish%>
-      <% end %>
-      <div class='links'>
-        <%= link_to_add_association auth_form, :wishes do %>
-            <i class="fas fa-plus-circle"></i>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-
-  <hr/>
 
   <div class="actions">
     <%= form.submit :class => "btn btn-primary"%>

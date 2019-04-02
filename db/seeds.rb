@@ -42,3 +42,7 @@ ExpenseType.create!(
 ExpenseType.create!(
     name: 'Food'
     )
+
+Request.delete_all
+Wish.delete_all
+Trip.delete_all

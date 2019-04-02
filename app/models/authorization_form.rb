@@ -3,9 +3,9 @@ class AuthorizationForm < ApplicationRecord
     belongs_to :trip
     belongs_to :status
     
-    has_many :wishes
+    has_many :wishes, :dependent => :destroy
     
     
-    validates :status_id, :employee_id, :trip_id, presence: true
+    validates :status_id, :employee_id, presence: true
     accepts_nested_attributes_for :wishes
 end

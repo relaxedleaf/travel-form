@@ -1,32 +1,37 @@
 <%= form_with(model: wish, local: true) do |form| %>
   <% if wish.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(wish.errors.count, "error") %> prohibited this wish from being saved:</h2>
-
-      <ul>
-      <% wish.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+      <div class="card">
+        <div class="card-header bg-danger text-white">
+          <%= pluralize(wish.errors.count, "error") %> prohibited this wish from being saved:
+      </div>
+      <div class="card-body">
+        <ul>
+        <% wish.errors.full_messages.each do |message| %>
+          <li class="card-text"><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :wish_type %>
-    <%= form.text_field :wish_type, id: :wish_wish_type %>
-  </div>
-
-  <div class="field">
-    <%= form.label :cost %>
-    <%= form.text_field :cost, id: :wish_cost %>
-  </div>
-
-  <div class="field">
-    <%= form.label :trip_id %>
-    <%= form.number_field :trip_id, id: :wish_trip_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <form>
+    <div class="form-group">
+      <%= form.label :expense_type %>
+      <%= form.collection_select :expense_type_id, ExpenseType.order('name ASC'), :id, :name, {id: :wish_expense_type}, {class: "form-control"} %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :cost %>
+      <%= form.number_field :cost, id: :wish_cost, class: "form-control"%>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :authorization_form_id %>
+      <%= form.number_field :authorization_form_id, id: :wish_authorization_form_id, :readonly => true, class: "form-control" %>
+    </div>
+  
+    <div class="actions">
+      <%= form.submit :class => "btn btn-primary" %>
+    </div>
+  </form>
 <% end %>
