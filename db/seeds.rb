@@ -46,3 +46,8 @@ ExpenseType.create!(
 Request.delete_all
 Wish.delete_all
 Trip.delete_all
+
+PaymentManager.delete_all
+PaymentManager.create!(
+    employee_ssn: 123456788
+    )
