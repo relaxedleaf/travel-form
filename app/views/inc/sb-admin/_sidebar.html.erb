@@ -43,6 +43,17 @@
   <% end %>
 </li>
 
+<% if check_manager %>
+  <hr class="sidebar-divider">
+  
+  <li class="nav-item <%= current_class?(reimbursement_forms_path) %>">
+    <%= link_to reimbursement_forms_path, { :class => "nav-link"} do %>
+      <i class="fas fa-user-cog"></i>
+      <span>Manage</span>
+    <% end %>
+  </li>
+<% end %>
+
 
 
 <!-- Divider -->
