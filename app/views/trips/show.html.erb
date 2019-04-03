@@ -137,6 +137,7 @@
                   <tr>
                     <th>Department</th>
                     <th>Amount</th>
+                    <th>Status</th>
                     <th colspan="1"></th>
                   </tr>
                 </thead>
@@ -146,6 +147,7 @@
                     <tr>
                       <td><%= request.department.name %></td>
                       <td><%= number_to_currency request.amount %></td>
+                      <td><%= request.status.name %></td>
                       <td>
                         <div class="dropdown no-arrow">
                           <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

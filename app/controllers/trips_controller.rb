@@ -79,7 +79,7 @@ class TripsController < ApplicationController
     def trip_params
       params.require(:trip).permit(:destination, :purpose, :date_start, :date_end, :employee_id,
                                    authorization_form_attributes: [:employee_id, :status_id, wishes_attributes: [:expense_type_id, :cost]],
-                                   requests_attributes: [:department_id, :amount])
+                                   requests_attributes: [:department_id, :amount, :status_id])
     end
     
     def access_control

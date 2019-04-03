@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190330231045) do
+ActiveRecord::Schema.define(version: 20190403182603) do
 
   create_table "authorization_forms", force: :cascade do |t|
     t.integer "status_id"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20190330231045) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "amount", precision: 8, scale: 2
+    t.integer "status_id"
   end
 
   create_table "statuses", force: :cascade do |t|
