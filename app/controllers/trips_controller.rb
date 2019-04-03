@@ -1,10 +1,11 @@
 class TripsController < ApplicationController
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
+  before_action :access_control, only: [:show, :edit, :update, :destroy]
 
   # GET /trips
   # GET /trips.json
   def index
-    @trips = Trip.all
+    @trips = Trip.where("employee_id = " + (current_employee.id.to_s if current_employee))
   end
 
   # GET /trips/1
@@ -79,5 +80,12 @@ class TripsController < ApplicationController
       params.require(:trip).permit(:destination, :purpose, :date_start, :date_end, :employee_id,
                                    authorization_form_attributes: [:employee_id, :status_id, wishes_attributes: [:expense_type_id, :cost]],
                                    requests_attributes: [:department_id, :amount])
+    end
+    
+    def access_control
+      if @trip.employee_id != current_employee.id
+        redirect_to trips_path
+        flash[:danger] = "Access denied!"
+      end
     end
 end
