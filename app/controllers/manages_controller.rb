@@ -5,10 +5,6 @@ class ManagesController < ApplicationController
         @requests = Request.where(department_id: current_employee.department_id, 
                                   status_id: status_id)
         
-        puts "hello"
-        puts status_id
-        puts @requests
-        puts "hello"
     end
     
     def authform_show
@@ -25,38 +21,39 @@ class ManagesController < ApplicationController
         req.update_attribute(:status_id, status_id)
         update_authform_status
 
-        
-        redirect_to manage_auth_path(@trip), :notice => "Updated successful!"
+        redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
           
           
     end
     
     private 
-        
+        #update authorization form status to approve or partial approved if conditions meet
         def update_authform_status
-            statusID = -1
             approved_id = Status.where(name: "Approved").take.id
             p_approved_id = Status.where(name: "Partial Approved").take.id
             pending_id = Status.where(name: "Pending").take.id
             denied_id = Status.where(name: "Denied").take.id
+            pfa_id = Status.where(name: "Pending Final Approval").take.id
             
-            puts "hello"
-            
-            pb = !Request.where(trip_id: @trip.id, status_id: pending_id).nil? #pb = pending_boolean
-            ab = !Request.where(trip_id: @trip.id, status_id: approved_id).nil? #ab = approved_boolean
-            db = !Request.where(trip_id: @trip.id, status_id: denied_id).nil? #db = denied_boolean
-            
-            puts pb
-            puts ab
-            puts db
-            
-            if pb && ab
-                if db
-                    statusID =  p_approved_id
-                    @authorization_form.update_attribute(:status_id, statusID)
+            ##true means record exists
+            pb = !(Request.where(trip_id: @trip.id, status_id: pending_id).empty?) #pb = pending_boolean
+            ab = !(Request.where(trip_id: @trip.id, status_id: approved_id).empty?) #ab = approved_boolean
+            db = !(Request.where(trip_id: @trip.id, status_id: denied_id).empty?) #db = denied_boolean
+        
+            if db == false
+                #check partial approved condition
+                if pb && ab && (db == false)
+                    if @authorization_form.id != p_approved_id #update only if the current status is not partial approved already
+                        @authorization_form.update_attribute(:status_id, p_approved_id)
+                    end
                 end
+                
+                #check approved condition, if all approved, the status will change to Pending Final Approval
+                if (pb == false) && ab && (db == false)
+                    @authorization_form.update_attribute(:status_id, pfa_id)
+                end
+            else
+                @authorization_form.update_attribute(:status_id, denied_id)
             end
-            
-            
         end
 end

@@ -1,5 +1,4 @@
 <%= link_to 'Back', trips_path, class: "btn btn-primary" %>
-<%= link_to 'Delete', @trip, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger float-right" %>
 
 </br></br>
 
@@ -14,8 +13,8 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
               <div class="dropdown-header">Actions:</div>
-              <%= link_to 'Approve', manage_auth_update_path(@requests.where(department_id: current_employee.department_id).take.id, :status_id => Status.where(name: 'Approved').take.id), method: :put, class: "dropdown-item" %>
-              <%= link_to 'Deny', wishes_path, class: "dropdown-item" %>
+              <%= link_to 'Approve', manage_auth_update_path(@requests.where(department_id: current_employee.department_id).take.id, :status_id => Status.where(name: 'Approved').take.id), data: { confirm: 'You are about to approve this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
+              <%= link_to 'Deny', manage_auth_update_path(@requests.where(department_id: current_employee.department_id).take.id, :status_id => Status.where(name: 'Denied').take.id), data: { confirm: 'You are about to deny this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
             </div>
           </div>
         </div>
@@ -33,16 +32,48 @@
         </div>
         <!-- Card Body -->
           <div class="card-body">
-            <%= @trip.reimbursement_form ? @trip.reimbursement_form.status.name : (link_to "Not yet submitted", new_reimbursement_form_path) %>
+            <%= @trip.reimbursement_form ? @trip.reimbursement_form.status.name : "Not yet submitted" %>
           </div>
       </div>
   </div>
 </div>
 
-</br>
+<div class="card shadow h-100 py-2">
+  <div class="card-header">
+      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Employee Info</div>
+  </div>
+  <div class="card-body">
+    <div class="row no-gutters align-items-center">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">First Name</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.employee.fname %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Last Name</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.employee.lname %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Department</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.employee.department.name %></div>
+      </div>
+    </div>
+    </br>
+    <div class="row">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Birthday</div>
+        <div class="h6 mb-0 font-weight-bold text-gray-800"><%= @trip.employee.bdate %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </br>
 
+
 <div class="card border-left-primary shadow h-100 py-2">
+  <div class="card-header">
+      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Trip Info</div>
+  </div>
   <div class="card-body">
     <div class="row no-gutters align-items-center">
       <div class="col mr-2">

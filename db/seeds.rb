@@ -30,6 +30,9 @@ Status.create!(
     name: 'Pending'
     )
 Status.create!(
+    name: 'Pending Final Approval'
+    )
+Status.create!(
     name: 'Partial Approved'
     )
 Status.create!(
