@@ -1,4 +1,6 @@
 class ManagesController < ApplicationController
+
+#**********Manage Auth Form**********#
     def authform_index
         status_id = Status.where(name: "Pending").take.id
         
@@ -13,6 +15,10 @@ class ManagesController < ApplicationController
         @requests = @trip.requests
     end
     
+    def authform_history
+    
+    end
+    
     def authform_update
         req = Request.find(params[:id])
         @trip = req.trip
@@ -22,8 +28,21 @@ class ManagesController < ApplicationController
         update_authform_status
 
         redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
-          
-          
+    end
+    
+#**********Manage Reimburse Form**********#
+    def reimform_index
+    end
+    
+    
+    def reimform_show
+    end
+    
+    def reimform_history
+    
+    end
+    
+    def reimform_update
     end
     
     private 
