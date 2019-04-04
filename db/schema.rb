@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190404032530) do
+ActiveRecord::Schema.define(version: 20190403184137) do
 
   create_table "authorization_forms", force: :cascade do |t|
     t.integer "status_id"
