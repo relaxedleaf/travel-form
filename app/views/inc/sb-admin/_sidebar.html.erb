@@ -12,10 +12,18 @@
 <hr class="sidebar-divider my-0">
 
 <!-- Nav Item - Dashboard -->
-<li class="nav-item <%= current_class?(expense_types_path) %>">
-  <%= link_to expense_types_path, { :class => "nav-link"} do %>
+<li class="nav-item <%= current_class?(dashboard_path) %>">
+  <%= link_to dashboard_path, { :class => "nav-link"} do %>
     <i class="fas fa-tachometer-alt"></i>
     <span>Dashboard</span>
+  <% end %>
+</li>
+
+<!-- Nav Item - Routes -->
+<li class="nav-item <%= current_class?(routes_path) %>">
+  <%= link_to routes_path, { :class => "nav-link"} do %>
+    <i class="fas fa-route"></i>
+    <span>Routes</span>
   <% end %>
 </li>
 

@@ -15,4 +15,7 @@ Rails.application.routes.draw do
   get 'manage', to: 'manages#authform_index'
   get 'manage/authform/:id', to: 'manages#authform_show', as: :manage_auth
   put 'manage/authform/:id', to: 'manages#authform_update', as: :manage_auth_update
+  
+  get 'routes', to: 'pages#routes'
+  get 'dashboard', to: 'pages#dashboard'
 end
