@@ -134,8 +134,8 @@ Employee.create!(
     email: 'paymentmg@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
-    fname: 'math',
-    lname: 'employee',
+    fname: 'payment',
+    lname: 'manager',
     ssn: 123456788,
     department_id: Department.where(name: "Computer Science").take.id,
     bdate: '04/30/2019'
