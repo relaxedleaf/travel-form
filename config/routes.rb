@@ -11,4 +11,5 @@ Rails.application.routes.draw do
   resources :statuses
   resources :trips
   resources :wishes
+  
 end
