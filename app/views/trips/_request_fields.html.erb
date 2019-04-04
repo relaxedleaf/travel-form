@@ -9,6 +9,10 @@
           <%= f.label :amount %>
           <%= f.number_field :amount, id: :request_amount, class: "form-control"%>
         </div>
+
+        <div class="field">
+            <%= f.hidden_field :status_id, :value => @status_id %>
+        </div>
         
         <%= link_to_remove_association f, { :class => "float-right"} do %>
             <i class="fas fa-minus-circle"></i>
