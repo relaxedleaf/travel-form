@@ -11,4 +11,8 @@ Rails.application.routes.draw do
   resources :statuses
   resources :trips
   resources :wishes
+  
+  get 'manage', to: 'manages#authform_index'
+  get 'manage/authform/:id', to: 'manages#authform_show', as: :manage_auth
+  put 'manage/authform/:id', to: 'manages#authform_update', as: :manage_auth_update
 end

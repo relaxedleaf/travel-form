@@ -1,0 +1,52 @@
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light static-top topbar mb-4 shadow">
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav mr-auto">
+                <li class="nav-item pr-5">
+                    <div class="nav-link">
+                        <a class="btn btn-outline-primary btn-rounded waves-effect nav-btn text-primary">Auth</a>
+                    </div>
+                </li>
+                
+                <li class="nav-item pr-5">
+                    <div class="nav-link">
+                        <a class="btn btn-outline-primary btn-rounded waves-effect nav-btn text-primary">Reim</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <% @requests.each do |request| %>
+      <div class="card shadow mb-4">
+        <!-- Card Header - Dropdown -->
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+            <div class="row container">
+              <div class="col">
+                <h6 class="m-0 font-weight-bold text-primary">Destination: <%= request.trip.destination%></h6>
+              </div>
+              <div class="col">
+                <h6 class="m-0 font-weight-bold text-primary">Start Date: <%= request.trip.date_start%></h6>
+              </div>
+              <div class="col">
+                <h6 class="m-0 font-weight-bold text-primary">End Date: <%= request.trip.date_end%></h6>
+              </div>
+            </div>
+          <div class="dropdown no-arrow">
+            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+              <div class="dropdown-header">Actions:</div>
+              <%= link_to 'Detail', manage_auth_path(request.trip), class: "dropdown-item" %>
+            </div>
+          </div>
+        </div>
+        <!-- Card Body -->
+        <div class="card-body">
+          <h6 class="m-0 font-weight-bold text-primary">Purpose: </h6>
+          <%= request.trip.purpose %>
+        </div>
+      </div>
+    <% end %>
+</div>
