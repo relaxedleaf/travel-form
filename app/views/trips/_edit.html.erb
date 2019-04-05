@@ -1,0 +1,44 @@
+<%= semantic_form_for trip do |form| %>
+  <% if trip.errors.any? %>
+    <div class="card">
+      <div class="card-header bg-danger text-white">
+        <%= pluralize(trip.errors.count, "error") %> prohibited this trip from being saved:
+      </div>
+      <div class="card-body">
+        <ul>
+        <% trip.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= form.label :destination %>
+    <%= form.text_field :destination, id: :trip_destination, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :purpose %>
+    <%= form.text_field :purpose, id: :trip_purpose, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :date_start %>
+    <%= form.text_field :date_start, data:{ provide:'datepicker' }, id: :trip_date_start, class: "form-control" %>
+  </div>
+  
+  <div class="form-group">
+    <%= form.label :date_end %>
+    <%= form.text_field :date_end, data:{ provide:'datepicker' }, id: :trip_date_end, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= form.hidden_field :employee_id, :value => current_employee.id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit :class => "btn btn-primary"%>
+  </div>
+<% end %>

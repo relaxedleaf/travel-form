@@ -42,7 +42,7 @@ class RequestsController < ApplicationController
   def update
     respond_to do |format|
       if @request.update(request_params)
-        format.html { redirect_to @request, notice: 'Request was successfully updated.' }
+        format.html { redirect_to trips_path, notice: 'Request was successfully updated.' }
         format.json { render :show, status: :ok, location: @request }
       else
         format.html { render :edit }
@@ -69,6 +69,6 @@ class RequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def request_params
-      params.require(:request).permit(:trip_id, :amount, :department_id)
+      params.require(:request).permit(:trip_id, :amount, :department_id, :status_id)
     end
 end

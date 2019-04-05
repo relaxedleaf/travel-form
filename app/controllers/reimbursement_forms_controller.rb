@@ -5,16 +5,25 @@ class ReimbursementFormsController < ApplicationController
   # GET /reimbursement_forms.json
   def index
     @reimbursement_forms = ReimbursementForm.all
+   # @trip = Trip.find(params[:trip_id])
+
   end
 
   # GET /reimbursement_forms/1
   # GET /reimbursement_forms/1.json
   def show
+    @trip = Trip.find(params[:trip_id])
+  
   end
 
   # GET /reimbursement_forms/new
   def new
     @reimbursement_form = ReimbursementForm.new
+    @status_id = Status.where(name: "Pending").take.id
+    @reimbursement_form.receipts.build
+
+    @trip = Trip.find(params[:trip_id])
+    
   end
 
   # GET /reimbursement_forms/1/edit
@@ -24,11 +33,14 @@ class ReimbursementFormsController < ApplicationController
   # POST /reimbursement_forms
   # POST /reimbursement_forms.json
   def create
+
     @reimbursement_form = ReimbursementForm.new(reimbursement_form_params)
+    
 
     respond_to do |format|
       if @reimbursement_form.save
-        format.html { redirect_to @reimbursement_form, notice: 'Reimbursement form was successfully created.' }
+        @trip = nil
+        format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully created.' }
         format.json { render :show, status: :created, location: @reimbursement_form }
       else
         format.html { render :new }
@@ -42,7 +54,7 @@ class ReimbursementFormsController < ApplicationController
   def update
     respond_to do |format|
       if @reimbursement_form.update(reimbursement_form_params)
-        format.html { redirect_to @reimbursement_form, notice: 'Reimbursement form was successfully updated.' }
+        format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully updated.' }
         format.json { render :show, status: :ok, location: @reimbursement_form }
       else
         format.html { render :edit }
@@ -66,7 +78,7 @@ class ReimbursementFormsController < ApplicationController
     def set_reimbursement_form
       @reimbursement_form = ReimbursementForm.find(params[:id])
     end
-
+  
     # Never trust parameters from the scary internet, only allow the white list through.
     def reimbursement_form_params
       params.require(:reimbursement_form).permit(:status_id, :employee_id, :trip_id)

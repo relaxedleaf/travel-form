@@ -11,29 +11,56 @@
 <!-- Divider -->
 <hr class="sidebar-divider my-0">
 
-<!-- Nav Item - Livestock index -->
-<li class="nav-item <%= current_class?(expense_types_path) %>">
-  <%= link_to expense_types_path, { :class => "nav-link"} do %>
+<!-- Nav Item - Dashboard -->
+<li class="nav-item <%= current_class?(dashboard_path) %>">
+  <%= link_to dashboard_path, { :class => "nav-link"} do %>
     <i class="fas fa-tachometer-alt"></i>
-    <span>Dashboard</span></a>
+    <span>Dashboard</span>
   <% end %>
 </li>
 
-<!-- Nav Item - Tank -->
+<!-- Nav Item - Routes -->
+<li class="nav-item <%= current_class?(routes_path) %>">
+  <%= link_to routes_path, { :class => "nav-link"} do %>
+    <i class="fas fa-route"></i>
+    <span>Routes</span>
+  <% end %>
+</li>
+
+<!-- Nav Item - Trip -->
+<li class="nav-item <%= current_class?(trips_path) %>">
+  <%= link_to trips_path, { :class => "nav-link"} do %>
+    <i class="fas fa-plane-departure"></i>
+    <span>Trip</span>
+  <% end %>
+</li>
+
+<!-- Nav Item - Authorization form -->
 <li class="nav-item <%= current_class?(authorization_forms_path) %>">
   <%= link_to authorization_forms_path, { :class => "nav-link"} do %>
     <i class="fas fa-paper-plane"></i>
-    <span>Travel Form</span></a>
+    <span>Travel Form</span>
   <% end %>
 </li>
 
-<!-- Nav Item - Livestock create bulk -->
+<!-- Nav Item -reimbursement form -->
 <li class="nav-item <%= current_class?(reimbursement_forms_path) %>">
   <%= link_to reimbursement_forms_path, { :class => "nav-link"} do %>
     <i class="fas fa-backward"></i>
-    <span>Reimbursement Form</span></a>
+    <span>Reimbursement Form</span>
   <% end %>
 </li>
+
+<% if check_manager %>
+  <hr class="sidebar-divider">
+  
+  <li class="nav-item <%= current_class?(manage_authform_pending_path) %>">
+    <%= link_to manage_authform_pending_path, { :class => "nav-link"} do %>
+      <i class="fas fa-user-cog"></i>
+      <span>Manage</span>
+    <% end %>
+  </li>
+<% end %>
 
 
 
@@ -49,7 +76,7 @@
 <li class="nav-item <%= current_class?("/pages/about") %>">
   <%= link_to "/pages/about", { :class => "nav-link"} do %>
     <i class="fas fa-question-circle"></i>
-    <span>About</span></a>
+    <span>About</span>
   <% end %>
 </li>
 

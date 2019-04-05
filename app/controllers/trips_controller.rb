@@ -1,22 +1,28 @@
 class TripsController < ApplicationController
   before_action :set_trip, only: [:show, :edit, :update, :destroy]
+  before_action :access_control, only: [:show, :edit, :update, :destroy]
 
   # GET /trips
   # GET /trips.json
   def index
-    @trips = Trip.all
+    @trips = Trip.where("employee_id = " + (current_employee.id.to_s if current_employee))
   end
 
   # GET /trips/1
   # GET /trips/1.json
   def show
+    @wishes = @trip.authorization_form.wishes
+    @requests = @trip.requests
   end
 
   # GET /trips/new
   def new
     @trip = Trip.new
-    @employee_id = current_employee.id
-    @status_id = Status.where(name: "Pending").take
+    @status_id = Status.where(name: "Pending").take.id
+    
+    @trip.requests.build
+    authorization_form = @trip.build_authorization_form
+    authorization_form.wishes.build
   end
 
   # GET /trips/1/edit
@@ -27,7 +33,6 @@ class TripsController < ApplicationController
   # POST /trips.json
   def create
     @trip = Trip.new(trip_params)
-
     respond_to do |format|
       if @trip.save
         format.html { redirect_to @trip, notice: 'Trip was successfully created.' }
@@ -71,6 +76,15 @@ class TripsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trip_params
-      params.require(:trip).permit(:destination, :purpose, :date_start, :date_end, :employee_id)
+      params.require(:trip).permit(:destination, :purpose, :date_start, :date_end, :employee_id,
+                                   authorization_form_attributes: [:employee_id, :status_id, wishes_attributes: [:expense_type_id, :cost]],
+                                   requests_attributes: [:department_id, :amount, :status_id])
+    end
+    
+    def access_control
+      if @trip.employee_id != current_employee.id
+        redirect_to trips_path
+        flash[:danger] = "Access denied!"
+      end
     end
 end
