@@ -1,0 +1,28 @@
+<%= link_to 'Back', trips_path, class: "btn btn-primary" %>
+<%= link_to 'Delete', @reimbursement_form, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger float-right" %>
+
+</br></br>
+<div class="row">
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reimbursement Form Status</div>
+      </div>
+      <div class="card-body">
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.reimbursement_form.status.name %></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Authorization Form Status</div>
+      </div>
+      <div class="card-body">
+        <%= @trip.authorization_form ? (link_to @trip.authorization_form.status.name, authorization_form_path(:trip_id => @trip.id))
+            : (link_to "Not yet submitted", new_authorization_form_path(:trip_id => @trip.id)) %>
+      </div>
+    </div>
+  </div>
+</div>
