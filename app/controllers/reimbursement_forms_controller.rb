@@ -1,6 +1,6 @@
 class ReimbursementFormsController < ApplicationController
   before_action :set_reimbursement_form, only: [:show, :edit, :update, :destroy]
-  before_action :set_trip_id, only: [:new,:show, :edit, :update, :destroy]
+
   # GET /reimbursement_forms
   # GET /reimbursement_forms.json
   def index
@@ -12,6 +12,8 @@ class ReimbursementFormsController < ApplicationController
   # GET /reimbursement_forms/1
   # GET /reimbursement_forms/1.json
   def show
+    @trip = Trip.find(params[:trip_id])
+  
   end
 
   # GET /reimbursement_forms/new
@@ -20,7 +22,8 @@ class ReimbursementFormsController < ApplicationController
     @status_id = Status.where(name: "Pending").take.id
     @reimbursement_form.receipts.build
 
-    #@trip = Trip.find_by(params[:trip_id])
+    @trip = Trip.find(params[:trip_id])
+    
   end
 
   # GET /reimbursement_forms/1/edit
@@ -37,7 +40,7 @@ class ReimbursementFormsController < ApplicationController
     respond_to do |format|
       if @reimbursement_form.save
         @trip = nil
-        format.html { redirect_to @reimbursement_form, notice: 'Reimbursement form was successfully created.' }
+        format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully created.' }
         format.json { render :show, status: :created, location: @reimbursement_form }
       else
         format.html { render :new }
@@ -51,7 +54,7 @@ class ReimbursementFormsController < ApplicationController
   def update
     respond_to do |format|
       if @reimbursement_form.update(reimbursement_form_params)
-        format.html { redirect_to @reimbursement_form, notice: 'Reimbursement form was successfully updated.' }
+        format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully updated.' }
         format.json { render :show, status: :ok, location: @reimbursement_form }
       else
         format.html { render :edit }
@@ -74,10 +77,6 @@ class ReimbursementFormsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_reimbursement_form
       @reimbursement_form = ReimbursementForm.find(params[:id])
-    end
-  
-    def set_trip_id
-      @trip = Trip.find(params[:trip_id])
     end
   
     # Never trust parameters from the scary internet, only allow the white list through.

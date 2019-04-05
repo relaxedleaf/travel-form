@@ -21,7 +21,7 @@
         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reimbursement Form Status</div>
       </div>
       <div class="card-body">
-        <%= @trip.reimbursement_form ? @trip.reimbursement_form.status.name : (link_to "Not yet submitted", new_reimbursement_form_path(:trip_id => @trip.id)) %>
+        <%= @trip.reimbursement_form ? (link_to @trip.reimbursement_form.status.name, reimbursement_form_path(:trip_id => @trip.id)) : (link_to "Not yet submitted", new_reimbursement_form_path(:trip_id => @trip.id)) %>
       </div>
     </div>
           <%= debug(@trip.id) %>

@@ -15,5 +15,6 @@
   <%= @reimbursement_form.trip_id %>
 </p>
 
+<%= render 'show', reimbursement_form: @reimbursement_form %>
+
 <%= link_to 'Edit', edit_reimbursement_form_path(@reimbursement_form) %> |
-<%= link_to 'Back', reimbursement_forms_path %>
