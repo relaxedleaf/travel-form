@@ -16,15 +16,21 @@ class Trip < ApplicationRecord
     def dates_validation
         ds = date_start.split('/').map(&:to_i) #date start
         de = date_end.split('/').map(&:to_i) #date end
-        if de[2] < ds[2]
+        if de[2] < ds[2] #year
             errors.add(:date_end,"can't be ealier than date start")
             throw :abort
-        elsif de[0] < ds[0]
-            errors.add(:date_end,"can't be ealier than date start")
-            throw :abort
-        elsif de[1] < ds[1]
-            errors.add(:date_end,"can't be ealier than date start")
-            throw :abort
+        else
+            if de[0] < ds[0] #month
+                errors.add(:date_end,"can't be ealier than date start")
+                throw :abort
+            else
+                if de[0] == ds[0]
+                    if de[1] < ds[1] #day
+                        errors.add(:date_end,"can't be ealier than date start")
+                        throw :abort
+                    end
+                end
+            end
         end
     end
 end
