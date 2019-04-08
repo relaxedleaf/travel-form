@@ -1,5 +1,12 @@
 <%= link_to 'Back', trips_path, class: "btn btn-primary" %>
 
+<!--Display budget info based on the type of manager-->
+<% if check_paymentmanager %>
+  <%= render "manages/inc/budget_info_payment_manager.html"%>
+<% else %>
+  <%= render "manages/inc/budget_info_budget_approver"%>
+<% end %>
+
 </br></br>
 
 <div class="row">
