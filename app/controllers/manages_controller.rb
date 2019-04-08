@@ -3,8 +3,7 @@ class ManagesController < ApplicationController
 
 #**********Manage Auth Form**********#
     def authform_index
-
-        if PaymentManager.where(employee_ssn: current_employee.ssn).present?
+        if check_paymentmanager
             status_id = Status.where(name: "Pending Final Approval").take.id
             
             @authforms = AuthorizationForm.where(status_id: status_id)
@@ -28,7 +27,27 @@ class ManagesController < ApplicationController
 
     
     def authform_history
-    
+        if check_paymentmanager
+            status_ids = []
+            past_statuses = Status.where.not(name: ["Pending Final Approval", "Pending"])
+            
+            past_statuses.each do |status|
+                status_ids.push(status.id)
+            end
+            
+            @authforms = AuthorizationForm.where(status_id: [status_ids])
+            render 'authform_history_payment'
+
+        else
+            status_ids = []
+            past_statuses = Status.where(name: ["Approved", "Denied", "Pending Final Approval", "Partial Approved"])
+            past_statuses.each do |status|
+                status_ids.push(status.id)
+            end
+            
+            @requests = Request.where(department_id: current_employee.department_id, 
+                                      status_id: [status_ids])
+        end
     end
     
     def authform_update
