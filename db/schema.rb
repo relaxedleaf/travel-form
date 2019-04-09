@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20190405183744) do
     t.integer "manager_ssn"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.decimal "hold_budget"
     t.decimal "budget_hold"
   end
 
@@ -107,7 +106,6 @@ ActiveRecord::Schema.define(version: 20190405183744) do
     t.integer "expense_type_id"
     t.decimal "cost", precision: 8, scale: 2
     t.integer "authorization_form_id"
-    t.integer "request_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
