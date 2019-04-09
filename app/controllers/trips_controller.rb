@@ -19,6 +19,9 @@ class TripsController < ApplicationController
   def new
     @trip = Trip.new
     @status_id = Status.where(name: "Pending").take.id
+
+    # Need to update the pie_chart's data here
+    pie_chart.updateData("?")
     
     @trip.requests.build
     authorization_form = @trip.build_authorization_form
