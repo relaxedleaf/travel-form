@@ -13,8 +13,13 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
               <div class="dropdown-header">Actions:</div>
-              <%= link_to 'Approve', manage_auth_update_path(@requests.where(department_id: current_employee.department_id).take.id, :status_id => Status.where(name: 'Approved').take.id), data: { confirm: 'You are about to approve this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
-              <%= link_to 'Deny', manage_auth_update_path(@requests.where(department_id: current_employee.department_id).take.id, :status_id => Status.where(name: 'Denied').take.id), data: { confirm: 'You are about to deny this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
+              <% if check_paymentmanager == false %>
+                <%= link_to 'Approve', manage_auth_update_path(@requests.where(department_id: current_employee.department_id).take.id, :status_id => Status.where(name: 'Approved').take.id), data: { confirm: 'You are about to approve this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
+                <%= link_to 'Deny', manage_auth_update_path(@requests.where(department_id: current_employee.department_id).take.id, :status_id => Status.where(name: 'Denied').take.id), data: { confirm: 'You are about to deny this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
+              <% else %>
+                <%= link_to 'Approve', manage_auth_update_path(@trip.authorization_form, :status_id => Status.where(name: 'Approved').take.id), data: { confirm: 'You are about to approve this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
+                <%= link_to 'Deny', manage_auth_update_path(@trip.authorization_form, :status_id => Status.where(name: 'Denied').take.id), data: { confirm: 'You are about to deny this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
+              <% end %>
             </div>
           </div>
         </div>

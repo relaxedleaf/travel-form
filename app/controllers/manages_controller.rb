@@ -2,10 +2,19 @@ class ManagesController < ApplicationController
 
 #**********Manage Auth Form**********#
     def authform_index
-        status_id = Status.where(name: "Pending").take.id
-        
-        @requests = Request.where(department_id: current_employee.department_id, 
-                                  status_id: status_id)
+
+        if PaymentManager.where(employee_ssn: current_employee.ssn).present?
+            @requests = []
+            status_id = Status.where(name: "Pending Final Approval").take.id
+            
+            @authforms = AuthorizationForm.where(status_id: status_id)
+            render 'authform_index_payment'
+
+        else
+            status_id = Status.where(name: "Pending").take.id
+            @requests = Request.where(department_id: current_employee.department_id, 
+                                      status_id: status_id)
+        end
         
     end
     
@@ -20,14 +29,23 @@ class ManagesController < ApplicationController
     end
     
     def authform_update
-        req = Request.find(params[:id])
-        @trip = req.trip
-        @authorization_form = @trip.authorization_form
-        status_id = params[:status_id]
-        req.update_attribute(:status_id, status_id)
-        update_authform_status
-
-        redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
+        if PaymentManager.where(employee_ssn: current_employee.ssn).present?
+            authorization_form = AuthorizationForm.find(params[:id])
+            trip = authorization_form.trip
+            status_id = params[:status_id]
+            authorization_form.update_attribute(:status_id, status_id)
+    
+            redirect_to manage_auth_path(trip), :notice => "Updated Successfully!"
+        else
+            req = Request.find(params[:id])
+            @trip = req.trip
+            @authorization_form = @trip.authorization_form
+            status_id = params[:status_id]
+            req.update_attribute(:status_id, status_id)
+            update_authform_status
+    
+            redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
+        end
     end
     
 #**********Manage Reimburse Form**********#

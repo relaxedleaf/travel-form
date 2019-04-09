@@ -10,4 +10,12 @@ module ApplicationHelper
       return false
     end
   end
+  
+  def check_paymentmanager
+    if PaymentManager.where(:employee_ssn => current_employee.ssn).present?
+      return true
+    else
+      return false
+    end
+  end
 end
