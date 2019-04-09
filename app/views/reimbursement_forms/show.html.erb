@@ -3,4 +3,7 @@
 
 <%= render 'show', reimbursement_form: @reimbursement_form %>
 
-<%= link_to 'Edit', edit_reimbursement_form_path(@reimbursement_form) %> |
+<%= link_to 'Edit', edit_reimbursement_form_path(@reimbursement_form, :trip_id => @trip.id) %> 
+
+<%= debug @trip.id%>
+
