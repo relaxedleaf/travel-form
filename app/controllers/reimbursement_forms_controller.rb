@@ -1,6 +1,6 @@
 class ReimbursementFormsController < ApplicationController
-  before_action :set_reimbursement_form, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_reimbursement_form, only: [ :edit, :update, :destroy]
+  before_action :set_trip, only: [:show, :new, :edit,:update, :destroy]
   # GET /reimbursement_forms
   # GET /reimbursement_forms.json
   def index
@@ -12,18 +12,18 @@ class ReimbursementFormsController < ApplicationController
   # GET /reimbursement_forms/1
   # GET /reimbursement_forms/1.json
   def show
-    @trip = Trip.find(params[:trip_id])
-  
+    @reimbursement_form = ReimbursementForm.find(@trip.reimbursement_form.id)
+    @receipts =  @reimbursement_form.receipts
+    @requests = @trip.requests
+#need to create request
   end
 
   # GET /reimbursement_forms/new
   def new
     @reimbursement_form = ReimbursementForm.new
     @status_id = Status.where(name: "Pending").take.id
-    @reimbursement_form.receipts.build
-
-    @trip = Trip.find(params[:trip_id])
     
+    @reimbursement_form.receipts.build
   end
 
   # GET /reimbursement_forms/1/edit
@@ -79,8 +79,12 @@ class ReimbursementFormsController < ApplicationController
       @reimbursement_form = ReimbursementForm.find(params[:id])
     end
   
+    def set_trip
+      @trip = Trip.find(params[:trip_id])
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def reimbursement_form_params
-      params.require(:reimbursement_form).permit(:status_id, :employee_id, :trip_id)
+      params.require(:reimbursement_form).permit(:status_id, :employee_id, :trip_id, receipts_attributes: [:reimbursement_form_id,:location,:receipt_date,:expense_type_id,:image_url,:cost])
     end
 end

@@ -1,0 +1,185 @@
+<%= link_to 'Back', trips_path, class: "btn btn-primary" %>
+<%= link_to 'Delete', @reimbursement_form, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger float-right" %>
+
+</br></br>
+<div class="row">
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reimbursement Form Status</div>
+      </div>
+      <div class="card-body">
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.reimbursement_form.status.name %></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Authorization Form Status</div>
+      </div>
+      <div class="card-body">
+        <%= @trip.authorization_form ? (link_to @trip.authorization_form.status.name, @trip)
+            : (link_to "Not yet submitted", new_authorization_form_path(:trip_id => @trip.id)) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+<div class="card border-left-primary shadow h-100 py-2">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <div class="dropdown no-arrow">
+        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+          <div class="dropdown-header">Actions:</div>
+          <%= link_to 'Edit', edit_trip_path(@trip), class: "dropdown-item" %>
+        </div>
+      </div>
+    </div>
+  <div class="card-body">
+    <div class="row no-gutters align-items-center">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Destination</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.destination %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Departure Date</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.date_start %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Return Date</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.date_end %></div>
+      </div>
+      <div class="col-auto">
+        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+      </div>
+    </div>
+    </br>
+    <div class="row">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Purpose</div>
+        <div class="h6 mb-0 font-weight-bold text-gray-800"><%= @trip.purpose %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</br>
+</br>
+<%= debug @receipts%>
+
+<div class="row">
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Receipt</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Type</th>
+                    <th>Cost</th>
+                    <th>Location</th>
+                    <th>Receipt Date</th>
+                    <th colspan="1"></th>
+                  </tr>
+                </thead>
+              
+              
+             
+                <tbody>
+                  <% @receipts.each do |receipt| %>
+                    <tr>
+                      <td><%= receipt.expense_type.name %></td>
+                      <td><%= number_to_currency receipt.cost %></td>
+                      <td><%= receipt.location %></td>
+                      <td><%= receipt.receipt_date %></td>
+                      <td>
+                        <div class="dropdown no-arrow">
+                          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Actions:</div>
+                            <%= link_to 'Edit', edit_receipt_path(receipt), class: "dropdown-item" %>
+                            <%= link_to 'Delete', receipt, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-gift fa-2x text-gray-300"></i>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Requests</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Department</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th colspan="1"></th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+                  <% @requests.each do |request| %>
+                    <tr>
+                      <td><%= request.department.name %></td>
+                      <td><%= number_to_currency request.amount %></td>
+                      <td><%= request.status.name %></td>
+                      <td>
+                        <div class="dropdown no-arrow">
+                          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Actions:</div>
+                            <%= link_to 'Edit', edit_request_path(request), class: "dropdown-item" %>
+                            <%= link_to 'Delete', request, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-money-check-alt fa-2x text-gray-300"></i>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div>
+  </div>
+</div>
+

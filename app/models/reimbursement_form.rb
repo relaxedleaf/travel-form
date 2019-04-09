@@ -6,5 +6,7 @@ class ReimbursementForm < ApplicationRecord
     has_many :receipts, :dependent => :destroy
     
     validates :status_id, :employee_id, :trip_id, presence: true
+    
+    accepts_nested_attributes_for :receipts, :reject_if => :all_blank, :allow_destroy => true
 
 end

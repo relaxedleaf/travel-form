@@ -4,7 +4,9 @@ class CreateWishes < ActiveRecord::Migration[5.1]
       t.integer :expense_type_id
       t.decimal :cost, precision:8, scale:2
       t.integer :authorization_form_id
-
+      
+      t.integer :request_id
+      
       t.timestamps
     end
   end
