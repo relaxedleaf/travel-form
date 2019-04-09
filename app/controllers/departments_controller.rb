@@ -69,6 +69,6 @@ class DepartmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def department_params
-      params.require(:department).permit(:name, :total_budget, :manager_ssn)
+      params.require(:department).permit(:name, :total_budget, :manager_ssn, :budget_hold)
     end
 end

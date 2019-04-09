@@ -10,18 +10,21 @@ Department.delete_all
 Department.create!(
     name: 'Computer Science',
     total_budget: 1000,
+    budget_hold: 0,
     manager_ssn: 123456789
     )
 
 Department.create!(
     name: 'Math',
     total_budget: 1000,
+    budget_hold: 0,
     manager_ssn: 223456789
     )
     
 Department.create!(
     name: 'English',
     total_budget: 1000,
+    budget_hold: 0,
     manager_ssn: 323456789
     )
 
@@ -134,8 +137,8 @@ Employee.create!(
     email: 'paymentmg@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
-    fname: 'math',
-    lname: 'employee',
+    fname: 'payment',
+    lname: 'manager',
     ssn: 123456788,
     department_id: Department.where(name: "Computer Science").take.id,
     bdate: '04/30/2019'
