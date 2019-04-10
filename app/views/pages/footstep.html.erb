@@ -111,6 +111,48 @@
 </body>
 
 <script>
+  $(document).ready(function(){
+    function getDestination(){
+        var locations = [];
+        locations.push("hello");
+        $.ajax({
+            url: window.location.origin + '/api/destination',
+            async: false
+        }).done(function(destinations){
+            $.each(destinations.data,function(key, destination){
+              locations.push(destination.destination);
+            });
+        });
+        return locations;
+    }
+    
+    function getCoordinates(){
+        var locations = getDestination();
+        var coordinates = [];
+        $.each(locations,function(key, location){
+          $.ajax({
+              type: 'GET',
+              url: 'https://api.mapbox.com/geocoding/v5/mapbox.places/{charlotte}.json?',
+              data :{
+                  access_token: 'pk.eyJ1IjoiMmdsaTkiLCJhIjoiY2p1OTdvZHpjMXNtYjQ0bzJ6d3RtaWdjbyJ9.2OfthI_k2S_vcFur6Ugpcg',
+                  country: 'US',
+                  region: 'North Carolina',
+                  place: 'charlotte',
+                  limit: 1
+              },
+              async: false
+          }).done(function(coordinates){
+              console.log(coordinates)
+          });
+        });
+    }
+    
+    getCoordinates()
+    
+    // getCoordinates();
+
+    // var locations = getDestination();
+    
     mapboxgl.accessToken = 'pk.eyJ1IjoiMmdsaTkiLCJhIjoiY2p1OTdvZHpjMXNtYjQ0bzJ6d3RtaWdjbyJ9.2OfthI_k2S_vcFur6Ugpcg';
     var coordinates = document.getElementById('coordinates');
     var map = new mapboxgl.Map({
@@ -125,6 +167,7 @@
     })
     .setLngLat([-77.0364, 38.8951])
     .addTo(map);
+  });
 </script>
 
 </html>
