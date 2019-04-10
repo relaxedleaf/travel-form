@@ -147,7 +147,12 @@ Employee.create!(
 #*********** Creating trips for csemp ***********#
 Trip.delete_all
 Trip.create!(
-    destination: 'Georgia', 
+    destination_attributes: 
+        {
+         country: "US",
+         state: "Georgia",
+         city: "Thomasville"
+        },
     purpose:  'Going to have fun',
     date_start: '04/30/2019', 
     date_end: '04/31/2019', 

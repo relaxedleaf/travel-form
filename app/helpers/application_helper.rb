@@ -18,4 +18,8 @@ module ApplicationHelper
       return false
     end
   end
+  
+  def trip_destination(destination)
+    return destination.country + " " + destination.state + " " + destination.city
+  end
 end

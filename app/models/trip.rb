@@ -2,6 +2,7 @@ class Trip < ApplicationRecord
     belongs_to :employee
     has_one :reimbursement_form, :dependent => :destroy
     has_one :authorization_form, :dependent => :destroy
+    has_one :destination, :dependent => :destroy
     has_many :requests, :dependent => :destroy
 
     validates :purpose, :destination, :date_start, :date_end, :employee_id, presence: true
@@ -9,6 +10,7 @@ class Trip < ApplicationRecord
     
     
     accepts_nested_attributes_for :authorization_form
+    accepts_nested_attributes_for :destination
     accepts_nested_attributes_for :requests
     
     private

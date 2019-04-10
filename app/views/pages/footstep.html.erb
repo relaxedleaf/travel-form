@@ -114,13 +114,15 @@
   $(document).ready(function(){
     function getDestination(){
         var locations = [];
-        locations.push("hello");
         $.ajax({
             url: window.location.origin + '/api/destination',
             async: false
         }).done(function(destinations){
             $.each(destinations.data,function(key, destination){
-              locations.push(destination.destination);
+              locations.push({country: destination.country,
+                              state: destination.state,
+                              city: destination.city
+              });
             });
         });
         return locations;
@@ -132,26 +134,24 @@
         $.each(locations,function(key, location){
           $.ajax({
               type: 'GET',
-              url: 'https://api.mapbox.com/geocoding/v5/mapbox.places/{charlotte}.json?',
+              url: 'https://api.mapbox.com/geocoding/v5/mapbox.places/' + location.city + '.json?',
               data :{
                   access_token: 'pk.eyJ1IjoiMmdsaTkiLCJhIjoiY2p1OTdvZHpjMXNtYjQ0bzJ6d3RtaWdjbyJ9.2OfthI_k2S_vcFur6Ugpcg',
-                  country: 'US',
-                  region: 'North Carolina',
-                  place: 'charlotte',
+                  country: location.country,
+                  region: location.state,
+                  place: location.city,
                   limit: 1
               },
               async: false
-          }).done(function(coordinates){
-              console.log(coordinates)
+          }).done(function(coords){
+              coordinates.push({
+                  longtitude: coords.features[0].center[0],
+                  latitude: coords.features[0].center[1]
+              });
           });
         });
+        return coordinates;
     }
-    
-    getCoordinates()
-    
-    // getCoordinates();
-
-    // var locations = getDestination();
     
     mapboxgl.accessToken = 'pk.eyJ1IjoiMmdsaTkiLCJhIjoiY2p1OTdvZHpjMXNtYjQ0bzJ6d3RtaWdjbyJ9.2OfthI_k2S_vcFur6Ugpcg';
     var coordinates = document.getElementById('coordinates');
@@ -161,12 +161,17 @@
         center: [0, 0],
         zoom: 2
     });
+    
+    var coordinates = getCoordinates();
      
-    var marker = new mapboxgl.Marker({
-        draggable: false
-    })
-    .setLngLat([-77.0364, 38.8951])
-    .addTo(map);
+    for (var i = 0; i < coordinates.length; i++){
+      var marker = new mapboxgl.Marker({
+          draggable: false
+      })
+      .setLngLat([coordinates[i].longtitude, coordinates[i].latitude])
+      .addTo(map);
+    }
+
   });
 </script>
 
