@@ -1,0 +1,9 @@
+<div class="btn-group float-right">
+  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Budget Info
+  </button>
+  <div class="dropdown-menu">
+    <p class="dropdown-item">Total Budget: <%= number_to_currency(current_employee.department.total_budget)%></p>
+    <p class="dropdown-item">Available Budget: <%= number_to_currency(current_employee.department.total_budget - current_employee.department.budget_hold) %></p>
+  </div>
+</div>

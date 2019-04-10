@@ -29,6 +29,7 @@ gem 'webpacker'
 gem "cocoon"
 gem 'formtastic', '~> 3.0'
 gem 'faker'
+gem 'rack-cors'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
