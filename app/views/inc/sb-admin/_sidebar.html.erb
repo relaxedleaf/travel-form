@@ -19,6 +19,14 @@
   <% end %>
 </li>
 
+<!-- Nav Item - Footstep -->
+<li class="nav-item <%= current_class?(footstep_path) %>">
+  <%= link_to footstep_path, { :class => "nav-link"} do %>
+    <i class="fas fa-shoe-prints"></i>
+    <span>Footprint</span>
+  <% end %>
+</li>
+
 <!-- Nav Item - Routes -->
 <li class="nav-item <%= current_class?(routes_path) %>">
   <%= link_to routes_path, { :class => "nav-link"} do %>

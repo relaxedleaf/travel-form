@@ -1,5 +1,12 @@
 <%= link_to 'Back', trips_path, class: "btn btn-primary" %>
 
+<!--Display budget info based on the type of manager-->
+<% if check_paymentmanager %>
+  <%= render "manages/inc/budget_info_payment_manager.html"%>
+<% else %>
+  <%= render "manages/inc/budget_info_budget_approver"%>
+<% end %>
+
 </br></br>
 
 <div class="row">
@@ -83,7 +90,7 @@
     <div class="row no-gutters align-items-center">
       <div class="col mr-2">
         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Destination</div>
-        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.destination %></div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= trip_destination(@trip.destination) %></div>
       </div>
       <div class="col mr-2">
         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Departure Date</div>

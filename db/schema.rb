@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190403184137) do
+ActiveRecord::Schema.define(version: 20190410172321) do
 
   create_table "authorization_forms", force: :cascade do |t|
     t.integer "status_id"
@@ -24,6 +24,16 @@ ActiveRecord::Schema.define(version: 20190403184137) do
     t.string "name"
     t.decimal "total_budget"
     t.integer "manager_ssn"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.decimal "budget_hold"
+  end
+
+  create_table "destinations", force: :cascade do |t|
+    t.integer "trip_id"
+    t.string "country"
+    t.string "state"
+    t.string "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -92,7 +102,6 @@ ActiveRecord::Schema.define(version: 20190403184137) do
   end
 
   create_table "trips", force: :cascade do |t|
-    t.string "destination"
     t.string "purpose"
     t.string "date_start"
     t.string "date_end"
