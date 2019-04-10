@@ -24,9 +24,13 @@ Rails.application.routes.draw do
   
   get 'routes', to: 'pages#routes'
   get 'dashboard', to: 'pages#dashboard'
+
+  get 'about', to: 'pages#about'
+
   get 'footstep', to: 'pages#footstep'
   
   namespace :api do
     get 'destination', to: 'pages#getdestination'
   end
+
 end
