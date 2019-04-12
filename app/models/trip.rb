@@ -4,9 +4,12 @@ class Trip < ApplicationRecord
     has_one :authorization_form, :dependent => :destroy
     has_one :destination, :dependent => :destroy
     has_many :requests, :dependent => :destroy
+    
+    before_destroy :authform_status
 
     validates :purpose, :destination, :date_start, :date_end, :employee_id, presence: true
     validate :dates_validation
+    validate :authform_status
     
     
     accepts_nested_attributes_for :authorization_form
@@ -36,5 +39,12 @@ class Trip < ApplicationRecord
                 end
             end
         end
+    end
+    
+    def authform_status
+       if self.authorization_form.status.name = "Approved"
+            errors.add(" ","Form has already been approved")
+            throw :abort 
+       end
     end
 end

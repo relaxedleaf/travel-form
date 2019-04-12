@@ -66,12 +66,24 @@ class TripsController < ApplicationController
   # DELETE /trips/1
   # DELETE /trips/1.json
   def destroy
-    @trip.destroy
+    error_messages = []
+    bullet = '&#8226 '
     respond_to do |format|
-      format.html { redirect_to trips_url, notice: 'Trip was successfully destroyed.' }
-      format.json { head :no_content }
+      if @trip.destroy
+        format.html { redirect_to trips_url }
+        flash[:success] = 'Trip was successfully deleted'
+        format.json { head :no_content }
+      else
+        format.html { redirect_to trips_url}
+        @trip.errors.full_messages.each do |message|
+          error_messages.push(bullet + message)
+        end
+        flash[:danger] = error_messages.join("<br/>")
+        format.json { head :no_content }
+      end
     end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

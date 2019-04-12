@@ -2,4 +2,4 @@
 
 <%= render 'form', wish: @wish %>
 
-<%= link_to 'Back', wishes_path %>
+<%= link_to 'Back', trip_path(@wish.authorization_form.trip.id) %>
