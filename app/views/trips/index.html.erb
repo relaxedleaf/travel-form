@@ -5,7 +5,8 @@
   <div class="card shadow mb-4">
     <!-- Card Header - Dropdown -->
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-        <div class="row container">
+      <div class="container">
+        <div class="row">
           <div class="col">
             <h6 class="m-0 font-weight-bold text-primary">Destination: <%= trip_destination(trip.destination)%></h6>
           </div>
@@ -15,7 +16,20 @@
           <div class="col">
             <h6 class="m-0 font-weight-bold text-primary">End Date: <%= trip.date_end%></h6>
           </div>
+          <div class="col">
+            <h6 class="m-0 font-weight-bold text-primary">End Date: <%= trip.date_end%></h6>
+          </div>
         </div>
+        </br>
+        <div class="row">
+          <div class="col">
+            <h6 class="m-0 font-weight-bold text-primary">Auth Form Status: <%= trip.authorization_form.status.name%></h6>
+          </div>
+          <div class="col">
+            <h6 class="m-0 font-weight-bold text-primary">Reim Form Status: <%= trip.reimbursement_form ? trip.reimbursement_form.status.name : "Not yet Submitted"%></h6>
+          </div>
+        </div>
+      </div>  
       <div class="dropdown no-arrow">
         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
