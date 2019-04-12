@@ -42,7 +42,7 @@ class Trip < ApplicationRecord
     end
     
     def authform_status
-       if self.authorization_form.status.name = "Approved"
+       if self.authorization_form.status.name == "Approved"
             errors.add(" ","Form has already been approved")
             throw :abort 
        end
