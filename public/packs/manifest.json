@@ -1,0 +1,14 @@
+{
+  "authorization_form.js": "/packs/js/authorization_form-9c0db3d764979fdab626.js",
+  "authorization_form.js.map": "/packs/js/authorization_form-9c0db3d764979fdab626.js.map",
+  "entrypoints": {
+    "authorization_form": {
+      "js": [
+        "/packs/js/authorization_form-9c0db3d764979fdab626.js"
+      ],
+      "js.map": [
+        "/packs/js/authorization_form-9c0db3d764979fdab626.js.map"
+      ]
+    }
+  }
+}
