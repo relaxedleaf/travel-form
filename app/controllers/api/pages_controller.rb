@@ -11,5 +11,10 @@ module Api
             
             render json: {data: destinations}
         end
+        
+        def allstatus
+            statuses = Status.all;
+            render json: {data: statuses}
+        end
     end
 end

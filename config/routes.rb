@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   
   namespace :api do
     get 'destination', to: 'pages#getdestination'
+    get 'allstatus', to: 'pages#allstatus'
   end
 
 end
