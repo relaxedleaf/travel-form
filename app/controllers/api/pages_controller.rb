@@ -13,8 +13,16 @@ module Api
         end
         
         def allstatus
-            statuses = Status.all;
-            render json: {data: statuses}
+            #statuses = Status.select("id","name").all;
+             statuses = ["Pending", "Pending Final Approval", "Partial Approved", "Approved", "Denied"]
+            num = [
+                    AuthorizationForm.where(:employee_id => current_employee.id, :status_id => Status.where(name: "Pending").take.id).to_a.count,
+                    AuthorizationForm.where(:employee_id => current_employee.id, :status_id => Status.where(name: "Pending Final Approval").take.id).to_a.count,
+                    AuthorizationForm.where(:employee_id => current_employee.id, :status_id => Status.where(name: "Partial Approved").take.id).to_a.count,
+                    AuthorizationForm.where(:employee_id => current_employee.id, :status_id => Status.where(name: "Approved").take.id).to_a.count,
+                    AuthorizationForm.where(:employee_id => current_employee.id, :status_id => Status.where(name: "Denied").take.id).to_a.count
+                  ]
+            render json: {statuses: statuses, num: num}
         end
     end
 end
