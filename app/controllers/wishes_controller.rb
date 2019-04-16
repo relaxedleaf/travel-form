@@ -40,9 +40,16 @@ class WishesController < ApplicationController
   # PATCH/PUT /wishes/1
   # PATCH/PUT /wishes/1.json
   def update
+    authform = @wish.authorization_form
+    authformCurrentStat = authform.status.name
+    pendingStatus_id = Status.where(name: "Pending").take.id
+
     respond_to do |format|
       if @wish.update(wish_params)
-        format.html { redirect_to trips_path, notice: 'Wish was successfully updated.' }
+        if authformCurrentStat != "pending"
+          authform.update_attribute(:status_id, pendingStatus_id)
+        end
+        format.html { redirect_to trip_path(@wish.trip), notice: 'Wish was successfully updated.' }
         format.json { render :show, status: :ok, location: @wish }
       else
         format.html { render :edit }
@@ -54,10 +61,21 @@ class WishesController < ApplicationController
   # DELETE /wishes/1
   # DELETE /wishes/1.json
   def destroy
-    @wish.destroy
+    error_messages = []
+    bullet = '&#8226 '
     respond_to do |format|
-      format.html { redirect_to wishes_url, notice: 'Wish was successfully destroyed.' }
-      format.json { head :no_content }
+      if @wish.destroy
+        format.html { redirect_to trip_path(@wish.authorization_form.trip) }
+        flash[:success] = 'Wish was successfully deleted'
+        format.json { head :no_content }
+      else
+        format.html { redirect_to trip_path(@wish.authorization_form.trip)}
+        @wish.errors.full_messages.each do |message|
+          error_messages.push(bullet + message)
+        end
+        flash[:danger] = error_messages.join("<br/>")
+        format.json { head :no_content }
+      end
     end
   end
 

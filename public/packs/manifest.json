@@ -1,0 +1,24 @@
+{
+  "authorization_form.js": "/packs/js/authorization_form-365f0bcfe935703fbb5f.js",
+  "authorization_form.js.map": "/packs/js/authorization_form-365f0bcfe935703fbb5f.js.map",
+  "dashboard.js": "/packs/js/dashboard-c878ce1fcb6e3b7fc079.js",
+  "dashboard.js.map": "/packs/js/dashboard-c878ce1fcb6e3b7fc079.js.map",
+  "entrypoints": {
+    "authorization_form": {
+      "js": [
+        "/packs/js/authorization_form-365f0bcfe935703fbb5f.js"
+      ],
+      "js.map": [
+        "/packs/js/authorization_form-365f0bcfe935703fbb5f.js.map"
+      ]
+    },
+    "dashboard": {
+      "js": [
+        "/packs/js/dashboard-c878ce1fcb6e3b7fc079.js"
+      ],
+      "js.map": [
+        "/packs/js/dashboard-c878ce1fcb6e3b7fc079.js.map"
+      ]
+    }
+  }
+}

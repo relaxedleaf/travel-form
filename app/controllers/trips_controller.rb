@@ -21,7 +21,7 @@ class TripsController < ApplicationController
     @status_id = Status.where(name: "Pending").take.id
 
     # Need to update the pie_chart's data here
-    pie_chart.updateData("?")
+    #pie_chart.updateData("?")
     
     @trip.requests.build
     authorization_form = @trip.build_authorization_form
@@ -36,6 +36,7 @@ class TripsController < ApplicationController
   # POST /trips.json
   def create
     @trip = Trip.new(trip_params)
+    @status_id = Status.where(name: "Pending").take.id
 
     respond_to do |format|
       if @trip.save
@@ -65,12 +66,24 @@ class TripsController < ApplicationController
   # DELETE /trips/1
   # DELETE /trips/1.json
   def destroy
-    @trip.destroy
+    error_messages = []
+    bullet = '&#8226 '
     respond_to do |format|
-      format.html { redirect_to trips_url, notice: 'Trip was successfully destroyed.' }
-      format.json { head :no_content }
+      if @trip.destroy
+        format.html { redirect_to trips_url }
+        flash[:success] = 'Trip was successfully deleted'
+        format.json { head :no_content }
+      else
+        format.html { redirect_to trips_url}
+        @trip.errors.full_messages.each do |message|
+          error_messages.push(bullet + message)
+        end
+        flash[:danger] = error_messages.join("<br/>")
+        format.json { head :no_content }
+      end
     end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
@@ -80,9 +93,9 @@ class TripsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trip_params
-      params.require(:trip).permit(:destination, :purpose, :date_start, :date_end, :employee_id,
+      params.require(:trip).permit(:purpose, :date_start, :date_end, :employee_id,
                                    authorization_form_attributes: [:employee_id, :status_id, wishes_attributes: [:expense_type_id, :cost]],
-                                   requests_attributes: [:department_id, :amount, :status_id])
+                                   requests_attributes: [:department_id, :amount, :status_id], destination_attributes: [:country, :state, :city])
     end
     
     def access_control
