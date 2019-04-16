@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong> total amount:</strong>
+  <%= @receipts_request. total_amount %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @receipts_request.department_id %>
+</p>
+
+<p>
+  <strong>Reimbursement form:</strong>
+  <%= @receipts_request.reimbursement_form_id %>
+</p>
+
+<%= link_to 'Edit', edit_receipts_request_path(@receipts_request) %> |
+<%= link_to 'Back', receipts_requests_path %>

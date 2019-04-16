@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190410172321) do
+ActiveRecord::Schema.define(version: 20190416031015) do
 
   create_table "authorization_forms", force: :cascade do |t|
     t.integer "status_id"
@@ -78,6 +78,14 @@ ActiveRecord::Schema.define(version: 20190410172321) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "receipts_requests", force: :cascade do |t|
+    t.decimal "total_amount", precision: 8, scale: 2
+    t.integer "department_id"
+    t.integer "reimbursement_form_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "reimbursement_forms", force: :cascade do |t|
     t.integer "status_id"
     t.integer "employee_id"
@@ -102,6 +110,7 @@ ActiveRecord::Schema.define(version: 20190410172321) do
   end
 
   create_table "trips", force: :cascade do |t|
+    t.string "destination"
     t.string "purpose"
     t.string "date_start"
     t.string "date_end"

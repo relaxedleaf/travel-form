@@ -146,7 +146,9 @@ Employee.create!(
 
 #*********** Creating trips for csemp ***********#
 Trip.delete_all
-Trip.create!(
+ReimbursementForm.delete_all
+
+first_trip = Trip.create!(
     destination_attributes: 
         {
          country: "US",
@@ -185,6 +187,34 @@ Trip.create!(
                  cost: 300
                }
          ]
-       }
+       },
+)
+
+ReimbursementForm.create!(
+    employee_id: Employee.where(ssn: 111).take.id,
+    trip_id: first_trip.id,
+    status_id: Status.where(name: "Pending").take.id,
+
+    
+    receipts_attributes: [
+        {
+            expense_type_id: ExpenseType.where(name: "Hotel").take.id,
+            cost: 200,
+            location: 'Holiday Inn',
+            receipt_date: '04/30/2019'
+        },
+        {
+            expense_type_id: ExpenseType.where(name: "Food").take.id,
+            cost: 400,
+            location: 'Steak House',
+            receipt_date: '04/30/2019'
+        },
+        {
+            expense_type_id: ExpenseType.where(name: "Transportation").take.id,
+            cost: 100,
+            location: 'City',
+            receipt_date: '04/30/2019'
+        },
+        ]
     
 )
