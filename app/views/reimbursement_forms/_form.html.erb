@@ -21,14 +21,6 @@
           <div class="col mr-2">
             <div class="table-responsive text-center">
               <table class="table table-borderless">
-                <thead class="thead-light">
-                  <tr>
-                    <th>Department</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th colspan="1"></th>
-                  </tr>
-                </thead>
               
                 <tbody>
                   <% @requests.each do |request| %>
@@ -62,14 +54,17 @@
   </div>
   
   
+  <div class="receipts_request">
+  
+    <%= form.label :receipts_request %>
+    <%= form.semantic_fields_for :receipts_request, ReceiptsRequest.new do |receipt_request| %>
+
+  
     <div class="receipts">
         <%= form.label :receipts %>
         <%= form.semantic_fields_for :receipts, Receipt.new do |receipt| %>
           <%= render 'receipt_fields', :f => receipt%>
         <% end %>
-        
-        
-        
         <div class='links'>
           <%= link_to_add_association form, :receipts do %>
               <i class="fas fa-plus-circle"></i>
@@ -77,6 +72,13 @@
         </div>
     </div>
     
+    <% end %>
+        <div class='links'>
+          <%= link_to_add_association form, :receipts_request do %>
+              <i class="fas fa-plus-circle"></i>
+          <% end %>
+        </div>
+  </div>
 
 
   <div class="actions">

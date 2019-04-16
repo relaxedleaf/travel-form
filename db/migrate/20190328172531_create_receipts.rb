@@ -7,7 +7,8 @@ class CreateReceipts < ActiveRecord::Migration[5.1]
       t.decimal :cost, precision:8, scale:2
       t.string :receipt_date
       t.integer :expense_type_id
-
+      t.integer :receipts_request_id
+      
       t.timestamps
     end
   end

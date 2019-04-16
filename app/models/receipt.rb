@@ -2,6 +2,7 @@ class Receipt < ApplicationRecord
     mount_uploader :image, ImageUploader
     belongs_to :reimbursement_form
     belongs_to :expense_type
+    belongs_to :receipts_request
     
     validates :reimbursement_form, :location, :receipt_date, :expense_type_id, presence: true
     

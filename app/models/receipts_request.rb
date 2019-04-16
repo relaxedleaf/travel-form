@@ -3,10 +3,14 @@ class ReceiptsRequest < ApplicationRecord
     belongs_to :status
     belongs_to :reimbursement_forms
     
+    has_many :receipt
     
     validates :department_id, :total_amount, :reimbursement_form_id, presence: true
     validates :total_amount, numericality: {greater_than_or_equal_to: 0.01}
     validate :authform_status
+    
+    accepts_nested_attributes_for :receipts, :reject_if => :all_blank, :allow_destroy => true
+
     
     before_destroy :authform_status
     

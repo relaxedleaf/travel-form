@@ -25,6 +25,8 @@ class ReimbursementFormsController < ApplicationController
     @status_id = Status.where(name: "Pending").take.id
     @requests = @trip.requests
     @reimbursement_form.receipts.build
+    @reimbursement_form.receipts_request.build
+
   end
 
   # GET /reimbursement_forms/1/edit
@@ -88,6 +90,7 @@ class ReimbursementFormsController < ApplicationController
     # New Create, need all attribute and table names
     def reimbursement_form_params
       params.require(:reimbursement_form).permit(:status_id, :employee_id, :trip_id, 
-      receipts_attributes: [:reimbursement_form_id,:location,:receipt_date,:expense_type_id,:image_url,:cost])
+      receipts_attributes: [:reimbursement_form_id,:location,:receipt_date,:expense_type_id,:image_url,:cost],
+      receipts_requests_attributes: [:total_amount, :department_id, :reimbursement_form_id],)
     end
 end
