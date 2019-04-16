@@ -15,14 +15,15 @@ class ReimbursementFormsController < ApplicationController
     @reimbursement_form = ReimbursementForm.find(@trip.reimbursement_form.id)
     @receipts =  @reimbursement_form.receipts
     @requests = @trip.requests
-#need to create request
+    @total_reimb_budget = 0
+    #need to create request
   end
 
   # GET /reimbursement_forms/new
   def new
     @reimbursement_form = ReimbursementForm.new
     @status_id = Status.where(name: "Pending").take.id
-    
+    @requests = @trip.requests
     @reimbursement_form.receipts.build
   end
 

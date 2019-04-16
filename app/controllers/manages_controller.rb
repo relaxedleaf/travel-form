@@ -21,7 +21,6 @@ class ManagesController < ApplicationController
         @trip = Trip.find(params[:id])
         @wishes = @trip.authorization_form.wishes
         @requests = @trip.requests
-        
     end
     
 

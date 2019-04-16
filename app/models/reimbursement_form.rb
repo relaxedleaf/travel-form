@@ -9,4 +9,8 @@ class ReimbursementForm < ApplicationRecord
     
     accepts_nested_attributes_for :receipts, :reject_if => :all_blank, :allow_destroy => true
 
+    def total_costs
+        self.receipts.sum(:cost)
+    end
+    
 end

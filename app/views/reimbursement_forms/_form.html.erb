@@ -11,6 +11,43 @@
     </div>
   <% end %>
 
+<div class="col-xl-12 col-md-12 mb-12">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Requests Money</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Department</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th colspan="1"></th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+                  <% @requests.each do |request| %>
+                    <tr>
+                      <td><%= request.department.name %></td>
+                      <td><%= number_to_currency request.amount %></td>
+                      <td><%= request.status.name %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div>
+  </div>
+
 
   <div class="field">
       <%=form.hidden_field :status_id, :value => @status_id %>
@@ -30,6 +67,9 @@
         <%= form.semantic_fields_for :receipts, Receipt.new do |receipt| %>
           <%= render 'receipt_fields', :f => receipt%>
         <% end %>
+        
+        
+        
         <div class='links'>
           <%= link_to_add_association form, :receipts do %>
               <i class="fas fa-plus-circle"></i>

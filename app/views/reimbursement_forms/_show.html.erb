@@ -150,6 +150,7 @@
               
                 <tbody>
                   <% @requests.each do |request| %>
+                    <% @total_reimb_budget += request.amount %>
                     <tr>
                       <td><%= request.department.name %></td>
                       <td><%= number_to_currency request.amount %></td>
@@ -180,5 +181,45 @@
       </div>
     </div>
   </div>
-</div>
+  </div>
+  </br>
+  </br>
+  
+   <div class="col-xl-12 col-md-12 mb-12">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Your Balance</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Total Requests Amount</th>
+                    <th>Total Receipt Costs</th>
+                    <th>Your Balance</th>
+                    <th>Status</th>
+                    <th colspan="1"></th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+                  <td><%= reimbursement_form.total_costs %></td>
+                  <td><%= @total_reimb_budget %></td>
+                  <td><%= @total_reimb_budget - reimbursement_form.total_costs %></td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-money-check-alt fa-2x text-gray-300"></i>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div>
+  </div>
+
 
