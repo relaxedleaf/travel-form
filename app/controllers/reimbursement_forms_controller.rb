@@ -1,6 +1,6 @@
 class ReimbursementFormsController < ApplicationController
-  before_action :set_reimbursement_form, only: [ :edit, :update, :destroy]
-  before_action :set_trip, only: [:show, :new, :edit,:update, :destroy]
+  before_action :set_reimbursement_form, only: [:show, :edit, :update, :destroy]
+  before_action :set_trip, only: [:new]
   # GET /reimbursement_forms
   # GET /reimbursement_forms.json
   def index
@@ -12,9 +12,9 @@ class ReimbursementFormsController < ApplicationController
   # GET /reimbursement_forms/1
   # GET /reimbursement_forms/1.json
   def show
-    @reimbursement_form = ReimbursementForm.find(@trip.reimbursement_form.id)
     @receipts =  @reimbursement_form.receipts
-    @requests = @trip.requests
+    @requests = @reimbursement_form.trip.requests
+    @trip = @reimbursement_form.trip
     @total_reimb_budget = 0
     #need to create request
   end
@@ -36,12 +36,10 @@ class ReimbursementFormsController < ApplicationController
   def create
 
     @reimbursement_form = ReimbursementForm.new(reimbursement_form_params)
-    
 
     respond_to do |format|
       if @reimbursement_form.save
-        @trip = nil
-        format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully created.' }
+        format.html { redirect_to @reimbursement_form, notice: 'Reimbursement form was successfully created.' }
         format.json { render :show, status: :created, location: @reimbursement_form }
       else
         format.html { render :new }
