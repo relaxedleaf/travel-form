@@ -69,6 +69,6 @@ class ReceiptsRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipts_request_params
-      params.require(:receipts_request).permit(: total_amount, :department_id, :reimbursement_form_id)
+      params.require(:receipts_request).permit(:total_amount, :department_id, :reimbursement_form_id)
     end
 end
