@@ -1,14 +1,20 @@
 import React from 'react';
-//import ReactChartkick, { LineChart, PieChart } from 'react-chartkick';
+//import ReactChartkick, { ColumnChart, PieChart } from 'react-chartkick';
 //import Chart from 'chart.js';
 //import axios from 'axios';
-//import piechart from 'Piechart'
+ import piechart from "./components/PieChart"
+ import deptgraph from "./components/DeptGraph"
     
 export default class App extends React.Component {
-/* render (<Piechart />
-           <Graph />)*/    
-  state = {
-    statuses: [],
-    num: []
-  };
+    render = () => {
+        return (
+         
+            <div>
+                <PieChart name="Your Forms" />
+  
+                <DeptGraph name="Dept Approvals" />
+            </div>
+
+        )
+    };
 }

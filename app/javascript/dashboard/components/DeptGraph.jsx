@@ -5,14 +5,18 @@ import axios from 'axios';
 
 ReactChartkick.addAdapter(Chart)
 
-export default class App extends React.Component {
+export default class DeptGraph extends React.Component {
+    state = {
+        depts: [],
+        num: []
+      };
 
     componentDidMount = () => {
         var self = this;
         axios.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
-        axios.get('/api/allstatus')
+        axios.get('/api/deptApproveRate')
         .then(function (response) {
-            self.setState({statuses: response.data.statuses})
+            self.setState({depts: response.data.depts})
             self.setState({num: response.data.num})
             
         })
@@ -22,16 +26,14 @@ export default class App extends React.Component {
     };
 
     render = () => {
-        if(this.state.statuses.length != 0 && this.state.num.length !=0){
-            console.log(this.state.statuses);
+        if(this.state.depts.length != 0 && this.state.num.length !=0){
+            console.log(this.state.depts);
             return(
 
             <ColumnChart data={
-                            [[this.state.statuses[0], this.state.num[0]],
-                                [this.state.statuses[1], this.state.num[1]],
-                                [this.state.statuses[2], this.state.num[2]],
-                                [this.state.statuses[3], this.state.num[3]],
-                                [this.state.statuses[4], this.state.num[4]]]
+                            [[this.state.depts[0], this.state.num[0]],
+                                [this.state.depts[1], this.state.num[1]],
+                                [this.state.depts[2], this.state.num[2]]]
                             } />
             )}
 

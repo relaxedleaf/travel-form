@@ -5,7 +5,11 @@ import axios from 'axios';
 
 ReactChartkick.addAdapter(Chart)
 
-export default class App extends React.Component {
+export default class PieChart extends React.Component {
+    state = {
+        statuses: [],
+        num: []
+      };
 
     componentDidMount = () => {
         var self = this;

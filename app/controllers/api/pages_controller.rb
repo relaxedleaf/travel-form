@@ -24,5 +24,15 @@ module Api
                   ]
             render json: {statuses: statuses, num: num}
         end
+
+        def deptApproveRate
+            depts = ["Computer Science", "English", "Math"]
+
+            num = [
+                    AuthorizationForm.where(:status_id => Status.where(name: "Approved").take.id).to_a.count
+                ]
+
+            render json: {depts: depts, num: num}
+        end
     end
 end
