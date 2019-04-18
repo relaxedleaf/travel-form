@@ -71,20 +71,27 @@ class ManagesController < ApplicationController
             req = Request.find(params[:id])
             @trip = req.trip
             @authorization_form = @trip.authorization_form
-            status_id = params[:status_id]
+            status_id = params[:status_id].to_i
+            status_denied_id = Status.where(name: 'Denied').take.id.to_i
             department = Department.find(current_employee.department_id)
             
-            if req.amount <= department.total_budget - department.budget_hold #Compare the request amount and the avaliable budget
+            if status_id == status_denied_id
                 req.update_attribute(:status_id, status_id)
                 update_authform_status
-                
-                #*****update department budget*****#
-                department.update_attribute(:budget_hold, department.budget_hold + req.amount)
-            
                 redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
             else
-                redirect_to manage_auth_path(@trip)
-                flash[:danger] = "Update Failed! Your Department Does Not Have Enough Budget"
+                if req.amount <= department.total_budget - department.budget_hold#Compare the request amount and the avaliable budget
+                    req.update_attribute(:status_id, status_id)
+                    update_authform_status
+                    
+                    #*****update department budget*****#
+                    department.update_attribute(:budget_hold, department.budget_hold + req.amount)
+                
+                    redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
+                else
+                    redirect_to manage_auth_path(@trip)
+                    flash[:danger] = "Update Failed! Your Department Does Not Have Enough Budget"
+                end
             end
         end
     end
