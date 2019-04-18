@@ -8,6 +8,7 @@ class Trip < ApplicationRecord
     before_destroy :authform_status
 
     validates :purpose, :destination, :date_start, :date_end, :employee_id, presence: true
+    accepts_nested_attributes_for :reimbursement_form
     validate :dates_validation
     validate :authform_status
     

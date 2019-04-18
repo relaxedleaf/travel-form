@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190410172321) do
+ActiveRecord::Schema.define(version: 20190416031015) do
 
   create_table "authorization_forms", force: :cascade do |t|
     t.integer "status_id"
@@ -74,6 +74,14 @@ ActiveRecord::Schema.define(version: 20190410172321) do
     t.decimal "cost", precision: 8, scale: 2
     t.string "receipt_date"
     t.integer "expense_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "receipts_requests", force: :cascade do |t|
+    t.decimal "total_amount", precision: 8, scale: 2
+    t.integer "department_id"
+    t.integer "reimbursement_form_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

@@ -1,4 +1,4 @@
-<%= form_with(model: reimbursement_form, local: true) do |form| %>
+<%= semantic_form_for reimbursement_form do |form| %>
   <% if reimbursement_form.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(reimbursement_form.errors.count, "error") %> prohibited this reimbursement_form from being saved:</h2>
@@ -11,20 +11,73 @@
     </div>
   <% end %>
 
+<div class="col-xl-12 col-md-12 mb-12">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Requests Money</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Department</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th colspan="1"></th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+                  <% @requests.each do |request| %>
+                    <tr>
+                      <td><%= request.department.name %></td>
+                      <td><%= number_to_currency request.amount %></td>
+                      <td><%= request.status.name %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div>
+  </div>
+
+
   <div class="field">
-    <%= form.label :status_id %>
-    <%= form.number_field :status_id, id: :reimbursement_form_status_id %>
+      <%=form.hidden_field :status_id, :value => @status_id %>
   </div>
 
   <div class="field">
-    <%= form.label :employee_id %>
-    <%= form.number_field :employee_id, id: :reimbursement_form_employee_id %>
+    <%= form.hidden_field :employee_id, :value => current_employee.id %>
   </div>
 
-  <div class="field">
-    <%= form.label :trip_id %>
-    <%= form.number_field :trip_id, id: :reimbursement_form_trip_id %>
+  <div class="form-group">
+    <%= form.hidden_field :trip_id, id: :reimbursement_form_trip_id , :value => @trip.id%>
   </div>
+  
+  
+    <div class="receipts">
+        <%= form.label :receipts %>
+        <%= form.semantic_fields_for :receipts, Receipt.new do |receipt| %>
+          <%= render 'receipt_fields', :f => receipt%>
+        <% end %>
+        
+        
+        
+        <div class='links'>
+          <%= link_to_add_association form, :receipts do %>
+              <i class="fas fa-plus-circle"></i>
+          <% end %>
+        </div>
+    </div>
+    
+
 
   <div class="actions">
     <%= form.submit %>

@@ -1,20 +1,30 @@
 class ReimbursementFormsController < ApplicationController
   before_action :set_reimbursement_form, only: [:show, :edit, :update, :destroy]
-
+  before_action :set_trip, only: [:new]
   # GET /reimbursement_forms
   # GET /reimbursement_forms.json
   def index
     @reimbursement_forms = ReimbursementForm.all
+   # @trip = Trip.find(params[:trip_id])
+
   end
 
   # GET /reimbursement_forms/1
   # GET /reimbursement_forms/1.json
   def show
+    @receipts =  @reimbursement_form.receipts
+    @requests = @reimbursement_form.trip.requests
+    @trip = @reimbursement_form.trip
+    @total_reimb_budget = 0
+    #need to create request
   end
 
   # GET /reimbursement_forms/new
   def new
     @reimbursement_form = ReimbursementForm.new
+    @status_id = Status.where(name: "Pending").take.id
+    @requests = @trip.requests
+    @reimbursement_form.receipts.build
   end
 
   # GET /reimbursement_forms/1/edit
@@ -24,6 +34,7 @@ class ReimbursementFormsController < ApplicationController
   # POST /reimbursement_forms
   # POST /reimbursement_forms.json
   def create
+
     @reimbursement_form = ReimbursementForm.new(reimbursement_form_params)
 
     respond_to do |format|
@@ -42,7 +53,7 @@ class ReimbursementFormsController < ApplicationController
   def update
     respond_to do |format|
       if @reimbursement_form.update(reimbursement_form_params)
-        format.html { redirect_to @reimbursement_form, notice: 'Reimbursement form was successfully updated.' }
+        format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully updated.' }
         format.json { render :show, status: :ok, location: @reimbursement_form }
       else
         format.html { render :edit }
@@ -66,9 +77,15 @@ class ReimbursementFormsController < ApplicationController
     def set_reimbursement_form
       @reimbursement_form = ReimbursementForm.find(params[:id])
     end
-
+  
+    def set_trip
+      @trip = Trip.find(params[:trip_id])
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
+    # New Create, need all attribute and table names
     def reimbursement_form_params
-      params.require(:reimbursement_form).permit(:status_id, :employee_id, :trip_id)
+      params.require(:reimbursement_form).permit(:status_id, :employee_id, :trip_id, 
+      receipts_attributes: [:reimbursement_form_id,:location,:receipt_date,:expense_type_id,:image_url,:cost])
     end
 end

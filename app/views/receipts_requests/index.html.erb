@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Receipts Requests</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th> total amount</th>
+      <th>Department</th>
+      <th>Reimbursement form</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @receipts_requests.each do |receipts_request| %>
+      <tr>
+        <td><%= receipts_request. total_amount %></td>
+        <td><%= receipts_request.department_id %></td>
+        <td><%= receipts_request.reimbursement_form_id %></td>
+        <td><%= link_to 'Show', receipts_request %></td>
+        <td><%= link_to 'Edit', edit_receipts_request_path(receipts_request) %></td>
+        <td><%= link_to 'Destroy', receipts_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Receipts Request', new_receipts_request_path %>
