@@ -1,23 +1,23 @@
 {
-  "authorization_form.js": "/packs/js/authorization_form-ed6b5f235342584a68fc.js",
-  "authorization_form.js.map": "/packs/js/authorization_form-ed6b5f235342584a68fc.js.map",
-  "dashboard.js": "/packs/js/dashboard-03dfbb546769cd9877fd.js",
-  "dashboard.js.map": "/packs/js/dashboard-03dfbb546769cd9877fd.js.map",
+  "authorization_form.js": "/packs/js/authorization_form-6369ac48fd9fa2578a15.js",
+  "authorization_form.js.map": "/packs/js/authorization_form-6369ac48fd9fa2578a15.js.map",
+  "dashboard.js": "/packs/js/dashboard-1d459019ba3f359cfaba.js",
+  "dashboard.js.map": "/packs/js/dashboard-1d459019ba3f359cfaba.js.map",
   "entrypoints": {
     "authorization_form": {
       "js": [
-        "/packs/js/authorization_form-ed6b5f235342584a68fc.js"
+        "/packs/js/authorization_form-6369ac48fd9fa2578a15.js"
       ],
       "js.map": [
-        "/packs/js/authorization_form-ed6b5f235342584a68fc.js.map"
+        "/packs/js/authorization_form-6369ac48fd9fa2578a15.js.map"
       ]
     },
     "dashboard": {
       "js": [
-        "/packs/js/dashboard-03dfbb546769cd9877fd.js"
+        "/packs/js/dashboard-1d459019ba3f359cfaba.js"
       ],
       "js.map": [
-        "/packs/js/dashboard-03dfbb546769cd9877fd.js.map"
+        "/packs/js/dashboard-1d459019ba3f359cfaba.js.map"
       ]
     }
   }

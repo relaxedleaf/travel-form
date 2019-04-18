@@ -29,6 +29,8 @@ module Api
             depts = ["Computer Science", "English", "Math"]
 
             num = [
+                    AuthorizationForm.where(:status_id => Status.where(name: "Approved").take.id).to_a.count,
+                    AuthorizationForm.where(:status_id => Status.where(name: "Approved").take.id).to_a.count,
                     AuthorizationForm.where(:status_id => Status.where(name: "Approved").take.id).to_a.count
                 ]
 
