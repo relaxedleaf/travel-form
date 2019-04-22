@@ -11,6 +11,7 @@ class Trip < ApplicationRecord
     accepts_nested_attributes_for :reimbursement_form
     validate :dates_validation
     validate :authform_status
+    validate :requests_exceed_wishes
     
     
     accepts_nested_attributes_for :authorization_form
@@ -39,6 +40,13 @@ class Trip < ApplicationRecord
                     end
                 end
             end
+        end
+    end
+    
+    def requests_exceed_wishes
+        if requests.map(&:amount).sum > authorization_form.wishes.map(&:cost).sum
+            errors.add(:requests,"exceeds your wishes")
+            throw :abort
         end
     end
     

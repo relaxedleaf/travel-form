@@ -142,13 +142,21 @@
                   place: location.city,
                   limit: 1
               },
-              async: false
-          }).done(function(coords){
-              coordinates.push({
-                  longtitude: coords.features[0].center[0],
-                  latitude: coords.features[0].center[1]
-              });
-          });
+              async: false,
+              success: function(coords){
+                          if(coords.features.length > 0){
+                            coordinates.push({
+                                longtitude: coords.features[0].center[0],
+                                latitude: coords.features[0].center[1]
+                            });
+                          }
+              },
+              error: function(xhr, textStatus, error){
+                        console.log(xhr.statusText);
+                        console.log(textStatus);
+                        console.log(error);
+                      }
+            });
         });
         return coordinates;
     }

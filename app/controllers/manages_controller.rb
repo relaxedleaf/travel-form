@@ -3,16 +3,21 @@ class ManagesController < ApplicationController
 
 #**********Manage Auth Form**********#
     def authform_index
-        if check_paymentmanager
-            status_id = Status.where(name: "Pending Final Approval").take.id
+        # if check_paymentmanager
+        #     status_id = Status.where(name: "Pending Final Approval").take.id
             
-            @authforms = AuthorizationForm.where(status_id: status_id)
-            render 'authform_index_payment'
+        #     @authforms = AuthorizationForm.where(status_id: status_id)
+        #     render 'authform_index_payment'
 
-        else
+        # else
+        
+        if check_budget_approver
             status_id = Status.where(name: "Pending").take.id
             @requests = Request.where(department_id: current_employee.department_id, 
                                       status_id: status_id)
+        else
+            redirect_to dashboard_path
+            flash[:danger] = "Access denied!"
         end
         
     end
@@ -26,18 +31,20 @@ class ManagesController < ApplicationController
 
     
     def authform_history
-        if check_paymentmanager
-            status_ids = []
-            past_statuses = Status.where.not(name: ["Pending Final Approval", "Pending"])
+        # if check_paymentmanager
+        #     status_ids = []
+        #     past_statuses = Status.where.not(name: ["Pending Final Approval", "Pending"])
             
-            past_statuses.each do |status|
-                status_ids.push(status.id)
-            end
+        #     past_statuses.each do |status|
+        #         status_ids.push(status.id)
+        #     end
             
-            @authforms = AuthorizationForm.where(status_id: [status_ids])
-            render 'authform_history_payment'
+        #     @authforms = AuthorizationForm.where(status_id: [status_ids])
+        #     render 'authform_history_payment'
 
-        else
+        # else
+        
+        if check_budget_approver
             status_ids = []
             past_statuses = Status.where(name: ["Approved", "Denied", "Pending Final Approval", "Partial Approved"])
             past_statuses.each do |status|
@@ -46,27 +53,30 @@ class ManagesController < ApplicationController
             
             @requests = Request.where(department_id: current_employee.department_id, 
                                       status_id: [status_ids])
+        else
+            redirect_to dashboard_path
+            flash[:danger] = "Access denied!"
         end
     end
     
     def authform_update
-        if PaymentManager.where(employee_ssn: current_employee.ssn).present?
-            #for payment manager
-            authorization_form = AuthorizationForm.find(params[:id])
-            trip = authorization_form.trip
-            status_id = params[:status_id]
-            authorization_form.update_attribute(:status_id, status_id)
+        # if PaymentManager.where(employee_ssn: current_employee.ssn).present?
+        #     #for payment manager
+        #     authorization_form = AuthorizationForm.find(params[:id])
+        #     trip = authorization_form.trip
+        #     status_id = params[:status_id]
+        #     authorization_form.update_attribute(:status_id, status_id)
             
-            #if the final decision is denied, modify the budget_hold
-            if status_id = Status.where(name: "Denied").take.id
-                trip.requests.each do |request|
-                    request.department.update_attribute(:budget_hold, request.department.budget_hold - request.amount)
-                end
-            end
+        #     #if the final decision is denied, modify the budget_hold
+        #     if status_id = Status.where(name: "Denied").take.id
+        #         trip.requests.each do |request|
+        #             request.department.update_attribute(:budget_hold, request.department.budget_hold - request.amount)
+        #         end
+        #     end
             
     
-            redirect_to manage_auth_path(trip), :notice => "Updated Successfully!"
-        else
+        #     redirect_to manage_auth_path(trip), :notice => "Updated Successfully!"
+        # else
             #for budget approver
             req = Request.find(params[:id])
             @trip = req.trip
@@ -90,10 +100,10 @@ class ManagesController < ApplicationController
                     redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
                 else
                     redirect_to manage_auth_path(@trip)
-                    flash[:danger] = "Update Failed! Your Department Does Not Have Enough Budget"
+                    flash[:danger] = "Update Failed! Your department does not have enough budget"
                 end
             end
-        end
+        # end
     end
     
 #**********Manage Reimburse Form**********#
@@ -118,7 +128,7 @@ class ManagesController < ApplicationController
             p_approved_id = Status.where(name: "Partial Approved").take.id
             pending_id = Status.where(name: "Pending").take.id
             denied_id = Status.where(name: "Denied").take.id
-            pfa_id = Status.where(name: "Pending Final Approval").take.id
+            # pfa_id = Status.where(name: "Pending Final Approval").take.id
             
             ##true means record exists
             pb = !(Request.where(trip_id: @trip.id, status_id: pending_id).empty?) #pb = pending_boolean
@@ -133,9 +143,9 @@ class ManagesController < ApplicationController
                     end
                 end
                 
-                #check approved condition, if all approved, the status will change to Pending Final Approval
+                #check approved condition, if all approved, the status will change to Approved
                 if (pb == false) && ab && (db == false)
-                    @authorization_form.update_attribute(:status_id, pfa_id)
+                    @authorization_form.update_attribute(:status_id, approved_id)
                 end
             else
                 @authorization_form.update_attribute(:status_id, denied_id)
