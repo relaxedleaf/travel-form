@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   get 'about', to: 'pages#about'
 
-  get 'footstep', to: 'pages#footstep'
+  get 'footprint', to: 'pages#footprint'
   
   namespace :api do
     get 'destination', to: 'pages#getdestination'
