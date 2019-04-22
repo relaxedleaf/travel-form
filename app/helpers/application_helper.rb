@@ -11,6 +11,15 @@ module ApplicationHelper
     end
   end
   
+  def check_budget_approver
+    if Department.where(:manager_ssn => current_employee.ssn).present?
+      return true
+    else
+      return false
+    end
+  end
+  
+  
   def check_paymentmanager
     if PaymentManager.where(:employee_ssn => current_employee.ssn).present?
       return true

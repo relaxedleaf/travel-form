@@ -61,11 +61,18 @@
 
 <% if check_manager %>
   <hr class="sidebar-divider">
-  
-  <li class="nav-item <%= current_class?(manage_authform_pending_path) %>">
-    <%= link_to manage_authform_pending_path, { :class => "nav-link"} do %>
-      <i class="fas fa-user-cog"></i>
-      <span>Manage</span>
+    <% if check_budget_approver %>
+      <li class="nav-item <%= current_class?(manage_authform_pending_path) %>">
+      <%= link_to manage_authform_pending_path, { :class => "nav-link"} do %>
+        <i class="fas fa-user-cog"></i>
+        <span>Manage</span>
+      <% end %>
+    <% else %>
+      <li class="nav-item <%= current_class?(manage_reimform_pending_path) %>">
+      <%= link_to manage_reimform_pending_path, { :class => "nav-link"} do %>
+        <i class="fas fa-user-cog"></i>
+        <span>Manage</span>
+      <% end %>
     <% end %>
   </li>
 <% end %>
