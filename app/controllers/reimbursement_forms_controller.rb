@@ -1,36 +1,52 @@
 class ReimbursementFormsController < ApplicationController
   before_action :set_reimbursement_form, only: [ :edit, :update, :destroy]
-  before_action :set_trip, only: [:show, :new, :edit,:update, :destroy]
+  before_action :set_trip, only: [:show, :new, :edit,:update]
   # GET /reimbursement_forms
   # GET /reimbursement_forms.json
   def index
     @reimbursement_forms = ReimbursementForm.all
-   # @trip = Trip.find(params[:trip_id])
-
   end
 
   # GET /reimbursement_forms/1
   # GET /reimbursement_forms/1.json
   def show
     @reimbursement_form = ReimbursementForm.find(@trip.reimbursement_form.id)
-    @receipts =  @reimbursement_form.receipts
+    @receipts_request = @reimbursement_form.receipts_request
     @requests = @trip.requests
     @total_reimb_budget = 0
+    #@receipts = @receipts_request.receipts
     #need to create request
+    @receipts = @reimbursement_form.receipts
   end
 
   # GET /reimbursement_forms/new
   def new
     @reimbursement_form = ReimbursementForm.new
     @status_id = Status.where(name: "Pending").take.id
-    @requests = @trip.requests
-    @reimbursement_form.receipts.build
-    @reimbursement_form.receipts_request.build
-
   end
 
   # GET /reimbursement_forms/1/edit
   def edit
+  end
+
+
+  def create_receipts
+    @reimbursement_form = ReimbursementForm.find(params[:reimbursement_form])
+    @trip = Trip.find(params[:reimbursement_form][:trip_id])
+    @status_id = Status.where(name: "Pending").take.id
+    @receipts_request = @reimbursement_form.receipts_request.build
+    @receipts_request.receipts.build
+    
+    respond_to do |format|
+      if @reimbursement_form.save
+        @trip = nil
+        format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully created.' }
+        format.json { render :show, status: :created, location: @reimbursement_form }
+      else
+        format.html { render :new }
+        format.json { render json: @reimbursement_form.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /reimbursement_forms
@@ -38,13 +54,13 @@ class ReimbursementFormsController < ApplicationController
   def create
 
     @reimbursement_form = ReimbursementForm.new(reimbursement_form_params)
+    #@trip = Trip.find(params[:reimbursement_form][:trip_id])
     
-
     respond_to do |format|
       if @reimbursement_form.save
         @trip = nil
-        format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully created.' }
-        format.json { render :show, status: :created, location: @reimbursement_form }
+        format.html { redirect_to reimbursement_forms_create_receipt_path(@reimbursement_form), notice: 'Reimbursement form was successfully created.' }
+        format.json { render :create_receipts, status: :created, location: @reimbursement_form }
       else
         format.html { render :new }
         format.json { render json: @reimbursement_form.errors, status: :unprocessable_entity }
@@ -90,7 +106,9 @@ class ReimbursementFormsController < ApplicationController
     # New Create, need all attribute and table names
     def reimbursement_form_params
       params.require(:reimbursement_form).permit(:status_id, :employee_id, :trip_id, 
-      receipts_attributes: [:reimbursement_form_id,:location,:receipt_date,:expense_type_id,:image_url,:cost],
-      receipts_requests_attributes: [:total_amount, :department_id, :reimbursement_form_id],)
+      receipts_request_attributes: [:id,:total_amount, :department_id,:status_id, :_destroy],
+      receipts_attributes: [:id,:location,:receipt_date,:expense_type_id,:image_url,:cost,:_destroy])
     end
+    
+    
 end

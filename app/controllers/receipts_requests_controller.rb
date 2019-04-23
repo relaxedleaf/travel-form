@@ -10,6 +10,7 @@ class ReceiptsRequestsController < ApplicationController
   # GET /receipts_requests/1
   # GET /receipts_requests/1.json
   def show
+    @receipts = @receipts_request.receipts
   end
 
   # GET /receipts_requests/new
@@ -17,7 +18,7 @@ class ReceiptsRequestsController < ApplicationController
     @receipts_request = ReceiptsRequest.new
     @status_id = Status.where(name: "Pending").take.id
     @receipts_request.receipts.build
-
+    
   end
 
   # GET /receipts_requests/1/edit
@@ -72,7 +73,7 @@ class ReceiptsRequestsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def receipts_request_params
-      params.require(:receipts_request).permit(:total_amount, :department_id, :reimbursement_form_id,
-      receipts_attributes: [:reimbursement_form_id,:location,:receipt_date,:expense_type_id,:image_url,:cost])
+      params.require(:receipts_request).permit(:total_amount, :department_id, :status_id,
+      receipts_attributes: [:id ,:location,:receipt_date,:expense_type_id,:image_url,:cost,:_destroy])
     end
 end

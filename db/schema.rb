@@ -69,11 +69,12 @@ ActiveRecord::Schema.define(version: 20190416031015) do
 
   create_table "receipts", force: :cascade do |t|
     t.string "image"
-    t.integer "reimbursement_form_id"
     t.string "location"
     t.decimal "cost", precision: 8, scale: 2
     t.string "receipt_date"
     t.integer "expense_type_id"
+    t.integer "receipts_request_id"
+    t.integer "reimbursement_form_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -81,6 +82,7 @@ ActiveRecord::Schema.define(version: 20190416031015) do
   create_table "receipts_requests", force: :cascade do |t|
     t.decimal "total_amount", precision: 8, scale: 2
     t.integer "department_id"
+    t.integer "status_id"
     t.integer "reimbursement_form_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -110,7 +112,6 @@ ActiveRecord::Schema.define(version: 20190416031015) do
   end
 
   create_table "trips", force: :cascade do |t|
-    t.string "destination"
     t.string "purpose"
     t.string "date_start"
     t.string "date_end"
@@ -123,6 +124,7 @@ ActiveRecord::Schema.define(version: 20190416031015) do
     t.integer "expense_type_id"
     t.decimal "cost", precision: 8, scale: 2
     t.integer "authorization_form_id"
+    t.integer "request_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
