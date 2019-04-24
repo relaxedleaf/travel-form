@@ -1,4 +1,5 @@
 <%= semantic_form_for reimbursement_form do |form| %>
+
   <% if reimbursement_form.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(reimbursement_form.errors.count, "error") %> prohibited this reimbursement_form from being saved:</h2>

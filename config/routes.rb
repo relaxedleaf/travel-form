@@ -23,8 +23,8 @@ Rails.application.routes.draw do
   get 'manage/reimform/:id', to: 'manages#reimform_show', as: :manage_reimform
   put 'manage/reimform/:id', to: 'manages#reimform_update', as: :manage_reimform_update
   
-  get 'reimbursement_forms/:reimbursement_form', to: 'reimbursement_forms#create_receipts', as: :reimbursement_forms_create_receipt
-  
+  get 'create_receipts/:reimbursement_form' => "reimbursement_forms#create_receipts", as: 'create_receipt_yea'
+
   get 'routes', to: 'pages#routes'
   get 'dashboard', to: 'pages#dashboard'
 

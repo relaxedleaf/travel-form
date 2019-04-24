@@ -1,6 +1,6 @@
 class ReimbursementFormsController < ApplicationController
   before_action :set_reimbursement_form, only: [ :edit, :update, :destroy]
-  before_action :set_trip, only: [:show, :new, :edit,:update]
+  before_action :set_trip, only: [:show, :new, :edit]
   # GET /reimbursement_forms
   # GET /reimbursement_forms.json
   def index
@@ -32,21 +32,12 @@ class ReimbursementFormsController < ApplicationController
 
   def create_receipts
     @reimbursement_form = ReimbursementForm.find(params[:reimbursement_form])
-    @trip = Trip.find(params[:reimbursement_form][:trip_id])
     @status_id = Status.where(name: "Pending").take.id
     @receipts_request = @reimbursement_form.receipts_request.build
     @receipts_request.receipts.build
     
-    respond_to do |format|
-      if @reimbursement_form.save
-        @trip = nil
-        format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully created.' }
-        format.json { render :show, status: :created, location: @reimbursement_form }
-      else
-        format.html { render :new }
-        format.json { render json: @reimbursement_form.errors, status: :unprocessable_entity }
-      end
-    end
+    render 'create_receipts'
+
   end
 
   # POST /reimbursement_forms
@@ -54,12 +45,13 @@ class ReimbursementFormsController < ApplicationController
   def create
 
     @reimbursement_form = ReimbursementForm.new(reimbursement_form_params)
-    #@trip = Trip.find(params[:reimbursement_form][:trip_id])
-    
+    @trip = Trip.find(params[:reimbursement_form][:trip_id])
+
     respond_to do |format|
       if @reimbursement_form.save
         @trip = nil
-        format.html { redirect_to reimbursement_forms_create_receipt_path(@reimbursement_form), notice: 'Reimbursement form was successfully created.' }
+
+        format.html { redirect_to create_receipt_yea_path(:reimbursement_form => @reimbursement_form)}
         format.json { render :create_receipts, status: :created, location: @reimbursement_form }
       else
         format.html { render :new }
@@ -74,7 +66,7 @@ class ReimbursementFormsController < ApplicationController
     respond_to do |format|
       if @reimbursement_form.update(reimbursement_form_params)
         format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully updated.' }
-        format.json { render :show, status: :ok, location: @reimbursement_form }
+        format.json { head :no_content }
       else
         format.html { render :edit }
         format.json { render json: @reimbursement_form.errors, status: :unprocessable_entity }
@@ -87,7 +79,7 @@ class ReimbursementFormsController < ApplicationController
   def destroy
     @reimbursement_form.destroy
     respond_to do |format|
-      format.html { redirect_to reimbursement_forms_url, notice: 'Reimbursement form was successfully destroyed.' }
+      format.html { redirect_to trip_index_url, notice: 'Reimbursement form was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
