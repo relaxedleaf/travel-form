@@ -21,6 +21,8 @@
             <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
               <div class="dropdown-header">Actions:</div>
               
+                <%= link_to 'Approve', manage_reimform_update_path(@trip, :status_id => Status.where(name: 'Approved').take.id), data: { confirm: 'You are about to approve this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
+                <%= link_to 'Deny', manage_reimform_update_path(@trip, :status_id => Status.where(name: 'Denied').take.id), data: { confirm: 'You are about to deny this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
             </div>
           </div>
         </div>
@@ -109,10 +111,6 @@
 </div>
 
 </br>
-
-<div class="row">
-
- <div class="col-xl-6 col-md-6 mb-6">
     <div class="card shadow h-100 py-2">
       <div class="card-header">
         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Receipt</div>
@@ -131,28 +129,41 @@
                     <th colspan="1"></th>
                   </tr>
                 </thead>
-                
                 <tbody>
-                  <% @receipts.each do |receipt| %>
-                    <tr>
-                      <td><%= receipt.expense_type.name %></td>
-                      <td><%= number_to_currency receipt.cost %></td>
-                      <td><%= receipt.location %></td>
-                      <td><%= receipt.receipt_date %></td>
-                      <td>
-                        <div class="dropdown no-arrow">
-                          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
-                          </a>
-                          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Actions:</div>
-                            <%= link_to 'Edit', edit_receipt_path(receipt), class: "dropdown-item" %>
-                            <%= link_to 'Delete', receipt, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  <%end%>
+                 <% @receipts_requests.each do |receipts_request| %>
+                
+                      <% @receipt.each do |receipt| %>
+                        
+                        <% if receipt.receipts_request_id.equal? receipts_request.id %>
+                        <tr>
+                          <td><%= receipt.expense_type.name %></td>
+                          <td><%= number_to_currency receipt.cost %></td>
+                          <td><%= receipt.location %></td>
+                          <td><%= receipt.receipt_date %></td>
+                          <td>
+                            <div class="dropdown no-arrow">
+                              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Actions:</div>
+                                <%= link_to 'Edit', edit_receipt_path(receipt), class: "dropdown-item" %>
+                                <%= link_to 'Delete', receipt, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+                              </div>
+                            </div>
+                          </td>
+                        </tr>
+                        <%else%>
+                        <%end%>
+                      <%end%>
+                    <thead class="thead-dark">
+                      <tr >
+                        <th align="right">Total Cost:</th>
+                        <th ><%= receipts_request.total_amount%></th>
+                        <th colspan="3"></th>
+                      </tr>
+                    </thead>
+                <%end%>
                 </tbody>
               </table>
             </div>
@@ -164,5 +175,4 @@
         </br>
       </div>
     </div>
-  </div>
-</div>
+

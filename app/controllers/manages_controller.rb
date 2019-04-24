@@ -105,22 +105,51 @@ class ManagesController < ApplicationController
             
             @reimbursement_form = ReimbursementForm.where(status_id: status_id)
             @trip = Trip.where(id: @reimbursement_form)
+            
         end
     end
     
     
     def reimform_show
+        status_id = Status.where(name: "Pending").take.id
         @trip = Trip.find(params[:id])
         @reimbursement_form = @trip.reimbursement_form
-        @receipts_requests
-        @receipt
+        #@receipts_requests = @reimbursement_form.receipts_request
+        @receipts_requests = ReceiptsRequest.where(department_id: current_employee.department_id, 
+                                      status_id: status_id)
+        @receipt = @reimbursement_form.receipts
     end
     
     def reimform_history
-    
+        
     end
     
     def reimform_update
+        #for budget approver
+        @trip = Trip.find(params[:id])
+        @reimbursement_form = @trip.reimbursement_form
+        @receipts_requests = ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id,
+                                                    department_id: current_employee.department_id)
+        status_id = params[:status_id]
+
+        department = Department.find(current_employee.department_id)
+        
+
+        @receipts_requests.each do |receipts_request|
+        
+            if receipts_request.total_amount <= department.total_budget - department.budget_hold #Compare the request amount and the avaliable budget
+                receipts_request.update_attribute(:status_id, status_id)
+                update_reimburseform_status
+                
+                #*****update department budget*****#
+                department.update_attribute(:budget_hold, department.budget_hold + receipts_request.total_amount)
+            
+                redirect_to manage_reimform_path(@trip), :notice => "Updated Successfully!"
+            else
+                redirect_to manage_reimform_path(@trip)
+                flash[:danger] = "Update Failed! Your Department Does Not Have Enough Budget"
+            end
+        end
     end
     
     private 
@@ -151,6 +180,39 @@ class ManagesController < ApplicationController
                 end
             else
                 @authorization_form.update_attribute(:status_id, denied_id)
+            end
+        end
+        
+        #update reimbursement form status in the reimform_updat action
+        def update_reimburseform_status
+            
+            pending_id = Status.where(name: "Pending").take.id
+            denied_id = Status.where(name: "Denied").take.id
+            approved_id = Status.where(name: "Approved").take.id
+            
+            
+            p_approved_id = Status.where(name: "Partial Approved").take.id
+            pfa_id = Status.where(name: "Pending Final Approval").take.id
+            
+            ##true means record exists
+            pb = !(ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id, status_id: pending_id).empty?) #pb = pending_boolean
+            ab = !(ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id, status_id: approved_id).empty?) #ab = approved_boolean
+            db = !(ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id, status_id: denied_id).empty?) #db = denied_boolean
+        
+            if db == false
+                #check partial approved condition
+                if pb && ab && (db == false)
+                    if @reimbursement_form.id != p_approved_id #update only if the current status is not partial approved already
+                        @reimbursement_form.update_attribute(:status_id, p_approved_id)
+                    end
+                end
+                
+                #check approved condition, if all approved, the status will change to Pending Final Approval
+                if (pb == false) && ab && (db == false)
+                    @reimbursement_form.update_attribute(:status_id, pfa_id)
+                end
+            else
+                @reimbursement_form.update_attribute(:status_id, denied_id)
             end
         end
 end
