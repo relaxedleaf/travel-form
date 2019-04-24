@@ -13,3 +13,43 @@
       <%=link_to "View History", manage_reimform_history_path %>
   </div>
 </nav>
+
+
+<% @reimbursement_form.each do |rf| %>
+  <% @trip = Trip.find(rf.trip_id)%>
+  <div class="card shadow mb-4">
+    <!-- Card Header - Dropdown -->
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+        <div class="row container">
+          <div class="col">
+            <h6 class="m-0 font-weight-bold text-primary">Destination: <%= trip_destination(@trip.destination)%></h6>
+          </div>
+          <div class="col">
+            <h6 class="m-0 font-weight-bold text-primary">Start Date: <%= @trip.date_start%></h6>
+          </div>
+          <div class="col">
+            <h6 class="m-0 font-weight-bold text-primary">End Date: <%= @trip.date_end%></h6>
+          </div>
+          <div class="col">
+            <h6 class="m-0 font-weight-bold text-primary">Form Status: <%= @trip.reimbursement_form.status.name%></h6>
+          </div>
+        </div>
+        
+        <div class="dropdown no-arrow">
+          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+            <div class="dropdown-header">Actions:</div>
+            <%= link_to 'Detail', manage_reimform_path(@trip), class: "dropdown-item" %>
+          </div>
+        </div>
+    </div>
+    <!-- Card Body -->
+    <div class="card-body">
+      <h6 class="m-0 font-weight-bold text-primary">Purpose: </h6>
+      <%= @trip.purpose %>
+    </div>
+  </div>
+<%end%>
+

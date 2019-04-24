@@ -37,7 +37,8 @@ class ReimbursementFormsController < ApplicationController
     @receipts_request.receipts.build
     
     render 'create_receipts'
-
+    
+    
   end
 
   # POST /reimbursement_forms

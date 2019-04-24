@@ -1,0 +1,168 @@
+<%= link_to 'Back', trips_path, class: "btn btn-primary" %>
+
+<!--Display budget info based on the type of manager-->
+<% if check_paymentmanager %>
+  <%= render "manages/inc/budget_info_payment_manager.html"%>
+<% else %>
+  <%= render "manages/inc/budget_info_budget_approver"%>
+<% end %>
+
+</br></br>
+
+<div class="row">
+  <div class="col-xl-6 col-md-6 mb-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reimbursement Form Status</div>
+          <div class="dropdown no-arrow">
+            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+              <div class="dropdown-header">Actions:</div>
+              
+            </div>
+          </div>
+        </div>
+        <!-- Card Body -->
+          <div class="card-body">
+            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.reimbursement_form.status.name %></div>
+          </div>
+      </div>
+  </div>
+  
+  <div class="col-xl-6 col-md-6 mb-6">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Authorization Form Status</div>
+        </div>
+        <!-- Card Body -->
+          <div class="card-body">
+            <%= @trip.reimbursement_form ? @trip.reimbursement_form.status.name : "Not yet submitted" %>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="card shadow h-100 py-2">
+  <div class="card-header">
+      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Employee Info</div>
+  </div>
+  <div class="card-body">
+    <div class="row no-gutters align-items-center">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">First Name</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.employee.fname %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Last Name</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.employee.lname %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Department</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.employee.department.name %></div>
+      </div>
+    </div>
+    </br>
+    <div class="row">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Birthday</div>
+        <div class="h6 mb-0 font-weight-bold text-gray-800"><%= @trip.employee.bdate %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</br>
+
+
+<div class="card border-left-primary shadow h-100 py-2">
+  <div class="card-header">
+      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Trip Info</div>
+  </div>
+  <div class="card-body">
+    <div class="row no-gutters align-items-center">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Destination</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= trip_destination(@trip.destination) %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Departure Date</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.date_start %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Return Date</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.date_end %></div>
+      </div>
+      <div class="col-auto">
+        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+      </div>
+    </div>
+    </br>
+    <div class="row">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Purpose</div>
+        <div class="h6 mb-0 font-weight-bold text-gray-800"><%= @trip.purpose %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</br>
+
+<div class="row">
+
+ <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Receipt</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Type</th>
+                    <th>Cost</th>
+                    <th>Location</th>
+                    <th>Receipt Date</th>
+                    <th colspan="1"></th>
+                  </tr>
+                </thead>
+                
+                <tbody>
+                  <% @receipts.each do |receipt| %>
+                    <tr>
+                      <td><%= receipt.expense_type.name %></td>
+                      <td><%= number_to_currency receipt.cost %></td>
+                      <td><%= receipt.location %></td>
+                      <td><%= receipt.receipt_date %></td>
+                      <td>
+                        <div class="dropdown no-arrow">
+                          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
+                          </a>
+                          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Actions:</div>
+                            <%= link_to 'Edit', edit_receipt_path(receipt), class: "dropdown-item" %>
+                            <%= link_to 'Delete', receipt, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  <%end%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-gift fa-2x text-gray-300"></i>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div>
+  </div>
+</div>

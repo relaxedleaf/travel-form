@@ -91,10 +91,29 @@ class ManagesController < ApplicationController
     
 #**********Manage Reimburse Form**********#
     def reimform_index
+        if check_paymentmanager
+            status_id = Status.where(name: "Pending Final Approval").take.id
+            
+            @reimbursement_form = ReimbursementForm.where(status_id: status_id)
+            
+            render 'reimform_index_payment'
+
+        else
+            status_id = Status.where(name: "Pending").take.id
+            @receipts_requests = ReceiptsRequest.where(department_id: current_employee.department_id, 
+                                      status_id: status_id)
+            
+            @reimbursement_form = ReimbursementForm.where(status_id: status_id)
+            @trip = Trip.where(id: @reimbursement_form)
+        end
     end
     
     
     def reimform_show
+        @trip = Trip.find(params[:id])
+        @reimbursement_form = @trip.reimbursement_form
+        @receipts_requests
+        @receipt
     end
     
     def reimform_history
