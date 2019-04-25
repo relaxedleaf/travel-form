@@ -113,11 +113,15 @@ class ManagesController < ApplicationController
     def reimform_show
         status_id = Status.where(name: "Pending").take.id
         @trip = Trip.find(params[:id])
-        @reimbursement_form = @trip.reimbursement_form
+        @reimbursement_form = ReimbursementForm.find(@trip.reimbursement_form.id)
         #@receipts_requests = @reimbursement_form.receipts_request
         @receipts_requests = ReceiptsRequest.where(department_id: current_employee.department_id, 
                                       status_id: status_id)
+                                      
+        @id = @receipts_requests.first.id
+        
         @receipt = @reimbursement_form.receipts
+        #Receipt.where(receipts_request_id: @id,reimbursement_form_id: @reimbursement_form.id)
     end
     
     def reimform_history

@@ -17,6 +17,8 @@ class ReimbursementFormsController < ApplicationController
     #@receipts = @receipts_request.receipts
     #need to create request
     @receipts = @reimbursement_form.receipts
+    
+    
   end
 
   # GET /reimbursement_forms/new
@@ -34,7 +36,7 @@ class ReimbursementFormsController < ApplicationController
     @reimbursement_form = ReimbursementForm.find(params[:reimbursement_form])
     @status_id = Status.where(name: "Pending").take.id
     @receipts_request = @reimbursement_form.receipts_request.build
-    @receipts_request.receipts.build
+    @receipts = @receipts_request.receipts.build
     
     render 'create_receipts'
     
