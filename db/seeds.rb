@@ -71,7 +71,7 @@ PaymentManager.create!(
 #*********** Creating employee for each department ***********#
 Employee.delete_all
 Employee.create!(
-    email: 'csemp@qq.com',
+    email: 'Ecs@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'cs',
@@ -81,7 +81,7 @@ Employee.create!(
     bdate: '04/30/2019'
     )
 Employee.create!(
-    email: 'engemp@qq.com',
+    email: 'Eeng@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'eng',
@@ -91,7 +91,7 @@ Employee.create!(
     bdate: '04/30/2019'
     )
 Employee.create!(
-    email: 'mathemp@qq.com',
+    email: 'Emath@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'math',
@@ -103,7 +103,7 @@ Employee.create!(
 
 #*********** Creating managers for each department ***********#
 Employee.create!(
-    email: 'csmg@qq.com',
+    email: 'Bcs@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'cs',
@@ -113,7 +113,7 @@ Employee.create!(
     bdate: '04/30/2019'
     )
 Employee.create!(
-    email: 'engmg@qq.com',
+    email: 'Beng@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'eng',
@@ -123,7 +123,7 @@ Employee.create!(
     bdate: '04/30/2019'
     )
 Employee.create!(
-    email: 'mathmg@qq.com',
+    email: 'Bmath@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'math',
@@ -134,7 +134,7 @@ Employee.create!(
     )
 #*********** Creating payment manager ***********#
 Employee.create!(
-    email: 'paymentmg@qq.com',
+    email: 'Payment@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'payment',
