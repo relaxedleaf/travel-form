@@ -92,7 +92,7 @@ class ManagesController < ApplicationController
 #**********Manage Reimburse Form**********#
     def reimform_index
         if check_paymentmanager
-            status_id = Status.where(name: "Pending Final Approval").take.id
+            status_id = Status.where(name: "Partial Approved").take.id
             
             @reimbursement_form = ReimbursementForm.where(status_id: status_id)
             
@@ -125,29 +125,47 @@ class ManagesController < ApplicationController
     end
     
     def reimform_update
-        #for budget approver
-        @trip = Trip.find(params[:id])
-        @reimbursement_form = @trip.reimbursement_form
-        @receipts_requests = ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id,
-                                                    department_id: current_employee.department_id)
-        status_id = params[:status_id]
-
-        department = Department.find(current_employee.department_id)
-        
-
-        @receipts_requests.each do |receipts_request|
-        
-            if receipts_request.total_amount <= department.total_budget - department.budget_hold #Compare the request amount and the avaliable budget
-                receipts_request.update_attribute(:status_id, status_id)
-                update_reimburseform_status
-                
-                #*****update department budget*****#
-                department.update_attribute(:budget_hold, department.budget_hold + receipts_request.total_amount)
+        if PaymentManager.where(employee_ssn: current_employee.ssn).present?
+            #for payment manager
+            authorization_form = AuthorizationForm.find(params[:id])
+            trip = authorization_form.trip
+            status_id = params[:status_id]
+            authorization_form.update_attribute(:status_id, status_id)
             
-                redirect_to manage_reimform_path(@trip), :notice => "Updated Successfully!"
-            else
-                redirect_to manage_reimform_path(@trip)
-                flash[:danger] = "Update Failed! Your Department Does Not Have Enough Budget"
+            #if the final decision is denied, modify the budget_hold
+            if status_id = Status.where(name: "Denied").take.id
+                trip.requests.each do |request|
+                    request.department.update_attribute(:budget_hold, request.department.budget_hold - request.amount)
+                end
+            end
+            
+    
+            redirect_to manage_auth_path(trip), :notice => "Updated Successfully!"
+        else
+            #for budget approver
+            @trip = Trip.find(params[:id])
+            @reimbursement_form = @trip.reimbursement_form
+            @receipts_requests = ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id,
+                                                        department_id: current_employee.department_id)
+            status_id = params[:status_id]
+    
+            department = Department.find(current_employee.department_id)
+            
+    
+            @receipts_requests.each do |receipts_request|
+            
+                if receipts_request.total_amount <= department.total_budget - department.budget_hold #Compare the request amount and the avaliable budget
+                    receipts_request.update_attribute(:status_id, status_id)
+                    update_reimburseform_status
+                    
+                    #*****update department budget*****#
+                    department.update_attribute(:budget_hold, department.budget_hold + receipts_request.total_amount)
+                
+                    redirect_to manage_reimform_path(@trip), :notice => "Updated Successfully!"
+                else
+                    redirect_to manage_reimform_path(@trip)
+                    flash[:danger] = "Update Failed! Your Department Does Not Have Enough Budget"
+                end
             end
         end
     end
