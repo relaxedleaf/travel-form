@@ -40,7 +40,8 @@ class ReimbursementFormsController < ApplicationController
     
     render 'create_receipts'
     
-    
+    #@receipts_request.update
+    #@receipts.update
   end
 
   # POST /reimbursement_forms
