@@ -121,7 +121,27 @@ class ManagesController < ApplicationController
     end
     
     def reimform_history
-        
+        if check_paymentmanager
+            status_ids = []
+            past_statuses = Status.where.not(name: ["Pending Final Approval", "Pending"])
+            
+            past_statuses.each do |status|
+                status_ids.push(status.id)
+            end
+            
+            @reimbursement_form = ReimbursementForm.where(status_id: [status_ids])
+            render 'reimhform_history_payment'
+
+        else
+            status_ids = []
+            past_statuses = Status.where(name: ["Approved", "Denied", "Pending Final Approval", "Partial Approved"])
+            past_statuses.each do |status|
+                status_ids.push(status.id)
+            end
+            
+            @receipts_request = ReceiptsRequest.where(department_id: current_employee.department_id, 
+                                      status_id: [status_ids])
+        end
     end
     
     def reimform_update

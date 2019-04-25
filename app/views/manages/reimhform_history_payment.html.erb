@@ -1,23 +1,25 @@
 <%=link_to "Back", manage_reimform_pending_path, class: " btn btn-primary" %>
-<h2>Reimbursement Form Request History</h2>
 
+</br></br>
+
+<h2>Reimbursement Form Request History</h2>
 </br>
-<% @receipts_request.each do |receipts_request| %>
+<% @reimbursement_form.each do |reimbursement_form| %>
   <div class="card shadow mb-4">
     <!-- Card Header - Dropdown -->
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <div class="row container">
           <div class="col">
-            <h6 class="m-0 font-weight-bold text-primary">Employee: </br><%= receipts_request.reimbursement_form.trip.employee.fname + " " +receipts_request.reimbursement_form.trip.employee.lname%></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Employee: </br><%= reimbursement_form.employee.fname + " " +reimbursement_form.employee.lname%></h6>
           </div>
           <div class="col">
-            <h6 class="m-0 font-weight-bold text-primary">Department:</br><%= receipts_request.reimbursement_form.trip.employee.department.name %></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Department:</br><%= reimbursement_form.employee.department.name %></h6>
           </div>
           <div class="col">
-            <h6 class="m-0 font-weight-bold text-primary">Submited at:</br> <%= date_formatter(receipts_request.reimbursement_form.created_at)%></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Submited at:</br> <%= date_formatter(reimbursement_form.created_at)%></h6>
           </div>
           <div class="col">
-            <h6 class="m-0 font-weight-bold text-primary">Form Status: <%= receipts_request.reimbursement_form.status.name%></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Form Status: <%= reimbursement_form.status.name%></h6>
           </div>
           
         </div>
@@ -27,7 +29,7 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
           <div class="dropdown-header">Actions:</div>
-          <%= link_to 'Detail', manage_reimform_path(receipts_request.reimbursement_form.trip), class: "dropdown-item" %>
+          <%= link_to 'Detail', manage_reimform_path(reimbursement_form.trip), class: "dropdown-item" %>
         </div>
       </div>
     </div>
@@ -35,11 +37,11 @@
     <div class="card-body">
         <div class="row container">
           <div class="col-3">
-            <h6 class="m-0 font-weight-bold text-primary">Destination: </br> <%= trip_destination(receipts_request.reimbursement_form.trip.destination) %></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Destination: </br> <%= trip_destination(reimbursement_form.trip.destination) %></h6>
           </div>
 
           <div class="col-9">
-            <h6 class="m-0 font-weight-bold"><span class="text-primary">Purpose: </span></br> <%= receipts_request.reimbursement_form.trip.purpose %></h6>
+            <h6 class="m-0 font-weight-bold"><span class="text-primary">Purpose: </span></br> <%= reimbursement_form.trip.purpose %></h6>
           </div>
         </div>
     </div>
