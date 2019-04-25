@@ -127,20 +127,21 @@ class ManagesController < ApplicationController
     def reimform_update
         if PaymentManager.where(employee_ssn: current_employee.ssn).present?
             #for payment manager
-            authorization_form = AuthorizationForm.find(params[:id])
-            trip = authorization_form.trip
+            @trip = Trip.find(params[:id])
+            @reimbursement_form = @trip.reimbursement_form
+            @receipts_requests = ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id)
             status_id = params[:status_id]
-            authorization_form.update_attribute(:status_id, status_id)
+            @reimbursement_form.update_attribute(:status_id, status_id)
             
             #if the final decision is denied, modify the budget_hold
             if status_id = Status.where(name: "Denied").take.id
-                trip.requests.each do |request|
-                    request.department.update_attribute(:budget_hold, request.department.budget_hold - request.amount)
+                @receipts_requests.each do |receipts_request|
+                    receipts_request.department.update_attribute(:budget_hold, receipts_request.department.budget_hold - receipts_request.total_amount)
                 end
             end
             
     
-            redirect_to manage_auth_path(trip), :notice => "Updated Successfully!"
+            redirect_to manage_reimform_path(@trip), :notice => "Updated Successfully!"
         else
             #for budget approver
             @trip = Trip.find(params[:id])
