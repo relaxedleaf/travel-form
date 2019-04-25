@@ -39,7 +39,7 @@
         </div>
         <!-- Card Body -->
           <div class="card-body">
-            <%= @trip.reimbursement_form ? @trip.reimbursement_form.status.name : "Not yet submitted" %>
+            <%= @trip.authorization_form ? (link_to @trip.authorization_form.status.name, manage_auth_path(@trip)) : "Not yet submitted" %>
           </div>
       </div>
   </div>
