@@ -29,7 +29,9 @@ class ReceiptsRequestsController < ApplicationController
   # POST /receipts_requests.json
   def create
     @receipts_request = ReceiptsRequest.new(receipts_request_params)
-
+    
+    
+    
     respond_to do |format|
       if @receipts_request.save
         format.html { redirect_to @receipts_request, notice: 'Receipts request was successfully created.' }

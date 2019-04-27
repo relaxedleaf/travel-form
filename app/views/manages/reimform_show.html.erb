@@ -43,6 +43,7 @@
           </div>
       </div>
   </div>
+  
 </div>
 
 <div class="card shadow h-100 py-2">
@@ -63,13 +64,18 @@
         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Department</div>
         <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.employee.department.name %></div>
       </div>
-    </div>
-    </br>
-    <div class="row">
+    
       <div class="col mr-2">
         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Birthday</div>
         <div class="h6 mb-0 font-weight-bold text-gray-800"><%= @trip.employee.bdate %></div>
       </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Request Amount</div>
+         <% @receipts_request.each do |receipts_request| %>
+           <% @receipts_request_total += receipts_request.total_amount%>
+         <%end%>
+        <div class="h6 mb-0 font-weight-bold text-gray-800"><%= @receipts_request_total %></div>
+    </div>
     </div>
   </div>
 </div>
@@ -110,6 +116,10 @@
 </div>
 
 </br>
+
+
+<div class="row">
+  <div class="col-xl-12 col-md-12 mb-12">
     <div class="card shadow h-100 py-2">
       <div class="card-header">
         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Receipt</div>
@@ -119,46 +129,66 @@
           <div class="col mr-2">
             <div class="table-responsive text-center">
               <table class="table table-borderless">
-                <thead class="thead-light">
-                  <tr>
-                    <th>Type</th>
-                    <th>Cost</th>
-                    <th>Location</th>
-                    <th>Receipt Date</th>
-                    <th colspan="1"></th>
-                  </tr>
-                </thead>
                 <tbody>
-                 <% @receipts_requests.each do |receipts_request| %>
-                
-                      <% @receipt.each do |receipt| %>
-                        <tr>
-                          <td><%= receipt.expense_type.name %></td>
-                          <td><%= number_to_currency receipt.cost %></td>
-                          <td><%= receipt.location %></td>
-                          <td><%= receipt.receipt_date %></td>
-                          <td>
-                            <div class="dropdown no-arrow">
-                              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
-                              </a>
-                              <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                                <div class="dropdown-header">Actions:</div>
-                                <%= link_to 'Edit', edit_receipt_path(receipt), class: "dropdown-item" %>
-                                <%= link_to 'Delete', receipt, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
-                              </div>
-                            </div>
-                          </td>
-                        </tr>
-                      <%end%>
-                    <thead class="thead-dark">
+              
+                  <% @receipts_request.each do |receipts_request| %>
+                    <% @receipts = Receipt.where(receipts_request_id: receipts_request.id) %>
+                    
+                    <thead class="thead-light">
                       <tr >
-                        <th align="right">Total Cost:</th>
-                        <th ><%= receipts_request.total_amount%></th>
+                        <th align="right">Request from Department Name:</th>
+                        <th ><%= receipts_request.department.name%></th>
                         <th colspan="3"></th>
                       </tr>
                     </thead>
-                <%end%>
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Type</th>
+                        <th>Cost</th>
+                        <th>Location</th>
+                        <th>Receipt Date</th>
+                        <th colspan="1"></th>
+                      </tr>
+                    </thead>
+                    <% @receipts.each do |receipt| %>
+                      <tr>
+                        <td><%= receipt.expense_type.name %></td>
+                        <td><%= number_to_currency receipt.cost %></td>
+                        <td><%= receipt.location %></td>
+                        <td><%= receipt.receipt_date %></td>
+                        <td>
+                          <div class="dropdown no-arrow">
+                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                             <div class="dropdown-header">Actions:</div>
+                                <%= link_to 'Edit', edit_receipt_path(receipt), class: "dropdown-item" %>
+                                <%= link_to 'Delete', receipt, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    <%end%>
+                      <thead class="thead-dark">
+                      <tr >
+                        <th align="right">Total Cost:</th>
+                        <th ><%= receipts_request.total_amount%></th>
+                        <% @receipts_request_total += receipts_request.total_amount %>
+                        <th colspan="3"></th>
+                      </tr>
+                      </thead>
+                      <thead>
+                        <tr>
+                          <th>
+                            
+                          </th>
+                          <th>
+                            
+                          </th>
+                        </tr>
+                      </thead>
+                  <%end%>
                 </tbody>
               </table>
             </div>
@@ -170,4 +200,5 @@
         </br>
       </div>
     </div>
-
+  </div>
+    </div>

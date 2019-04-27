@@ -115,12 +115,11 @@ class ManagesController < ApplicationController
         @trip = Trip.find(params[:id])
         @reimbursement_form = ReimbursementForm.find(@trip.reimbursement_form.id)
         #@receipts_requests = @reimbursement_form.receipts_request
-        @receipts_requests = ReceiptsRequest.where(department_id: current_employee.department_id, 
-                                      status_id: status_id)
+        @receipts_request = ReceiptsRequest.where(department_id: current_employee.department_id, 
+                                      status_id: status_id, reimbursement_form_id: @reimbursement_form.id)
                                       
-        @id = @receipts_requests.first.id
-        
         @receipt = @reimbursement_form.receipts
+        @receipts_request_total =0;
         #Receipt.where(receipts_request_id: @id,reimbursement_form_id: @reimbursement_form.id)
     end
     

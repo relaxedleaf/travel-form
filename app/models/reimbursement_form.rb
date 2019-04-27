@@ -16,4 +16,8 @@ class ReimbursementForm < ApplicationRecord
         self.receipts.sum(:cost)
     end
     
+    def check_amount(num1,num2)
+        return num1.to_i > num2.to_i 
+    end
+    
 end

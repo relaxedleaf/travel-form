@@ -14,8 +14,8 @@ class ReimbursementFormsController < ApplicationController
     @receipts_request = @reimbursement_form.receipts_request
     @requests = @trip.requests
     @total_reimb_budget = 0
-    @receipts
-    @id
+    @receipts_request_total = 0
+    @balance = 0
     #@receipt
     #@receipts = @receipts_request.receipts
     #need to create request
