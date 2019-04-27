@@ -23,6 +23,10 @@
         </div>
         
         <div class="field">
+          <%= f.hidden_field :reimbursement_form_id, :value => @reimbursement_form.id %>
+        </div>
+        
+        <div class="field">
               <%= f.label :total_amount %>
               <%= f.number_field :total_amount, id: :total_amount, class: "form-control"%>
        </div>

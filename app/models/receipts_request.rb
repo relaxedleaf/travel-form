@@ -10,5 +10,4 @@ class ReceiptsRequest < ApplicationRecord
 
     accepts_nested_attributes_for :receipts, :reject_if => :all_blank, :allow_destroy => true
     
-    before_destroy :authform_status
 end

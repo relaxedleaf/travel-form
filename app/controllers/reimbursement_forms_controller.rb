@@ -14,9 +14,12 @@ class ReimbursementFormsController < ApplicationController
     @receipts_request = @reimbursement_form.receipts_request
     @requests = @trip.requests
     @total_reimb_budget = 0
+    @receipts
+    @id
+    #@receipt
     #@receipts = @receipts_request.receipts
     #need to create request
-    @receipts = @reimbursement_form.receipts
+    #@receipts = @reimbursement_form.receipts
     
     
   end
@@ -102,8 +105,8 @@ class ReimbursementFormsController < ApplicationController
     # New Create, need all attribute and table names
     def reimbursement_form_params
       params.require(:reimbursement_form).permit(:status_id, :employee_id, :trip_id, 
-      receipts_request_attributes: [:id,:total_amount, :department_id,:status_id, :_destroy],
-      receipts_attributes: [:id,:location,:receipt_date,:expense_type_id,:image_url,:cost,:_destroy])
+      receipts_request_attributes: [:id,:total_amount, :department_id,:status_id, :receipts_request_id,
+       receipts_attributes: [:id,:location,:receipt_date,:expense_type_id,:image_url,:cost,:receipts_request_id,:reimbursement_form_id]])
     end
     
     

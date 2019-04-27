@@ -9,7 +9,14 @@
             <%= f.label :image_url %>
             <%= f.file_field :image, id: :receipt_image %>
           </div>
-              
+        
+        <div class="field">
+          <%= f.hidden_field :reimbursement_form_id, :value => @reimbursement_form.id %>
+        </div>
+        
+        <div class="field">
+          <%= f.hidden_field :receipts_request_id, :value => @receipts_request.id %>
+        </div>
         
           <div class="form-group">
             <%= f.label :cost %>
