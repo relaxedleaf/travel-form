@@ -13,4 +13,9 @@ class Employee < ApplicationRecord
   validates :department_id, :email, :fname, :lname, :ssn, :bdate, presence: true
   validates :email, :ssn, uniqueness: true
   validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}
+  
+  
+  def hello
+    @hello = "hello"
+  end
 end

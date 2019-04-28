@@ -16,4 +16,9 @@ class Status < ApplicationRecord
             #do some to notify user.
         end
     end
+    
+    
+    def hello
+        @hello = "hello"
+    end
 end
