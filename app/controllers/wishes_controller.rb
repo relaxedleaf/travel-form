@@ -40,16 +40,10 @@ class WishesController < ApplicationController
   # PATCH/PUT /wishes/1
   # PATCH/PUT /wishes/1.json
   def update
-    authform = @wish.authorization_form
-    authformCurrentStat = authform.status.name
-    pendingStatus_id = Status.where(name: "Pending").take.id
-
     respond_to do |format|
       if @wish.update(wish_params)
-        if authformCurrentStat != "pending"
-          authform.update_attribute(:status_id, pendingStatus_id)
-        end
-        format.html { redirect_to trip_path(@wish.trip), notice: 'Wish was successfully updated.' }
+        update_related_attribute
+        format.html { redirect_to trip_path(@wish.authorization_form.trip), notice: 'Wish was successfully updated.' }
         format.json { render :show, status: :ok, location: @wish }
       else
         format.html { render :edit }
@@ -88,5 +82,25 @@ class WishesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def wish_params
       params.require(:wish).permit(:expense_type_id, :cost, :authorization_form_id)
+    end
+    
+    def update_related_attribute
+      authform = @wish.authorization_form
+      authformCurrentStat = authform.status.name
+      if authformCurrentStat != "pending"
+        pendingStatus_id = Status.where(name: "Pending").take.id
+  
+        #update authform status
+        authform.update_attribute(:status_id, pendingStatus_id)
+        #update all the request status
+        requests = Request.where(trip_id: @wish.authorization_form.trip.id)
+        #update all the department's budget
+        requests.each do |request|
+          if request.status.name == "Approved"
+            request.department.update_attribute(:budget_hold, request.department.budget_hold - request.amount)
+          end
+        end
+        requests.update_all(status_id: pendingStatus_id)
+      end
     end
 end
