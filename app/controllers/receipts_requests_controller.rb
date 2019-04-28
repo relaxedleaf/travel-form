@@ -60,6 +60,7 @@ class ReceiptsRequestsController < ApplicationController
   # DELETE /receipts_requests/1
   # DELETE /receipts_requests/1.json
   def destroy
+    
     @receipts_request.destroy
     respond_to do |format|
       format.html { redirect_to receipts_requests_url, notice: 'Receipts request was successfully destroyed.' }

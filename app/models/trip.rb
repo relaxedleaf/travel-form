@@ -4,7 +4,7 @@ class Trip < ApplicationRecord
     has_one :authorization_form, :dependent => :destroy
     has_one :destination, :dependent => :destroy
     has_many :requests, :dependent => :destroy
-    
+
     before_destroy :authform_status
 
     validates :purpose, :destination, :date_start, :date_end, :employee_id, presence: true
