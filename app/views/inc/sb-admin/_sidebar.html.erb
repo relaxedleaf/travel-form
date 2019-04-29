@@ -43,14 +43,6 @@
   <% end %>
 </li>
 
-<!-- Nav Item - Authorization form -->
-<li class="nav-item <%= current_class?(authorization_forms_path) %>">
-  <%= link_to authorization_forms_path, { :class => "nav-link"} do %>
-    <i class="fas fa-paper-plane"></i>
-    <span>Travel Form</span>
-  <% end %>
-</li>
-
 <!-- Nav Item -reimbursement form -->
 <li class="nav-item <%= current_class?(reimbursement_forms_path) %>">
   <%= link_to reimbursement_forms_path, { :class => "nav-link"} do %>
