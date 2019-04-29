@@ -99,7 +99,7 @@ ActiveRecord::Schema.define(version: 20190429024140) do
   end
 
   create_table "reim_form_messages", force: :cascade do |t|
-    t.integer "reimbursement_form_id"
+    t.integer "trip_id"
     t.text "message"
     t.integer "status_id"
     t.integer "employee_id"
