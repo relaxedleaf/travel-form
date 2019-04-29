@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  reimbusement_form_id: 1
+  trip_id: 1
   message: MyText
   status_id: 1
 
 two:
-  reimbusement_form_id: 1
+  trip_id: 1
   message: MyText
   status_id: 1

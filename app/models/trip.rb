@@ -14,11 +14,23 @@ class Trip < ApplicationRecord
     validate :dates_validation
     validate :authform_status
     validate :requests_exceed_wishes
-    
+    after_create :create_auth_message
     
     accepts_nested_attributes_for :authorization_form
     accepts_nested_attributes_for :destination
     accepts_nested_attributes_for :requests
+    
+    
+    
+    def create_auth_message
+        @status_id = Status.where(name: "Pending").take.id
+
+        ReimFormMessage.create(trip_id: self.id,
+                              status_id: @status_id,
+                              employee_id: self.employee_id,
+                              message: "A")
+    end
+    
     
     private
     

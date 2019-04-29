@@ -3,7 +3,7 @@ class Status < ApplicationRecord
     has_many :reimbursement_forms
     has_many :requests
     has_many :receipts_request
-
+    has_many :reim_form_message
     validates :name, presence: true
     
     

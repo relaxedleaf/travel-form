@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_employee!
   layout :layout
 
+    @hello_message
     
     protected
     
@@ -21,4 +22,6 @@ class ApplicationController < ActionController::Base
           # or turn layout off for every devise controller:
           !devise_controller? && "application"
       end
+      
+      
 end
