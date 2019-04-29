@@ -33,6 +33,7 @@ Rails.application.routes.draw do
     get 'destination', to: 'pages#getdestination'
     get 'allstatus', to: 'pages#allstatus'
     get 'deptApproveRate', to: 'pages#deptApproveRate'
+    get 'getEmpName', to: 'pages#getEmpName'
   end
 
 end

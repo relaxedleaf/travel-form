@@ -81,15 +81,15 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./app/javascript/packs/authorization_form.jsx");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./app/javascript/packs/dashboard.jsx");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./app/javascript/authorization_form/components/App.jsx":
-/*!**************************************************************!*\
-  !*** ./app/javascript/authorization_form/components/App.jsx ***!
-  \**************************************************************/
+/***/ "./app/javascript/dashboard/components/App.jsx":
+/*!*****************************************************!*\
+  !*** ./app/javascript/dashboard/components/App.jsx ***!
+  \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -98,12 +98,202 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return App; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _FormChart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FormChart */ "./app/javascript/dashboard/components/FormChart.jsx");
+/* harmony import */ var _DeptGraph__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DeptGraph */ "./app/javascript/dashboard/components/DeptGraph.jsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+var _jsxFileName = "/Users/marko/Desktop/SeniorSem/Group-Project-for-Colasito-Dong-Li/app/javascript/dashboard/components/App.jsx";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+var App =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(App, _React$Component);
+
+  function App() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, App);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this.state = {
+      empName: ""
+    };
+
+    _this.componentDidMount = function () {
+      var self = _assertThisInitialized(_this);
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/getEmpName').then(function (response) {
+        self.setState({
+          empName: response.data.empName
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    };
+
+    _this.render = function () {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 25
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 26
+        },
+        __self: this
+      }, "Welcome back ", _this.state.empName, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 27
+        },
+        __self: this
+      }, " Your Dashboard"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "row",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 29
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "col-xl-9 col-lg-7",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 30
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "card shadow mb-4",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 31
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "card-header py-3 d-flex flex-row align-items-center justify-content-between",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 32
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
+        class: "m-0 font-weight-bold text-primary",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 33
+        },
+        __self: this
+      }, "Your Forms")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "card-body",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 36
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FormChart__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 37
+        },
+        __self: this
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "col-xl-8 col-lg-7",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 42
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "card shadow mb-4",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 43
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "card-header py-3 d-flex flex-row align-items-center justify-content-between",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 44
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
+        class: "m-0 font-weight-bold text-primary",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 45
+        },
+        __self: this
+      }, "Department Approval Rates")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        class: "card-body",
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 48
+        },
+        __self: this
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DeptGraph__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 49
+        },
+        __self: this
+      }))))));
+    };
+
+    return _this;
+  }
+
+  return App;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+
+/***/ }),
+
+/***/ "./app/javascript/dashboard/components/DeptGraph.jsx":
+/*!***********************************************************!*\
+  !*** ./app/javascript/dashboard/components/DeptGraph.jsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return DeptGraph; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_chartkick__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-chartkick */ "./node_modules/react-chartkick/dist/react-chartkick.esm.js");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
 /* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-var _jsxFileName = "/Users/marko/Desktop/SeniorSem/Group-Project-for-Colasito-Dong-Li/app/javascript/authorization_form/components/App.jsx";
+var _jsxFileName = "/Users/marko/Desktop/SeniorSem/Group-Project-for-Colasito-Dong-Li/app/javascript/dashboard/components/DeptGraph.jsx";
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -123,23 +313,130 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 react_chartkick__WEBPACK_IMPORTED_MODULE_1__["default"].addAdapter(chart_js__WEBPACK_IMPORTED_MODULE_2___default.a);
 
-var App =
+var DeptGraph =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(App, _React$Component);
+  _inherits(DeptGraph, _React$Component);
 
-  function App() {
+  function DeptGraph() {
     var _getPrototypeOf2;
 
     var _this;
 
-    _classCallCheck(this, App);
+    _classCallCheck(this, DeptGraph);
 
     for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(DeptGraph)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this.state = {
+      depts: [],
+      num: []
+    };
+
+    _this.componentDidMount = function () {
+      var self = _assertThisInitialized(_this);
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/deptApproveRate').then(function (response) {
+        self.setState({
+          depts: response.data.depts
+        });
+        self.setState({
+          num: response.data.num
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    };
+
+    _this.render = function () {
+      if (_this.state.depts.length != 0 && _this.state.num.length != 0) {
+        console.log(_this.state.depts);
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_chartkick__WEBPACK_IMPORTED_MODULE_1__["ColumnChart"], {
+          data: [[_this.state.depts[0], _this.state.num[0]], [_this.state.depts[1], _this.state.num[1]], [_this.state.depts[2], _this.state.num[2]]],
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 33
+          },
+          __self: this
+        });
+      } else {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          __source: {
+            fileName: _jsxFileName,
+            lineNumber: 41
+          },
+          __self: this
+        }, "Loading...");
+      }
+    };
+
+    return _this;
+  }
+
+  return DeptGraph;
+}(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
+
+
+
+/***/ }),
+
+/***/ "./app/javascript/dashboard/components/FormChart.jsx":
+/*!***********************************************************!*\
+  !*** ./app/javascript/dashboard/components/FormChart.jsx ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return FormChart; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_chartkick__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-chartkick */ "./node_modules/react-chartkick/dist/react-chartkick.esm.js");
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! chart.js */ "./node_modules/chart.js/dist/Chart.js");
+/* harmony import */ var chart_js__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(chart_js__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+var _jsxFileName = "/Users/marko/Desktop/SeniorSem/Group-Project-for-Colasito-Dong-Li/app/javascript/dashboard/components/FormChart.jsx";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+react_chartkick__WEBPACK_IMPORTED_MODULE_1__["default"].addAdapter(chart_js__WEBPACK_IMPORTED_MODULE_2___default.a);
+
+var FormChart =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(FormChart, _React$Component);
+
+  function FormChart() {
+    var _getPrototypeOf2;
+
+    var _this;
+
+    _classCallCheck(this, FormChart);
+
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(FormChart)).call.apply(_getPrototypeOf2, [this].concat(args)));
     _this.state = {
       statuses: [],
       num: []
@@ -186,17 +483,17 @@ function (_React$Component) {
     return _this;
   }
 
-  return App;
+  return FormChart;
 }(react__WEBPACK_IMPORTED_MODULE_0___default.a.Component);
 
 
 
 /***/ }),
 
-/***/ "./app/javascript/authorization_form/index.js":
-/*!****************************************************!*\
-  !*** ./app/javascript/authorization_form/index.js ***!
-  \****************************************************/
+/***/ "./app/javascript/dashboard/index.js":
+/*!*******************************************!*\
+  !*** ./app/javascript/dashboard/index.js ***!
+  \*******************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -206,8 +503,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./app/javascript/authorization_form/components/App.jsx");
-var _jsxFileName = "/Users/marko/Desktop/SeniorSem/Group-Project-for-Colasito-Dong-Li/app/javascript/authorization_form/index.js";
+/* harmony import */ var _components_App__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/App */ "./app/javascript/dashboard/components/App.jsx");
+var _jsxFileName = "/Users/marko/Desktop/SeniorSem/Group-Project-for-Colasito-Dong-Li/app/javascript/dashboard/index.js";
 
 
 
@@ -224,16 +521,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /***/ }),
 
-/***/ "./app/javascript/packs/authorization_form.jsx":
-/*!*****************************************************!*\
-  !*** ./app/javascript/packs/authorization_form.jsx ***!
-  \*****************************************************/
+/***/ "./app/javascript/packs/dashboard.jsx":
+/*!********************************************!*\
+  !*** ./app/javascript/packs/dashboard.jsx ***!
+  \********************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var authorization_form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! authorization_form */ "./app/javascript/authorization_form/index.js");
+/* harmony import */ var dashboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! dashboard */ "./app/javascript/dashboard/index.js");
 
 
 /***/ }),
@@ -62840,4 +63137,4 @@ module.exports = function (module) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=authorization_form-6369ac48fd9fa2578a15.js.map
+//# sourceMappingURL=dashboard-ca9cb1762e7737f1e46a.js.map

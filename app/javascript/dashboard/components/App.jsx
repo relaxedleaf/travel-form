@@ -1,12 +1,29 @@
 import React from 'react';
 import PieChart from "./FormChart"
 import DeptGraph from "./DeptGraph"
+import axios from 'axios';
     
 export default class App extends React.Component {
+    state = {
+        empName: ""
+    };
+
+    componentDidMount = () => {
+        var self = this;
+        axios.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
+        axios.get('/api/getEmpName')
+          .then(function (response) {
+              self.setState({empName: response.data.empName})
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    };
+
     render = () => {
         return (
             <div>
-                <div>Welcome back, <%= @employee. %> !</div>
+                <h2>Welcome back {this.state.empName} </h2>
                 <h3> Your Dashboard</h3>
                 
                 <div class="row">
@@ -21,7 +38,6 @@ export default class App extends React.Component {
                             </div>
                         </div>
                     </div>
-    
 
                     <div class="col-xl-8 col-lg-7">
                         <div class="card shadow mb-4">
@@ -30,7 +46,7 @@ export default class App extends React.Component {
                             </div>
 
                             <div class="card-body">
-                                <DeptGraph name="Dept Approvals" />
+                                <DeptGraph />
                             </div>
                         </div>
                     </div>

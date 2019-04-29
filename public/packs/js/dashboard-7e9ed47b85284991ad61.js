@@ -106,9 +106,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _possibleConstructorReturn(self, call) { if (call && (typeof call === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -135,108 +135,123 @@ function (_React$Component) {
     }
 
     _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(App)).call.apply(_getPrototypeOf2, [this].concat(args)));
+    _this.state = {
+      empName: ""
+    };
+
+    _this.componentDidMount = function () {
+      var self = _assertThisInitialized(_this);
+
+      axios.defaults.headers.common['X-Requested-With'] = "XMLHttpRequest";
+      axios.get('/api/getEmpName').then(function (response) {
+        self.setState({
+          empName: response.data.empName
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    };
 
     _this.render = function () {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 8
+          lineNumber: 24
         },
         __self: this
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 9
+          lineNumber: 25
         },
         __self: this
       }, " Your Dashboard"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "row",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 11
+          lineNumber: 27
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "col-xl-9 col-lg-7",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 12
+          lineNumber: 28
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "card shadow mb-4",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 13
+          lineNumber: 29
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "card-header py-3 d-flex flex-row align-items-center justify-content-between",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 14
+          lineNumber: 30
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
         class: "m-0 font-weight-bold text-primary",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 15
+          lineNumber: 31
         },
         __self: this
       }, "Your Forms")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "card-body",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 18
+          lineNumber: 34
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_FormChart__WEBPACK_IMPORTED_MODULE_1__["default"], {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 19
+          lineNumber: 35
         },
         __self: this
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "col-xl-8 col-lg-7",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 25
+          lineNumber: 40
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "card shadow mb-4",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 26
+          lineNumber: 41
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "card-header py-3 d-flex flex-row align-items-center justify-content-between",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 27
+          lineNumber: 42
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", {
         class: "m-0 font-weight-bold text-primary",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 28
+          lineNumber: 43
         },
         __self: this
       }, "Department Approval Rates")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         class: "card-body",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 31
+          lineNumber: 46
         },
         __self: this
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_DeptGraph__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        name: "Dept Approvals",
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 32
+          lineNumber: 47
         },
         __self: this
       }))))));
@@ -63113,4 +63128,4 @@ module.exports = function (module) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=dashboard-1d459019ba3f359cfaba.js.map
+//# sourceMappingURL=dashboard-7e9ed47b85284991ad61.js.map
