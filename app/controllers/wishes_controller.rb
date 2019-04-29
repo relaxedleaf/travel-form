@@ -15,6 +15,7 @@ class WishesController < ApplicationController
   # GET /wishes/new
   def new
     @wish = Wish.new
+    @authorization_form_id = params[:authorization_form_id]
   end
 
   # GET /wishes/1/edit
@@ -28,7 +29,8 @@ class WishesController < ApplicationController
 
     respond_to do |format|
       if @wish.save
-        format.html { redirect_to @wish, notice: 'Wish was successfully created.' }
+        update_related_attribute
+        format.html { redirect_to @wish.authorization_form.trip, notice: 'Wish was successfully created.' }
         format.json { render :show, status: :created, location: @wish }
       else
         format.html { render :new }
@@ -36,6 +38,7 @@ class WishesController < ApplicationController
       end
     end
   end
+    
 
   # PATCH/PUT /wishes/1
   # PATCH/PUT /wishes/1.json
@@ -59,6 +62,7 @@ class WishesController < ApplicationController
     bullet = '&#8226 '
     respond_to do |format|
       if @wish.destroy
+        update_related_attribute
         format.html { redirect_to trip_path(@wish.authorization_form.trip) }
         flash[:success] = 'Wish was successfully deleted'
         format.json { head :no_content }

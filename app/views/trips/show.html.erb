@@ -120,6 +120,11 @@
           </div>
         </div>
         </br>
+        <% if @trip.authorization_form.status.name != "Approved" %>
+          <div class="text-center">
+            <%= link_to 'Add Wish', new_wish_path(:authorization_form_id => @trip.authorization_form.id), class: "btn btn-primary" %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -172,6 +177,11 @@
           </div>
         </div>
         </br>
+        <% if @trip.authorization_form.status.name != "Approved" %>
+          <div class="text-center">
+            <%= link_to 'Add Request', new_request_path(:trip_id => @trip.id), class: "btn btn-primary" %>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
