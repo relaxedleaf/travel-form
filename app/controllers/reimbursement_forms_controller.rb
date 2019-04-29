@@ -36,9 +36,11 @@ class ReimbursementFormsController < ApplicationController
     @status_id = Status.where(name: "Pending").take.id
     @receipts_request = @reimbursement_form.receipts_request.build
     @receipts = @receipts_request.receipts.build
-    #@message = @reimbursement_form.reim_form_message.create(reimbursement_form_id: @reimbursement_form.id,
-     #                                                       status_id: @status_id,
-     #                                                       employee_id: current_employee.id)
+    @trip = @reimbursement_form.trip
+    @message = @trip.reim_form_message.create(reimbursement_form_id: @reimbursement_form.id,
+                                                            status_id: @status_id,
+                                                            employee_id: current_employee.id)
+                                                            
     render 'create_receipts'
     
     

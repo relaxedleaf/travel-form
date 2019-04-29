@@ -1,3 +1,3 @@
 class ReimFormMessage < ApplicationRecord
-    belongs_to :reimbursement_form
+    belongs_to :trip
 end

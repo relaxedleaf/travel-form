@@ -3,7 +3,7 @@ class ReimbursementForm < ApplicationRecord
     belongs_to :trip
     belongs_to :status
     has_many :notification
-    has_many :reim_form_message
+
     has_many :receipts_request, :dependent => :destroy
     has_many :receipts, :dependent => :destroy
 

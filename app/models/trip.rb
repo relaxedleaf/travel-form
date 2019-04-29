@@ -3,8 +3,10 @@ class Trip < ApplicationRecord
     has_one :reimbursement_form, :dependent => :destroy
     has_one :authorization_form, :dependent => :destroy
     has_one :destination, :dependent => :destroy
+    
     has_many :requests, :dependent => :destroy
-
+    has_many :reim_form_message
+    
     before_destroy :authform_status
 
     validates :purpose, :destination, :date_start, :date_end, :employee_id, presence: true
