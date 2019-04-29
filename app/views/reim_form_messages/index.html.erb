@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Reim Form Messages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Reimbusement form</th>
+      <th>Message</th>
+      <th>Status</th>
+      <th>Employee</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reim_form_messages.each do |reim_form_message| %>
+      <tr>
+        <td><%= reim_form_message.trip_id %></td>
+        <td><%= reim_form_message.message %></td>
+        <td><%= reim_form_message.status_id %></td>
+        <td><%= reim_form_message.employee_id %></td>
+        <td><%= link_to 'Show', reim_form_message %></td>
+        <td><%= link_to 'Edit', edit_reim_form_message_path(reim_form_message) %></td>
+        <td><%= link_to 'Destroy', reim_form_message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Reim Form Message', new_reim_form_message_path %>

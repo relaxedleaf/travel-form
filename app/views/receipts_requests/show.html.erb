@@ -15,5 +15,12 @@
   <%= @receipts_request.reimbursement_form_id %>
 </p>
 
+<%= debug @receipts.size%>
+
+<% @receipts.each do |receipts| %>
+  <td><%= receipts.expense_type.name %></td>
+  <td><%= receipts.cost %></td>
+<%end%>
+
 <%= link_to 'Edit', edit_receipts_request_path(@receipts_request) %> |
 <%= link_to 'Back', receipts_requests_path %>

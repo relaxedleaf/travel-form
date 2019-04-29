@@ -6,9 +6,9 @@ class Request < ApplicationRecord
     validates :department_id, :amount, presence: true
     validates :amount, numericality: {greater_than_or_equal_to: 0.01}
     validate :authform_status
-    
+
     before_destroy :authform_status
-    
+
     private 
     
     def authform_status
@@ -18,4 +18,6 @@ class Request < ApplicationRecord
        end
     end
 
+
+    
 end

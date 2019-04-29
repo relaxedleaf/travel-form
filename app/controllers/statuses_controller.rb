@@ -51,6 +51,12 @@ class StatusesController < ApplicationController
     end
   end
 
+
+  def hello
+    @hello = "hello"
+  end
+    
+    
   # DELETE /statuses/1
   # DELETE /statuses/1.json
   def destroy

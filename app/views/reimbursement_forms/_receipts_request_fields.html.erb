@@ -1,0 +1,39 @@
+<div class = 'nested-fields'>
+    <%= f.inputs do %>
+    
+        <div class="form-group">
+              <%= f.label :department %>
+              <%= f.collection_select :department_id, Department.order('name ASC'), :id, :name, {id: :request_department}, {class: "form-control"} %>
+        </div>
+        
+        <div class="receipts">
+            <%= f.label :receipts %>
+            <%= f.semantic_fields_for :receipts, Receipt.new do |receipt| %>
+              <%= render 'receipt_fields', :f => receipt%>
+            <% end %>
+            <div class='links'>
+              <%= link_to_add_association f, :receipts do %>
+                  <i class="fas fa-plus-circle"></i>
+              <% end %>
+            </div>
+        </div>
+        
+         <div class="field">
+          <%= f.hidden_field :status_id, :value => @status_id %>
+        </div>
+        
+        <div class="field">
+          <%= f.hidden_field :reimbursement_form_id, :value => @reimbursement_form.id %>
+        </div>
+        
+        <div class="field">
+              <%= f.label :total_amount %>
+              <%= f.number_field :total_amount, id: :total_amount, class: "form-control"%>
+       </div>
+       
+        <%= link_to_remove_association f, { :class => "float-right"} do %>
+            <i class="fas fa-minus-circle"></i>
+        <% end %>
+   
+   <%end%>
+</div>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :reim_form_messages
+  resources :notifications
   resources :receipts_requests
   devise_for :employees
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -23,6 +25,8 @@ Rails.application.routes.draw do
   get 'manage/reimform/:id', to: 'manages#reimform_show', as: :manage_reimform
   put 'manage/reimform/:id', to: 'manages#reimform_update', as: :manage_reimform_update
   
+  get 'create_receipts/:reimbursement_form' => "reimbursement_forms#create_receipts", as: 'create_receipt_yea'
+
   get 'routes', to: 'pages#routes'
   get 'dashboard', to: 'pages#dashboard'
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190416031015) do
+ActiveRecord::Schema.define(version: 20190429024140) do
 
   create_table "authorization_forms", force: :cascade do |t|
     t.integer "status_id"
@@ -61,6 +61,16 @@ ActiveRecord::Schema.define(version: 20190416031015) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.integer "status_id"
+    t.integer "trip_id"
+    t.string "form"
+    t.integer "reimbursement_form_id"
+    t.integer "authorization_form_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "payment_managers", force: :cascade do |t|
     t.integer "employee_ssn"
     t.datetime "created_at", null: false
@@ -69,11 +79,12 @@ ActiveRecord::Schema.define(version: 20190416031015) do
 
   create_table "receipts", force: :cascade do |t|
     t.string "image"
-    t.integer "reimbursement_form_id"
     t.string "location"
     t.decimal "cost", precision: 8, scale: 2
     t.string "receipt_date"
     t.integer "expense_type_id"
+    t.integer "receipts_request_id"
+    t.integer "reimbursement_form_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -81,7 +92,17 @@ ActiveRecord::Schema.define(version: 20190416031015) do
   create_table "receipts_requests", force: :cascade do |t|
     t.decimal "total_amount", precision: 8, scale: 2
     t.integer "department_id"
+    t.integer "status_id"
     t.integer "reimbursement_form_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reim_form_messages", force: :cascade do |t|
+    t.integer "trip_id"
+    t.text "message"
+    t.integer "status_id"
+    t.integer "employee_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -122,6 +143,7 @@ ActiveRecord::Schema.define(version: 20190416031015) do
     t.integer "expense_type_id"
     t.decimal "cost", precision: 8, scale: 2
     t.integer "authorization_form_id"
+    t.integer "request_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
