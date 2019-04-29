@@ -11,7 +11,7 @@ class PagesController < ApplicationController
       
     end
   
-    def footstep
+    def footprint
         render layout: false
     end
 end

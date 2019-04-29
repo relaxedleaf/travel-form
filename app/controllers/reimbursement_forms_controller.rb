@@ -1,6 +1,8 @@
 class ReimbursementFormsController < ApplicationController
+
   before_action :set_reimbursement_form, only: [ :edit, :update, :destroy]
   before_action :set_trip, only: [:show, :new, :edit]
+
   # GET /reimbursement_forms
   # GET /reimbursement_forms.json
   def index
@@ -16,12 +18,6 @@ class ReimbursementFormsController < ApplicationController
     @total_reimb_budget = 0
     @receipts_request_total = 0
     #@reim_message = ReimFormMessage.where(reimbursement_form_id: @reimbursement_form.id)
-    #@receipt
-    #@receipts = @receipts_request.receipts
-    #need to create request
-    #@receipts = @reimbursement_form.receipts
-    
-    
   end
 
   # GET /reimbursement_forms/new
@@ -59,13 +55,12 @@ class ReimbursementFormsController < ApplicationController
     #@notification = @reimbursement_form.notification.build
     
 
-#@book = Book.create(published_at: Time.now, author_id: @author.id)
+    #@book = Book.create(published_at: Time.now, author_id: @author.id)
 
 
     respond_to do |format|
       if @reimbursement_form.save
         @trip = nil
-
         format.html { redirect_to create_receipt_yea_path(:reimbursement_form => @reimbursement_form)}
         format.json { render :create_receipts, status: :created, location: @reimbursement_form }
       else
