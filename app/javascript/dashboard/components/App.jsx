@@ -23,8 +23,7 @@ export default class App extends React.Component {
     render = () => {
         return (
             <div>
-                <h2>Welcome back {this.state.empName} </h2>
-                <h3> Your Dashboard</h3>
+                <h2>Welcome back to your dashboard, {this.state.empName} !</h2>
                 
                 <div class="row">
                     <div class="col-xl-9 col-lg-7">
