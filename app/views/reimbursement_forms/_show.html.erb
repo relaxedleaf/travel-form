@@ -88,7 +88,7 @@
               
                   <% @receipts_request.each do |receipts_request| %>
                     <% @id = receipts_request.id%>
-                    <% @receipts = Receipt.where(receipts_request_id: @id) %>
+                    <% @receipts = @reimbursement_form.receipts.where(receipts_request_id: @id, reimbursement_form_id: @reimbursement_form.id) %>
                     
                     <thead class="thead-light">
                       <tr >
@@ -106,8 +106,12 @@
                         <th colspan="1"></th>
                       </tr>
                     </thead>
+                    <%@each_receipts_amount =0%>
+
                     <% @receipts.each do |receipt| %>
                       <tr>
+                        
+                        <%@each_receipts_amount += receipt.cost%>
                         <td><%= receipt.expense_type.name %></td>
                         <td><%= number_to_currency receipt.cost %></td>
                         <td><%= receipt.location %></td>
@@ -126,11 +130,16 @@
                         </td>
                       </tr>
                     <%end%>
+                     <% @nonono = @each_receipts_amount - receipts_request.total_amount %>
+                     
+                      <% if @nonono > 0%>
+                        <% receipts_request.update_attribute(:total_amount, @each_receipts_amount)%>
+                      <%end%>
+                    
                       <thead class="thead-dark">
                       <tr >
                         <th align="right">Total Cost:</th>
                         <th ><%= receipts_request.total_amount%></th>
-                        <% @receipts_request_total += receipts_request.total_amount %>
                         <th colspan="3"></th>
                       </tr>
                       </thead>
@@ -181,7 +190,6 @@
                 </thead>
                 <tbody>
                   <% @requests.each do |request| %>
-                    <% @total_reimb_budget += request.amount %>
                     <tr>
                       <td><%= request.department.name %></td>
                       <td><%= number_to_currency request.amount %></td>
@@ -269,5 +277,3 @@
   
   </br>
   </br>
-  
-  

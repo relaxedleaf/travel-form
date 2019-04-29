@@ -216,21 +216,25 @@ Receipt.delete_all
             cost: 200,
             location: 'Holiday Inn',
             receipt_date: '04/30/2019',
-            reimbursement_form_id: first_reimburse.id
+            reimbursement_form_id: first_reimburse.id,
+            image: 'ReceiptSwiss.jpg'
+            
         },
         {
             expense_type_id: ExpenseType.where(name: "Food").take.id,
             cost: 400,
             location: 'Steak House',
             receipt_date: '04/30/2019',
-            reimbursement_form_id: first_reimburse.id
+            reimbursement_form_id: first_reimburse.id,
+            image: 'ReceiptSwiss.jpg'
         },
         {
             expense_type_id: ExpenseType.where(name: "Transportation").take.id,
             cost: 100,
             location: 'City',
             receipt_date: '04/30/2019',
-            reimbursement_form_id: first_reimburse.id
+            reimbursement_form_id: first_reimburse.id,
+            image: 'ReceiptSwiss.jpg'
         },
     ]
  )
@@ -266,7 +270,7 @@ Receipt.delete_all
  )
  
  
- second_trip = Trip.create!(
+second_trip = Trip.create!(
     destination_attributes: 
         {
          country: "US",

@@ -14,7 +14,11 @@ class ReimbursementForm < ApplicationRecord
     #need one for create
 
     def total_costs
-        self.receipts.sum(:cost)
+        total_cost_request=0
+        @requests.each do |cost|
+         total_cost_request+= cost.amount
+        end
+        total_cost_request
     end
     
     def check_amount(num1,num2)

@@ -18,7 +18,7 @@
   <tbody>
     <% @receipts.each do |receipt| %>
       <tr>
-        <td><%= receipt.image %></td>
+        <td><%= image_tag(receipt.image) %></td>
         <td><%= receipt.reimbursement_form_id %></td>
         <td><%= receipt.location %></td>
         <td><%= receipt.cost %></td>
