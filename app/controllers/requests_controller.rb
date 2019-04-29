@@ -15,6 +15,7 @@ class RequestsController < ApplicationController
   # GET /requests/new
   def new
     @request = Request.new
+    @trip_id = params[:trip_id]
   end
 
   # GET /requests/1/edit
@@ -28,7 +29,8 @@ class RequestsController < ApplicationController
 
     respond_to do |format|
       if @request.save
-        format.html { redirect_to @request, notice: 'Request was successfully created.' }
+        update_related_attribute
+        format.html { redirect_to @request.trip, notice: 'Request was successfully created.' }
         format.json { render :show, status: :created, location: @request }
       else
         format.html { render :new }
@@ -40,9 +42,11 @@ class RequestsController < ApplicationController
   # PATCH/PUT /requests/1
   # PATCH/PUT /requests/1.json
   def update
+    @oldRequestAmount = @request.amount
     respond_to do |format|
       if @request.update(request_params)
-        format.html { redirect_to trips_path, notice: 'Request was successfully updated.' }
+        update_related_attribute
+        format.html { redirect_to @request.trip, notice: 'Request was successfully updated.' }
         format.json { render :show, status: :ok, location: @request }
       else
         format.html { render :edit }
@@ -54,10 +58,23 @@ class RequestsController < ApplicationController
   # DELETE /requests/1
   # DELETE /requests/1.json
   def destroy
-    @request.destroy
+    error_messages = []
+    bullet = '&#8226 '
+    @oldRequestAmount = @request.amount
     respond_to do |format|
-      format.html { redirect_to requests_url, notice: 'Request was successfully destroyed.' }
-      format.json { head :no_content }
+      if @request.destroy
+        update_related_attribute
+        format.html { redirect_to trip_path(@request.trip) }
+        flash[:success] = 'Request was successfully deleted'
+        format.json { head :no_content }
+      else
+        format.html { redirect_to trip_path(@request.trip)}
+        @request.errors.full_messages.each do |message|
+          error_messages.push(bullet + message)
+        end
+        flash[:danger] = error_messages.join("<br/>")
+        format.json { head :no_content }
+      end
     end
   end
 
@@ -70,5 +87,29 @@ class RequestsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def request_params
       params.require(:request).permit(:trip_id, :amount, :department_id, :status_id)
+    end
+
+    def update_related_attribute
+      authform = @request.trip.authorization_form
+      authformCurrentStat = authform.status.name
+      if authformCurrentStat != "pending"
+        pendingStatus_id = Status.where(name: "Pending").take.id
+  
+        #update authform status
+        authform.update_attribute(:status_id, pendingStatus_id)
+        #update all the request status
+        requests = Request.where(trip_id: @request.trip.id)
+        #update all the department's budget
+        requests.each do |request|
+          if request.status.name == "Approved"
+            if request.id == @request.id
+              request.department.update_attribute(:budget_hold, request.department.budget_hold - @oldRequestAmount)
+            else
+              request.department.update_attribute(:budget_hold, request.department.budget_hold - request.amount)
+            end
+          end
+        end
+        requests.update_all(status_id: pendingStatus_id)
+      end
     end
 end

@@ -1,10 +1,13 @@
 class Trip < ApplicationRecord
+    before_destroy :authform_status
+    
     belongs_to :employee
     has_one :reimbursement_form, :dependent => :destroy
     has_one :authorization_form, :dependent => :destroy
     has_one :destination, :dependent => :destroy
     
     has_many :requests, :dependent => :destroy
+
     has_many :reim_form_message
     
     before_destroy :authform_status
@@ -67,7 +70,19 @@ class Trip < ApplicationRecord
     def authform_status
        if self.authorization_form.status.name == "Approved"
             errors.add(" ","Form has already been approved")
-            throw :abort 
+            throw :abort
+       else
+          update_department_budget
        end
+    end
+    
+    def update_department_budget
+        requests = Request.where(trip_id: self.id.to_i)
+        requests.each do |request|
+        puts request.status.name
+        if request.status.name == "Approved"
+          request.department.update_attribute(:budget_hold, request.department.budget_hold - request.amount)
+        end
+      end       
     end
 end
