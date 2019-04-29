@@ -6,7 +6,8 @@ export default class App extends React.Component {
     render = () => {
         return (
             <div>
-                <h2> Your Dashboard</h2>
+                <div>Welcome back, <%= @employee. %> !</div>
+                <h3> Your Dashboard</h3>
                 
                 <div class="row">
                     <div class="col-xl-9 col-lg-7">
