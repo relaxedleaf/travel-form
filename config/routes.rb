@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :reim_form_messages
   resources :notifications
   resources :receipts_requests
   devise_for :employees

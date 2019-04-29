@@ -8,8 +8,7 @@ class Request < ApplicationRecord
     validate :authform_status
 
     before_destroy :authform_status
-    before_destroy :reim_form_status
-    
+
     private 
     
     def authform_status
@@ -19,11 +18,6 @@ class Request < ApplicationRecord
        end
     end
 
-    def reim_form_status
-       if self.trip.reimbursement_form.status.name == "Approved"
-            errors.add(" ","You cannot delete a form has already been approved")
-            throw :abort 
-       end
-    end
+
     
 end

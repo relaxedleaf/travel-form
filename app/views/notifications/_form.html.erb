@@ -1,8 +1,14 @@
 <%= semantic_form_for @notification do |f| %>
   <%= f.inputs do %>
-    <%= f.input :status_id %>
-    <%= f.input :trip_id %>
-    <%= f.input :message %>
+
+    <%= f.label :status_id %>
+    <%= f.number_field :status_id, id: :status_id, class: "form-control"%>
+
+    <%= f.label :trip_id %>
+    <%= f.number_field :trip_id, id: :trip_id, class: "form-control"%>
+
+    <%= f.label :form %>
+    <%= f.text_field :form, id: :form, class: "form-control"%>
   <% end %>
 
   <%= f.actions do %>

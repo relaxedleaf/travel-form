@@ -15,7 +15,7 @@ class ReimbursementFormsController < ApplicationController
     @requests = @trip.requests
     @total_reimb_budget = 0
     @receipts_request_total = 0
-    @balance = 0
+    #@reim_message = ReimFormMessage.where(reimbursement_form_id: @reimbursement_form.id)
     #@receipt
     #@receipts = @receipts_request.receipts
     #need to create request
@@ -40,8 +40,11 @@ class ReimbursementFormsController < ApplicationController
     @status_id = Status.where(name: "Pending").take.id
     @receipts_request = @reimbursement_form.receipts_request.build
     @receipts = @receipts_request.receipts.build
-    
+    #@message = @reimbursement_form.reim_form_message.create(reimbursement_form_id: @reimbursement_form.id,
+     #                                                       status_id: @status_id,
+     #                                                       employee_id: current_employee.id)
     render 'create_receipts'
+    
     
     #@receipts_request.update
     #@receipts.update
@@ -50,9 +53,14 @@ class ReimbursementFormsController < ApplicationController
   # POST /reimbursement_forms
   # POST /reimbursement_forms.json
   def create
-
+    
     @reimbursement_form = ReimbursementForm.new(reimbursement_form_params)
     @trip = Trip.find(params[:reimbursement_form][:trip_id])
+    #@notification = @reimbursement_form.notification.build
+    
+
+#@book = Book.create(published_at: Time.now, author_id: @author.id)
+
 
     respond_to do |format|
       if @reimbursement_form.save
@@ -106,7 +114,8 @@ class ReimbursementFormsController < ApplicationController
     def reimbursement_form_params
       params.require(:reimbursement_form).permit(:status_id, :employee_id, :trip_id, 
       receipts_request_attributes: [:id,:total_amount, :department_id,:status_id, :receipts_request_id,
-       receipts_attributes: [:id,:location,:receipt_date,:expense_type_id,:image_url,:cost,:receipts_request_id,:reimbursement_form_id]])
+       receipts_attributes: [:id,:location,:receipt_date,:expense_type_id,:image_url,:cost,:receipts_request_id,:reimbursement_form_id]],
+       notification_attributes: [:trip_id,:status_id,:employee_id,:form_id,:form])
     end
     
     

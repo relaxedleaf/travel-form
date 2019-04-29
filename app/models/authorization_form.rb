@@ -2,7 +2,7 @@ class AuthorizationForm < ApplicationRecord
     belongs_to :employee
     belongs_to :trip
     belongs_to :status
-    belongs_to :notification
+    has_many :notification
 
     has_many :wishes, :dependent => :destroy
     

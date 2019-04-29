@@ -244,12 +244,12 @@
                       <%= @receipts_request_total%>
                     </td>
                     <td>
-                      <% @balance = @total_reimb_budget - @receipts_request_total -1 %>
+                      <% @balance = @total_reimb_budget - @receipts_request_total %>
                       
                       <% if @balance < 0 %>
-                      <%= flash[:error] = "You need check your balance" %>
+                        <%= flash[:error] = "You need check your balance" %>
                       <%else%>
-                      <%@balance%>
+                        <%=@balance%>
                       <%end%>
                     </td>
                   </tr>

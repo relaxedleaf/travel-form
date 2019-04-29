@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Reimbusement form:</strong>
+  <%= @reim_form_message.reimbursement_form_id %>
+</p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @reim_form_message.message %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @reim_form_message.status_id %>
+</p>
+<p>
+  <strong>Status:</strong>
+  <%= @reim_form_message.employee_id %>
+</p>
+<%= link_to 'Edit', edit_reim_form_message_path(@reim_form_message) %> |
+<%= link_to 'Back', reim_form_messages_path %>
