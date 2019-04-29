@@ -41,5 +41,11 @@ module Api
             
             render json: {empName: empName}
         end
+
+        def nextTrip
+            trip = Trip.where(:employee_id => current_employee.id).take.id
+
+            render json: {trip: trip}
+        end
     end
 end

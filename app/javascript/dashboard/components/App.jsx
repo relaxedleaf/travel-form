@@ -5,7 +5,8 @@ import axios from 'axios';
     
 export default class App extends React.Component {
     state = {
-        empName: ""
+        empName: "",
+        nextTrip: ""
     };
 
     componentDidMount = () => {
@@ -47,6 +48,19 @@ export default class App extends React.Component {
                             <div class="card-body">
                                 <DeptGraph />
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                <h6 class="m-0 font-weight-bold text-primary">Upcoming Trip!</h6>
+                            </div>
+
+                            <div class="card-body">
+                                
+                            </div>
+
                         </div>
                     </div>
                 </div>
