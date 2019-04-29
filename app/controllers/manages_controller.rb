@@ -148,6 +148,10 @@ class ManagesController < ApplicationController
         @receipts_request_total =0;
         @reim_message = ReimFormMessage.where(trip_id: @trip.id,
                                               message: "R")
+                                              
+        @receipts_request.each do |receipts_request|
+            @receipts_request_total += receipts_request.total_amount
+        end
     end
     
     def reimform_history
