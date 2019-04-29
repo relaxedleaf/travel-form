@@ -25,7 +25,7 @@ class AuthorizationFormsController < ApplicationController
   # POST /authorization_forms.json
   def create
     @authorization_form = AuthorizationForm.new(authorization_form_params)
-
+    
     respond_to do |format|
       if @authorization_form.save
         format.html { redirect_to @authorization_form, notice: 'Authorization form was successfully created.' }

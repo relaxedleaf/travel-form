@@ -1,0 +1,34 @@
+<%= semantic_form_for @reimbursement_form do |form| %>
+
+    <% if @reimbursement_form.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@reimbursement_form.errors.count, "error") %> prohibited this reimbursement_form from being saved:</h2>
+    
+          <ul>
+          <% @reimbursement_form.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+    <% end %>
+      
+    <div class="receipts_request">
+        <%= form.label :receipts_request %>
+        <%= form.semantic_fields_for :receipts_request, ReceiptsRequest.new do |receipt_reqest| %>
+          <%= render 'receipts_request_fields', :f => receipt_reqest%>
+        <% end %>
+        <div class='links'>
+          <%= link_to_add_association form, :receipts_request do %>
+              <i class="fas fa-plus-circle"></i>
+          <% end %>
+        </div>
+    </div>
+    
+
+    
+    
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+  
+<%end%>
