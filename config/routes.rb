@@ -1,4 +1,24 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :employees
+    resources :authorization_forms
+    resources :departments
+    resources :destinations
+    resources :expense_types
+    resources :notifications
+    resources :payment_managers
+    resources :receipts
+    resources :receipts_requests
+    resources :reim_form_messages
+    resources :reimbursement_forms
+    resources :requests
+    resources :statuses
+    resources :trips
+    resources :wishes
+
+    root to: "employees#index"
+  end
+
   resources :reim_form_messages
   resources :notifications
   resources :receipts_requests

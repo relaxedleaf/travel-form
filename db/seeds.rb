@@ -70,7 +70,11 @@ PaymentManager.delete_all
 PaymentManager.create!(
     employee_ssn: 123456788
     )
-    
+ 
+Administrator.delete_all
+Administrator.create!(
+    employee_ssn: 666666666
+    )  
 
 #*********** Creating employee for each department ***********#
 Employee.delete_all
@@ -144,6 +148,17 @@ Employee.create!(
     fname: 'payment',
     lname: 'manager',
     ssn: 123456788,
+    department_id: Department.where(name: "Computer Science").take.id,
+    bdate: '04/30/2019'
+    )
+
+Employee.create!(
+    email: 'admin@qq.com',
+    password: '123123123',
+    password_confirmation: '123123123',
+    fname: 'super',
+    lname: 'admin',
+    ssn: 666666666,
     department_id: Department.where(name: "Computer Science").take.id,
     bdate: '04/30/2019'
     )
