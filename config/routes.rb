@@ -30,7 +30,7 @@ Rails.application.routes.draw do
   get 'footstep', to: 'pages#footstep'
   
   namespace :api do
-    get 'destination', to: 'pages#getdestination'
+    get 'expensiveDest', to: 'pages#getExpensiveDest'
     get 'allstatus', to: 'pages#allstatus'
     get 'deptApproveRate', to: 'pages#deptApproveRate'
     get 'getEmpName', to: 'pages#getEmpName'

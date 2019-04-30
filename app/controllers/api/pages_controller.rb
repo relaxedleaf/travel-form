@@ -1,15 +1,15 @@
 module Api
     class PagesController < ApplicationController  
-        def getdestination
+        def getExpensiveDest
             trips = Trip.where("employee_id = " + (current_employee.id.to_s if current_employee))
             
-            destinations = []
+            expensiveDest = []
             
             trips.each do |trip|
-              destinations.push(trip.destination)
+                expensiveDest.push(trip.destination)
             end
             
-            render json: {data: destinations}
+            render json: {data: expensiveDest}
         end
         
         def allstatus
@@ -40,12 +40,6 @@ module Api
             empName = Employee.find(current_employee.id).fname
             
             render json: {empName: empName}
-        end
-
-        def nextTrip
-            trip = Trip.where(:employee_id => current_employee.id).take.id
-
-            render json: {trip: trip}
         end
     end
 end
