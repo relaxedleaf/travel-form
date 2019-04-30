@@ -95,23 +95,41 @@ class ManagesController < ApplicationController
                 @auth_update.first.update_attribute(:status_id, status_id)
             end
             
-            if status_id == status_denied_id
-                req.update_attribute(:status_id, status_id)
-                update_authform_status
-                redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
-            else
-                if req.amount <= department.total_budget - department.budget_hold#Compare the request amount and the avaliable budget
-                    req.update_attribute(:status_id, status_id)
-                    update_authform_status
-                    
-                    #*****update department budget*****#
-                    department.update_attribute(:budget_hold, department.budget_hold + req.amount)
-                
-                    redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
+            if Request.where(trip_id: @trip.id, status_id: status_denied_id).where.not(department_id: department.id).count <= 0
+                if status_id == status_denied_id
+                    if req.status.name == "Approved" || req.status.name == "Pending"
+                        if req.status.name == "Approved"
+                             department.update_attribute(:budget_hold, department.budget_hold - req.amount)
+                        end
+                        req.update_attribute(:status_id, status_id)
+                        update_authform_status
+                        redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
+                    else
+                        redirect_to manage_auth_path(@trip)
+                        flash[:info] = "It has already been Denied"
+                    end
                 else
-                    redirect_to manage_auth_path(@trip)
-                    flash[:danger] = "Update Failed! Your department does not have enough budget"
+                    if req.status.name != "Approved" #if it isn't already approved
+                        if req.amount <= department.total_budget - department.budget_hold#Compare the request amount and the avaliable budget
+                            req.update_attribute(:status_id, status_id)
+                            update_authform_status
+                            
+                            #*****update department budget*****#
+                            department.update_attribute(:budget_hold, department.budget_hold + req.amount)
+                        
+                            redirect_to manage_auth_path(@trip), :notice => "Updated Successfully!"
+                        else
+                            redirect_to manage_auth_path(@trip)
+                            flash[:danger] = "Update Failed! Your department does not have enough budget"
+                        end
+                    else
+                        redirect_to manage_auth_path(@trip)
+                        flash[:info] = "It has already been approved"
+                    end
                 end
+            else
+                redirect_to manage_auth_path(@trip)
+                flash[:danger] = "This form has already been denied by other budget approvers"
             end
         # end
     end
