@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190429024140) do
+ActiveRecord::Schema.define(version: 20190430001501) do
+
+  create_table "administrators", force: :cascade do |t|
+    t.integer "employee_ssn"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "authorization_forms", force: :cascade do |t|
     t.integer "status_id"
