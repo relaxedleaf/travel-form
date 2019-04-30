@@ -12,6 +12,45 @@
         </div>
     <% end %>
       
+      
+      <div class="col-xl-12 col-md-12 mb-12">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Requests</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Department</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th colspan="1"></th>
+                  </tr>
+                </thead>
+              
+                <tbody>
+                  <% @request.each do |request| %>
+                    <tr>
+                      <td><%= request.department.name %></td>
+                      <td><%= number_to_currency request.amount %></td>
+                      <td><%= request.status.name %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+      
+      <br>
+      
     <div class="receipts_request">
         <%= form.label :receipts_request %>
         <%= form.semantic_fields_for :receipts_request, ReceiptsRequest.new do |receipt_reqest| %>

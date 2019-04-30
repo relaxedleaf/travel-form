@@ -45,6 +45,9 @@ class ReimbursementFormsController < ApplicationController
     @receipts_request = @reimbursement_form.receipts_request.build
     @receipts = @receipts_request.receipts.build
     @trip = @reimbursement_form.trip
+    
+    @request = @trip.requests
+    
     @message = @trip.reim_form_message.create(trip_id: @trip.id,
                                               status_id: @status_id,
                                               employee_id: current_employee.id,
