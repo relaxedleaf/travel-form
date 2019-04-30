@@ -1,0 +1,269 @@
+<%= link_to 'Back', trips_path, class: "btn btn-primary" %>
+<%= link_to 'Delete', @reimbursement_form, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger float-right" %>
+
+
+</br></br>
+<div class="row">
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reimbursement Form Status</div>
+      </div>
+      <div class="card-body">
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @reimbursement_form.status.name %></div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-xl-6 col-md-6 mb-6">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Authorization Form Status</div>
+      </div>
+      <div class="card-body">
+        <%= @trip.authorization_form ? (link_to @trip.authorization_form.status.name, @trip)
+            : (link_to "Not yet submitted", new_authorization_form_path(:trip_id => @trip.id)) %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+<div class="card border-left-primary shadow h-100 py-2">
+    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+      <div class="dropdown no-arrow">
+        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+          <div class="dropdown-header">Actions:</div>
+          <%= link_to 'Edit', edit_trip_path(@trip), class: "dropdown-item" %>
+        </div>
+      </div>
+    </div>
+  <div class="card-body">
+    <div class="row no-gutters align-items-center">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Destination</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= trip_destination(@trip.destination) %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Departure Date</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.date_start %></div>
+      </div>
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Return Date</div>
+        <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.date_end %></div>
+      </div>
+      <div class="col-auto">
+        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+      </div>
+    </div>
+    </br>
+    <div class="row">
+      <div class="col mr-2">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Purpose</div>
+        <div class="h6 mb-0 font-weight-bold text-gray-800"><%= @trip.purpose %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</br>
+</br>
+
+<div class="row">
+  <div class="col-xl-12 col-md-12 mb-12">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Receipt</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <tbody>
+              
+                  <% @receipts_request.each do |receipts_request| %>
+                    <% @id = receipts_request.id%>
+                    <% @receipts = @reimbursement_form.receipts.where(receipts_request_id: @id, reimbursement_form_id: @reimbursement_form.id) %>
+                    
+                    <thead class="thead-light">
+                      <tr >
+                        <th align="right">Request from Department Name:</th>
+                        <th ><%= receipts_request.department.name%></th>
+                        <th colspan="3"></th>
+                      </tr>
+                    </thead>
+                    <thead class="thead-light">
+                      <tr>
+                        <th>Type</th>
+                        <th>Cost</th>
+                        <th>Location</th>
+                        <th>Receipt Date</th>
+                        <th colspan="1"></th>
+                      </tr>
+                    </thead>
+                    <%@each_receipts_amount =0%>
+
+                    <% @receipts.each do |receipt| %>
+                      <tr>
+                        
+                        <%@each_receipts_amount += receipt.cost%>
+                        <td><%= receipt.expense_type.name %></td>
+                        <td><%= number_to_currency receipt.cost %></td>
+                        <td><%= receipt.location %></td>
+                        <td><%= receipt.receipt_date %></td>
+                        <% if @reimbursement_form.status.name != "Approved"%>
+                          <td>
+                            <div class="dropdown no-arrow">
+                              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Actions:</div>
+                                <%= link_to 'Edit', edit_receipt_path(receipt), class: "dropdown-item" %>
+                                <%= link_to 'Delete', receipt, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+                              </div>
+                            </div>
+                          </td>
+                        <%end%>
+                      </tr>
+                    <%end%>
+                     <% @nonono = @each_receipts_amount - receipts_request.total_amount %>
+                     
+                      <% if @nonono > 0%>
+                        <% receipts_request.update_attribute(:total_amount, @each_receipts_amount)%>
+                      <%end%>
+                    
+                      <thead class="thead-dark">
+                      <tr >
+                        <th align="right">Total Cost:</th>
+                        <th ><%= receipts_request.total_amount%></th>
+                        <th colspan="3"></th>
+                      </tr>
+                      </thead>
+                      <thead>
+                        <tr>
+                          <th>
+                            
+                          </th>
+                          <th>
+                            
+                          </th>
+                        </tr>
+                      </thead>
+                  <%end%>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-gift fa-2x text-gray-300"></i>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div>
+  </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+      <div class="col-xl-12 col-md-12 mb-12">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Requests</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Department</th>
+                    <th>Amount Request</th>
+                    <th>Status</th>
+                    <th colspan="1"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% @requests.each do |request| %>
+                    <tr>
+                      <td><%= request.department.name %></td>
+                      <td><%= number_to_currency request.amount %></td>
+
+                      <td><%= request.status.name %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-money-check-alt fa-2x text-gray-300"></i>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div> 
+  </div>
+  </div>
+  
+  <br>
+  <div class="row">
+      <div class="col-xl-12 col-md-12 mb-12">
+    <div class="card shadow h-100 py-2">
+      <div class="card-header">
+        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Your Request Status Report</div>
+      </div>
+      <div class="card-body">
+        <div class="row no-gutters align-items-center">
+          <div class="col mr-2">
+            <div class="table-responsive text-center">
+              <table class="table table-borderless">
+                <thead class="thead-light">
+                  <tr>
+                    <th>Total Request Amount</th>
+                    <th>Total receipt Request Amount</th>
+                    <th>Balance</th>
+                    <th colspan="1"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <%= @total_reimb_budget%>
+                    </td>
+                    <td>
+                      <%= @receipts_request_total%>
+                    </td>
+                    <td>
+                      <% @balance = @total_reimb_budget - @receipts_request_total %>
+                      
+                      <% if @balance < 0 %>
+                        <%= flash[:error] = "Warning! You need check your balance $ " + @balance.to_s%>
+                      <%else%>
+                        <%=@balance%>
+                      <%end%>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-auto">
+            <i class="fas fa-money-check-alt fa-2x text-gray-300"></i>
+          </div>
+        </div>
+        </br>
+      </div>
+    </div> 
+  </div>
+  </div>
+  
+  </br>
+  </br>

@@ -43,8 +43,8 @@
           <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reimbursement Form Status</div>
         </div>
         <!-- Card Body -->
-          <div class="card-body">
-            <%= @trip.reimbursement_form ? @trip.reimbursement_form.status.name : "Not yet submitted" %>
+           <div class="card-body">
+            <%= @trip.reimbursement_form ? (link_to @trip.reimbursement_form.status.name, manage_reimform_path(@trip)) : "Not yet submitted" %>
           </div>
       </div>
   </div>

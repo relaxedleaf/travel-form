@@ -9,6 +9,8 @@ end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.3'
 
+# Use sqlite3 as the database for Active Record
+
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
@@ -17,6 +19,9 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
+
+#notification for update form status
+#gem 'notifications', '~> 0.6.0'
 
 gem 'devise'
 gem 'carrierwave'
@@ -71,4 +76,8 @@ end
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+# if you want to run this: bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# For the dashboard visuals
+gem "chartkick"

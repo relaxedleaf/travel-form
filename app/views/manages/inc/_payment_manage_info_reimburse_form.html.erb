@@ -1,0 +1,51 @@
+<div class="btn-group float-right">
+  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="modal" data-target="#budgetModal" aria-haspopup="true" aria-expanded="false">
+    Budget Info
+  </button>
+</div>
+
+
+
+<div class="modal fade" id="budgetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Department Budget Info:</h5>
+          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <% @receipts_requests.each do |receipts_request| %>
+              <div>
+                  <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><%= receipts_request.department.name %></div>
+                    </div>
+                    <!-- Card Body -->
+                      <div class="card-body">
+                          <div>
+                              <p class="float-left">Total Budget:</p>
+                              <p class="float-right"><%= number_to_currency receipts_request.department.total_budget %></p>
+                          </div>
+                          </br></br>
+                          <div>
+                              <p class="float-left">Available Budget If Approved:</p>
+                              <p class="float-right"><%= number_to_currency(current_employee.department.total_budget - current_employee.department.budget_hold) %></p>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+             <% end %>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" type="button" data-dismiss="modal">Okay</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+  <div class="dropdown-menu">
+    <p class="dropdown-item">Total Budget: <%= number_to_currency(current_employee.department.total_budget)%></p>
+    <p class="dropdown-item">Available Budget: <%= number_to_currency(current_employee.department.total_budget - current_employee.department.budget_hold) %></p>
+  </div>

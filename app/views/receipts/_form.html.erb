@@ -11,37 +11,39 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :image %>
-    <%= form.text_field :image, id: :receipt_image %>
-  </div>
-
-  <div class="field">
-    <%= form.label :reimbursement_form_id %>
-    <%= form.number_field :reimbursement_form_id, id: :receipt_reimbursement_form_id %>
-  </div>
-
-  <div class="field">
-    <%= form.label :location %>
-    <%= form.text_field :location, id: :receipt_location %>
-  </div>
-
-  <div class="field">
-    <%= form.label :cost %>
-    <%= form.text_field :cost, id: :receipt_cost %>
-  </div>
-
-  <div class="field">
-    <%= form.label :receipt_date %>
-    <%= form.text_field :receipt_date, id: :receipt_receipt_date %>
-  </div>
-
-  <div class="field">
-    <%= form.label :expense_type_id %>
-    <%= form.number_field :expense_type_id, id: :receipt_expense_type_id %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <form>
+    <div class="form-group">
+      <%= form.label :expense_type %>
+      <%= form.collection_select :expense_type_id, ExpenseType.order('name ASC'), :id, :name, {id: :wish_expense_type}, {class: "form-control"} %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.label :image_url %>
+      <%= form.file_field :image, id: :receipt_image %>
+    </div>
+        
+  
+    <div class="form-group">
+      <%= form.label :cost %>
+      <%= form.number_field :cost, id: :receipt_cost, class: "form-control"%>
+    </div>
+    
+     <div class="form-group">
+        <%= form.label :location %>
+        <%= form.text_field :location, id: :receipt_location, class: "form-control" %>
+      </div>
+    
+    <div class="form-group">
+      <%= form.label :receipt_date %>
+      <%= form.text_field :receipt_date, data:{ provide:'datepicker' }, id: :receipt_receipt_date, class: "form-control" %>
+    </div>
+  
+    <div class="form-group">
+      <%= form.hidden_field :reimbursement_form_id, id: :receipt_reimbursement_form_id, :readonly => true, class: "form-control" %>
+    </div>
+    
+    <div class="actions">
+      <%= form.submit :class => "btn btn-primary" %>
+    </div>
+  </form>
 <% end %>

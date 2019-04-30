@@ -1,8 +1,8 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Wish type:</strong>
-  <%= @wish.wish_type %>
+  <strong>Expense Type:</strong>
+  <%= @wish.expense_type.name %>
 </p>
 
 <p>
@@ -11,8 +11,8 @@
 </p>
 
 <p>
-  <strong>Trip:</strong>
-  <%= @wish.trip_id %>
+  <strong>Authorization Form:</strong>
+  <%= @wish.authorization_form_id %>
 </p>
 
 <%= link_to 'Edit', edit_wish_path(@wish) %> |

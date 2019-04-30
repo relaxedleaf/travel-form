@@ -38,6 +38,7 @@ class TripsController < ApplicationController
     @trip = Trip.new(trip_params)
     @status_id = Status.where(name: "Pending").take.id
 
+
     respond_to do |format|
       if @trip.save
         format.html { redirect_to @trip, notice: 'Trip was successfully created.' }
@@ -54,6 +55,7 @@ class TripsController < ApplicationController
   def update
     respond_to do |format|
       if @trip.update(trip_params)
+        update_related_attribute
         format.html { redirect_to @trip, notice: 'Trip was successfully updated.' }
         format.json { render :show, status: :ok, location: @trip }
       else
@@ -68,13 +70,14 @@ class TripsController < ApplicationController
   def destroy
     error_messages = []
     bullet = '&#8226 '
+    @oldRequests = @trip.requests
     respond_to do |format|
       if @trip.destroy
         format.html { redirect_to trips_url }
         flash[:success] = 'Trip was successfully deleted'
         format.json { head :no_content }
       else
-        format.html { redirect_to trips_url}
+        format.html { redirect_to trip_path(@trip)}
         @trip.errors.full_messages.each do |message|
           error_messages.push(bullet + message)
         end
@@ -102,6 +105,26 @@ class TripsController < ApplicationController
       if @trip.employee_id != current_employee.id
         redirect_to trips_path
         flash[:danger] = "Access denied!"
+      end
+    end
+    
+    def update_related_attribute
+      authform = @trip.authorization_form
+      authformCurrentStat = authform.status.name
+      if authformCurrentStat != "pending"
+        pendingStatus_id = Status.where(name: "Pending").take.id
+  
+        #update authform status
+        authform.update_attribute(:status_id, pendingStatus_id)
+        #update all the request status
+        requests = Request.where(trip_id: @trip.id)
+        #update all the department's budget
+        requests.each do |request|
+          if request.status.name == "Approved"
+            request.department.update_attribute(:budget_hold, request.department.budget_hold - request.amount)
+          end
+        end
+        requests.update_all(status_id: pendingStatus_id)
       end
     end
 end

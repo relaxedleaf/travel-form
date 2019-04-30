@@ -1,0 +1,2 @@
+module ReceiptsRequestsHelper
+end
