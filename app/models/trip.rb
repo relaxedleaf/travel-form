@@ -5,7 +5,7 @@ class Trip < ApplicationRecord
     has_one :destination, :dependent => :destroy
     
     has_many :requests, :dependent => :destroy
-    has_many :reim_form_message
+    has_many :reim_form_message, :dependent => :destroy
     
     before_destroy :authform_status
 

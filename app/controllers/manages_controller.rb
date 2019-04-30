@@ -27,7 +27,7 @@ class ManagesController < ApplicationController
         @wishes = @trip.authorization_form.wishes
         @requests = @trip.requests
         
-        @reim_message = ReimFormMessage.where(trip_id: @trip.id,
+        @auth_update = ReimFormMessage.where(trip_id: @trip.id,
                                               message: "A")
     end
     
@@ -87,12 +87,12 @@ class ManagesController < ApplicationController
             status_id = params[:status_id].to_i
             status_denied_id = Status.where(name: 'Denied').take.id.to_i
             department = Department.find(current_employee.department_id)
-            @reim_message = ReimFormMessage.where(trip_id: @trip.id,
+            @auth_update = ReimFormMessage.where(trip_id: @trip.id,
                                               message: "A")
             
             
             if(@trip.authorization_form)
-                @reim_message.first.update_attribute(:status_id, status_id)
+                @auth_update.first.update_attribute(:status_id, status_id)
             end
             
             if status_id == status_denied_id
@@ -188,11 +188,11 @@ class ManagesController < ApplicationController
             @receipts_requests = ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id)
             status_id = params[:status_id]
             @reimbursement_form.update_attribute(:status_id, status_id)
-            @reim_message = ReimFormMessage.where(trip_id: @trip.id,
+            @reim_update = ReimFormMessage.where(trip_id: @trip.id,
                                                     message: "R")
             
             if(@trip.reimbursement_form)
-                @reim_message.first.update_attribute(:status_id, status_id)
+                @reim_update.first.update_attribute(:status_id, status_id)
             end
             
             #if the final decision is denied, modify the budget_hold
@@ -216,11 +216,14 @@ class ManagesController < ApplicationController
     
             department = Department.find(current_employee.department_id)
             
-            @reim_message = ReimFormMessage.where(trip_id: @trip.id,
+            @reim_update = ReimFormMessage.where(trip_id: @trip.id,
                                                     message: "R")
             #message = @reim_message.first
+            
+            puts "hello" + @reim_update.first.status_id.to_s
+            
             if(@trip.reimbursement_form)
-                @reim_message.first.update_attribute(:status_id, status_id)
+                @reim_update.first.update_attribute(:status_id, status_id)
             end
             
             @receipts_requests.each do |receipts_request|
@@ -300,7 +303,7 @@ class ManagesController < ApplicationController
             ab = !(ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id, status_id: approved_id).empty?) #ab = approved_boolean
             db = !(ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id, status_id: denied_id).empty?) #db = denied_boolean
         
-            @reim_message = ReimFormMessage.where(trip_id: @trip.id, message: "R")
+            @auth_update = ReimFormMessage.where(trip_id: @trip.id, message: "R")
             
             if db == false
                 #check partial approved condition
@@ -308,7 +311,7 @@ class ManagesController < ApplicationController
                     if @reimbursement_form.id != p_approved_id #update only if the current status is not partial approved already
                         @reimbursement_form.update_attribute(:status_id, p_approved_id)
                         if(@trip.reimbursement_form)
-                            @reim_message.first.update_attribute(:status_id, p_approved_id)
+                            @auth_update.first.update_attribute(:status_id, p_approved_id)
                         end
 
                     end
@@ -318,14 +321,14 @@ class ManagesController < ApplicationController
                 if (pb == false) && ab && (db == false)
                     @reimbursement_form.update_attribute(:status_id, pfa_id)
                     if(@trip.reimbursement_form)
-                        @reim_message.first.update_attribute(:status_id, pfa_id)
+                        @auth_update.first.update_attribute(:status_id, pfa_id)
                     end
 
                 end
             else
                 @reimbursement_form.update_attribute(:status_id, denied_id)
                 if(@trip.reimbursement_form)
-                    @reim_message.first.update_attribute(:status_id, denied_id)
+                    @auth_update.first.update_attribute(:status_id, denied_id)
                 end
             end
         end

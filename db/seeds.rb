@@ -311,3 +311,27 @@ second_trip = Trip.create!(
          ]
        },
 )
+
+ReimFormMessage.delete_all
+ReimFormMessage.create!(
+    trip_id: first_trip.id,
+    message: "A",
+    employee_id: Employee.where(ssn: 111).take.id,
+    status_id: Status.where(name: "Pending").take.id
+
+)
+
+ReimFormMessage.create!(
+    trip_id: second_trip.id,
+    message: "A",
+    employee_id: Employee.where(ssn: 111).take.id,
+    status_id: Status.where(name: "Pending").take.id
+
+)
+
+ReimFormMessage.create!(
+    trip_id: first_trip.id,
+    message: "R",
+    employee_id: Employee.where(ssn: 111).take.id,
+    status_id: Status.where(name: "Pending").take.id
+)

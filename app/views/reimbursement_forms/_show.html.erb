@@ -195,18 +195,6 @@
                       <td><%= number_to_currency request.amount %></td>
 
                       <td><%= request.status.name %></td>
-                      <td>
-                        <div class="dropdown no-arrow">
-                          <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
-                          </a>
-                          <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Actions:</div>
-                            <%= link_to 'Edit', edit_request_path(request), class: "dropdown-item" %>
-                            <%= link_to 'Delete', request, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
-                          </div>
-                        </div>
-                      </td>
                     </tr>
                   <% end %>
                 </tbody>
@@ -255,7 +243,7 @@
                       <% @balance = @total_reimb_budget - @receipts_request_total %>
                       
                       <% if @balance < 0 %>
-                        <%= flash[:error] = "You need check your balance" %>
+                        <%= flash[:error] = "Warning! You need check your balance $ " + @balance.to_s%>
                       <%else%>
                         <%=@balance%>
                       <%end%>
