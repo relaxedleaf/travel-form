@@ -137,26 +137,44 @@ class ManagesController < ApplicationController
 #**********Manage Reimburse Form**********#
     def reimform_index
         if check_paymentmanager
-            status_id = Status.where(name: "Partial Approved").take.id
+            status_id = Status.where(name: "Pending Final Approval").take.id
             
             @reimbursement_form = ReimbursementForm.where(status_id: status_id)
             
             render 'reimform_index_payment'
 
         else
-            status_id = Status.where(name: "Pending").take.id
-            @receipts_requests = ReceiptsRequest.where(department_id: current_employee.department_id, 
-                                      status_id: status_id)
-            
-            @reimbursement_form = ReimbursementForm.where(status_id: status_id)
-            @trip = Trip.where(id: @reimbursement_form)
-            
+            status_id = Status.where.not(name: "Approved").take.id
+            @receipts_requests = ReceiptsRequest.where(department_id: current_employee.department_id,
+                                                        status_id: status_id,)
         end
     end
     
+    def reimform_payment_show
+        
+        status_id = Status.where(name: "Pending Final Approval").take.id
+        receipts_status_id = Status.where(name: "Approved").take.id
+
+        @trip = Trip.find(params[:id])
+        @reimbursement_form = ReimbursementForm.where(id: @trip.reimbursement_form.id)
+        
+        
+        @receipts_request = ReceiptsRequest.where(status_id: receipts_status_id, reimbursement_form_id: @trip.reimbursement_form.id)
+        
+        @department = Department.where(id: @receipts_request.first.id)
+                                      
+        @receipt = @trip.reimbursement_form.receipts
+        @receipts_request_total =0;
+        
+                                              
+        @receipts_request.each do |receipts_request|
+            @receipts_request_total += receipts_request.total_amount
+        end
+        
+    end
     
     def reimform_history_index
-        status_id = Status.where.not(name: "Pending").take.id
+        
         @trip = Trip.find(params[:id])
         @reimbursement_form = ReimbursementForm.find(@trip.reimbursement_form.id)
         @receipts_request = ReceiptsRequest.where(department_id: current_employee.department_id, 
@@ -169,14 +187,17 @@ class ManagesController < ApplicationController
         @receipts_request.each do |receipts_request|
             @receipts_request_total += receipts_request.total_amount
         end
+        
     end
     
     def reimform_show
-        status_id = Status.where(name: "Pending").take.id
+        status_id = Status.where(name: ["Approved", "Pending"]).take.id
         @trip = Trip.find(params[:id])
         @reimbursement_form = ReimbursementForm.find(@trip.reimbursement_form.id)
+        
         @receipts_request = ReceiptsRequest.where(department_id: current_employee.department_id, 
-                                      status_id: status_id, reimbursement_form_id: @reimbursement_form.id)
+                                            status_id: status_id, reimbursement_form_id: @reimbursement_form.id)
+
                                       
         @receipt = @reimbursement_form.receipts
         @receipts_request_total =0;
@@ -191,13 +212,14 @@ class ManagesController < ApplicationController
     def reimform_history
         if check_paymentmanager
             status_ids = []
-            past_statuses = Status.where.not(name: ["Pending Final Approval", "Pending"])
+            past_statuses = Status.where(name: ["Approved", "Denied"])
             
             past_statuses.each do |status|
                 status_ids.push(status.id)
             end
             
             @reimbursement_form = ReimbursementForm.where(status_id: [status_ids])
+            
             render 'reimhform_history_payment'
 
         else
@@ -236,16 +258,15 @@ class ManagesController < ApplicationController
                 end
             end
             
-            
-
-    
-            redirect_to manage_reimform_path(@trip), :notice => "Updated Successfully!"
+            redirect_to manage_reimform_pending_path, :notice => "Updated Successfully!"
         else
             #for budget approver
             @trip = Trip.find(params[:id])
             @reimbursement_form = @trip.reimbursement_form
+            
             @receipts_requests = ReceiptsRequest.where(reimbursement_form_id: @reimbursement_form.id,
                                                         department_id: current_employee.department_id)
+                                                        
             status_id = params[:status_id]
     
             department = Department.find(current_employee.department_id)
@@ -269,7 +290,7 @@ class ManagesController < ApplicationController
                     #*****update department budget*****#
                     department.update_attribute(:budget_hold, department.budget_hold + receipts_request.total_amount)
                 
-                    redirect_to manage_reimform_path(@trip), :notice => "Updated Successfully!"
+                    redirect_to manage_reimform_history_path, :notice => "Updated Successfully!"
                 else
                     redirect_to manage_reimform_path(@trip)
                     flash[:danger] = "Update Failed! Your Department Does Not Have Enough Budget"

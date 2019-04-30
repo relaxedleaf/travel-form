@@ -14,23 +14,23 @@
   </div>
 </nav>
 
+<% @reimbursement_form.each do |reim_form|%>
 
-<% @reimbursement_form.each do |reimbursement_form| %>
   <div class="card shadow mb-4">
     <!-- Card Header - Dropdown -->
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <div class="row container">
           <div class="col">
-            <h6 class="m-0 font-weight-bold text-primary">Destination: <%= trip_destination(reimbursement_form.trip.destination)%></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Destination: <%= trip_destination(reim_form.trip.destination)%></h6>
           </div>
           <div class="col">
-            <h6 class="m-0 font-weight-bold text-primary">Start Date: <%= reimbursement_form.trip.date_start%></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Start Date: <%= reim_form.trip.date_start%></h6>
           </div>
           <div class="col">
-            <h6 class="m-0 font-weight-bold text-primary">End Date: <%= reimbursement_form.trip.date_end%></h6>
+            <h6 class="m-0 font-weight-bold text-primary">End Date: <%= reim_form.trip.date_end%></h6>
           </div>
           <div class="col">
-            <h6 class="m-0 font-weight-bold text-primary">Form Status: <%= reimbursement_form.status.name%></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Form Status: <%= reim_form.status.name%></h6>
           </div>
           
         </div>
@@ -40,14 +40,14 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
           <div class="dropdown-header">Actions:</div>
-          <%= link_to 'Detail', manage_reimform_path(reimbursement_form.trip), class: "dropdown-item" %>
+          <%= link_to 'Detail', manage_reimform_payment_show_path(reim_form.trip), class: "dropdown-item" %>
         </div>
       </div>
     </div>
     <!-- Card Body -->
     <div class="card-body">
       <h6 class="m-0 font-weight-bold text-primary">Purpose: </h6>
-      <%= reimbursement_form.trip.purpose %>
+      <%= reim_form.trip.purpose %>
     </div>
   </div>
 <% end %>

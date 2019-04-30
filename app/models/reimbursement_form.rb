@@ -12,9 +12,12 @@ class ReimbursementForm < ApplicationRecord
     accepts_nested_attributes_for :receipts_request, :reject_if => :all_blank, :allow_destroy => true
     #after_update :change_status
     
-    #need one for create
+    #no need for this method for now
     def change_status
-        self.update_attribute(:status_id, 1)
+        @receipts_request = ReceiptsRequest.where(reimbursement_form_id: self.id)
+        @receipts_request.each do |receipts_request|
+            receipts_request.update_attribute(:status_id, 1)
+        end
     end
 
     def total_costs
