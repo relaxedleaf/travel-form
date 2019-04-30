@@ -116,18 +116,20 @@
                         <td><%= number_to_currency receipt.cost %></td>
                         <td><%= receipt.location %></td>
                         <td><%= receipt.receipt_date %></td>
-                        <td>
-                          <div class="dropdown no-arrow">
-                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-                              <div class="dropdown-header">Actions:</div>
-                              <%= link_to 'Edit', edit_receipt_path(receipt), class: "dropdown-item" %>
-                              <%= link_to 'Delete', receipt, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+                        <% if @reimbursement_form.status.name != "Approved"%>
+                          <td>
+                            <div class="dropdown no-arrow">
+                              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400 float-right"></i>
+                              </a>
+                              <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Actions:</div>
+                                <%= link_to 'Edit', edit_receipt_path(receipt), class: "dropdown-item" %>
+                                <%= link_to 'Delete', receipt, method: :delete, data: { confirm: 'Are you sure?' }, class: "dropdown-item" %>
+                              </div>
                             </div>
-                          </div>
-                        </td>
+                          </td>
+                        <%end%>
                       </tr>
                     <%end%>
                      <% @nonono = @each_receipts_amount - receipts_request.total_amount %>

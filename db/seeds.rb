@@ -205,7 +205,7 @@ first_reimburse = ReimbursementForm.create!(
 ReceiptsRequest.delete_all
 Receipt.delete_all
 
- ReceiptsRequest.create!(
+ first_reimburse.receipts_request.create!(
     department_id: Department.where(name: "Computer Science").take.id,
     total_amount: 600.00,
     status_id: Status.where(name: "Pending").take.id,
@@ -239,7 +239,7 @@ Receipt.delete_all
     ]
  )
  
-  ReceiptsRequest.create!(
+  first_reimburse.receipts_request.create!(
     department_id: Department.where(name: "English").take.id,
     total_amount: 500.00,
     status_id: Status.where(name: "Pending").take.id,

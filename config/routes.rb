@@ -24,7 +24,8 @@ Rails.application.routes.draw do
   get 'manage/reimform/history', to: 'manages#reimform_history', as: :manage_reimform_history
   get 'manage/reimform/:id', to: 'manages#reimform_show', as: :manage_reimform
   put 'manage/reimform/:id', to: 'manages#reimform_update', as: :manage_reimform_update
-  
+  get 'manage/reimform/index_history/:id', to: 'manages#reimform_history_index', as: :manage_reimform_history_index
+
   get 'create_receipts/:reimbursement_form' => "reimbursement_forms#create_receipts", as: 'create_receipt_yea'
 
   get 'routes', to: 'pages#routes'

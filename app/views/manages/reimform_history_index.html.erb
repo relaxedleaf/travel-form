@@ -1,11 +1,6 @@
-<%= link_to 'Back', manage_reimform_pending_path, class: "btn btn-primary" %>
+<%= link_to 'Back', manage_reimform_history_index_path(@trip.id), class: "btn btn-primary" %>
 
-<!--Display budget info based on the type of manager-->
-<% if check_paymentmanager %>
-  <%= render "manages/inc/payment_manage_info_reimburse_form.html"%>
-<% else %>
-  <%= render "manages/inc/budget_info_budget_approver"%>
-<% end %>
+
 
 </br></br>
 
@@ -14,16 +9,6 @@
       <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reimbursement Form Status</div>
-          <div class="dropdown no-arrow">
-            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-              <div class="dropdown-header">Actions:</div>
-                <%= link_to 'Approve', manage_reimform_update_path(@trip, :status_id => Status.where(name: 'Approved').take.id), data: { confirm: 'You are about to approve this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
-                <%= link_to 'Deny', manage_reimform_update_path(@trip, :status_id => Status.where(name: 'Denied').take.id), data: { confirm: 'You are about to deny this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
-            </div>
-          </div>
         </div>
         <!-- Card Body -->
           <div class="card-body">
@@ -39,7 +24,7 @@
         </div>
         <!-- Card Body -->
           <div class="card-body">
-            <%= @trip.authorization_form ? (link_to @trip.authorization_form.status.name, manage_auth_path(@trip)) : "Not yet submitted" %>
+            <%= @trip.authorization_form.status.name %>
           </div>
       </div>
   </div>

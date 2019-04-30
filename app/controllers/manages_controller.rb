@@ -92,7 +92,7 @@ class ManagesController < ApplicationController
             
             
             if(@trip.authorization_form)
-                @auth_update.first.update_attribute(:status_id, status_id)
+                #@auth_update.first.update_attribute(:status_id, status_id)
             end
             
             if status_id == status_denied_id
@@ -136,6 +136,22 @@ class ManagesController < ApplicationController
         end
     end
     
+    
+    def reimform_history_index
+        status_id = Status.where.not(name: "Pending").take.id
+        @trip = Trip.find(params[:id])
+        @reimbursement_form = ReimbursementForm.find(@trip.reimbursement_form.id)
+        @receipts_request = ReceiptsRequest.where(department_id: current_employee.department_id, 
+                                      reimbursement_form_id: @reimbursement_form.id)
+                                      
+        @receipt = @reimbursement_form.receipts
+        @receipts_request_total =0;
+        
+                                              
+        @receipts_request.each do |receipts_request|
+            @receipts_request_total += receipts_request.total_amount
+        end
+    end
     
     def reimform_show
         status_id = Status.where(name: "Pending").take.id
@@ -223,7 +239,7 @@ class ManagesController < ApplicationController
             puts "hello" + @reim_update.first.status_id.to_s
             
             if(@trip.reimbursement_form)
-                @reim_update.first.update_attribute(:status_id, status_id)
+                #@reim_update.first.update_attribute(:status_id, status_id)
             end
             
             @receipts_requests.each do |receipts_request|
