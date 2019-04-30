@@ -205,7 +205,7 @@ first_reimburse = ReimbursementForm.create!(
 ReceiptsRequest.delete_all
 Receipt.delete_all
 
- ReceiptsRequest.create!(
+ first_reimburse.receipts_request.create!(
     department_id: Department.where(name: "Computer Science").take.id,
     total_amount: 600.00,
     status_id: Status.where(name: "Pending").take.id,
@@ -216,26 +216,30 @@ Receipt.delete_all
             cost: 200,
             location: 'Holiday Inn',
             receipt_date: '04/30/2019',
-            reimbursement_form_id: first_reimburse.id
+            reimbursement_form_id: first_reimburse.id,
+            image: 'ReceiptSwiss.jpg'
+            
         },
         {
             expense_type_id: ExpenseType.where(name: "Food").take.id,
             cost: 400,
             location: 'Steak House',
             receipt_date: '04/30/2019',
-            reimbursement_form_id: first_reimburse.id
+            reimbursement_form_id: first_reimburse.id,
+            image: 'ReceiptSwiss.jpg'
         },
         {
             expense_type_id: ExpenseType.where(name: "Transportation").take.id,
             cost: 100,
             location: 'City',
             receipt_date: '04/30/2019',
-            reimbursement_form_id: first_reimburse.id
+            reimbursement_form_id: first_reimburse.id,
+            image: 'ReceiptSwiss.jpg'
         },
     ]
  )
  
-  ReceiptsRequest.create!(
+  first_reimburse.receipts_request.create!(
     department_id: Department.where(name: "English").take.id,
     total_amount: 500.00,
     status_id: Status.where(name: "Pending").take.id,
@@ -266,7 +270,7 @@ Receipt.delete_all
  )
  
  
- second_trip = Trip.create!(
+second_trip = Trip.create!(
     destination_attributes: 
         {
          country: "US",
@@ -306,4 +310,28 @@ Receipt.delete_all
                }
          ]
        },
+)
+
+ReimFormMessage.delete_all
+ReimFormMessage.create!(
+    trip_id: first_trip.id,
+    message: "A",
+    employee_id: Employee.where(ssn: 111).take.id,
+    status_id: Status.where(name: "Pending").take.id
+
+)
+
+ReimFormMessage.create!(
+    trip_id: second_trip.id,
+    message: "A",
+    employee_id: Employee.where(ssn: 111).take.id,
+    status_id: Status.where(name: "Pending").take.id
+
+)
+
+ReimFormMessage.create!(
+    trip_id: first_trip.id,
+    message: "R",
+    employee_id: Employee.where(ssn: 111).take.id,
+    status_id: Status.where(name: "Pending").take.id
 )

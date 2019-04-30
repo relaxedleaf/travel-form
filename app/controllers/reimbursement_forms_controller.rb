@@ -17,7 +17,15 @@ class ReimbursementFormsController < ApplicationController
     @requests = @trip.requests
     @total_reimb_budget = 0
     @receipts_request_total = 0
-    #@reim_message = ReimFormMessage.where(reimbursement_form_id: @reimbursement_form.id)
+    
+    @requests.each do |request|
+      @total_reimb_budget += request.amount
+    end
+    
+    @receipts_request.each do |receipts_request|
+      @receipts_request_total += receipts_request.total_amount
+    end
+    
   end
 
   # GET /reimbursement_forms/new
@@ -29,7 +37,7 @@ class ReimbursementFormsController < ApplicationController
   # GET /reimbursement_forms/1/edit
   def edit
   end
-
+  
 
   def create_receipts
     @reimbursement_form = ReimbursementForm.find(params[:reimbursement_form])

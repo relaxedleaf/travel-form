@@ -2,7 +2,7 @@ class ReimbursementForm < ApplicationRecord
     belongs_to :employee
     belongs_to :trip
     belongs_to :status
-    has_many :notification
+    has_many :notification, :dependent => :destroy
 
     has_many :receipts_request, :dependent => :destroy
     has_many :receipts, :dependent => :destroy
@@ -10,11 +10,19 @@ class ReimbursementForm < ApplicationRecord
     validates :status_id, :employee_id, :trip_id, presence: true
     
     accepts_nested_attributes_for :receipts_request, :reject_if => :all_blank, :allow_destroy => true
-    #after_commit :create_notifications, on: [:create]
+    #after_update :change_status
+    
     #need one for create
+    def change_status
+        self.update_attribute(:status_id, 1)
+    end
 
     def total_costs
-        self.receipts.sum(:cost)
+        total_cost_request=0
+        @requests.each do |cost|
+         total_cost_request+= cost.amount
+        end
+        total_cost_request
     end
     
     def check_amount(num1,num2)
