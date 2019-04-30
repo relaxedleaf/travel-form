@@ -9,21 +9,21 @@
 Department.delete_all
 Department.create!(
     name: 'Computer Science',
-    total_budget: 1000,
+    total_budget: 10000,
     budget_hold: 0,
     manager_ssn: 123456789
     )
 
 Department.create!(
     name: 'Math',
-    total_budget: 1000,
+    total_budget: 10000,
     budget_hold: 0,
     manager_ssn: 223456789
     )
     
 Department.create!(
     name: 'English',
-    total_budget: 1000,
+    total_budget: 10000,
     budget_hold: 0,
     manager_ssn: 323456789
     )
@@ -75,7 +75,7 @@ PaymentManager.create!(
 #*********** Creating employee for each department ***********#
 Employee.delete_all
 Employee.create!(
-    email: 'csemp@qq.com',
+    email: 'Ecs@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'cs',
@@ -85,7 +85,7 @@ Employee.create!(
     bdate: '04/30/2019'
     )
 Employee.create!(
-    email: 'engemp@qq.com',
+    email: 'Eeng@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'eng',
@@ -95,7 +95,7 @@ Employee.create!(
     bdate: '04/30/2019'
     )
 Employee.create!(
-    email: 'mathemp@qq.com',
+    email: 'Emath@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'math',
@@ -107,7 +107,7 @@ Employee.create!(
 
 #*********** Creating managers for each department ***********#
 Employee.create!(
-    email: 'csmg@qq.com',
+    email: 'Bcs@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'cs',
@@ -117,7 +117,7 @@ Employee.create!(
     bdate: '04/30/2019'
     )
 Employee.create!(
-    email: 'engmg@qq.com',
+    email: 'Beng@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'eng',
@@ -127,7 +127,7 @@ Employee.create!(
     bdate: '04/30/2019'
     )
 Employee.create!(
-    email: 'mathmg@qq.com',
+    email: 'Bmath@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'math',
@@ -138,7 +138,7 @@ Employee.create!(
     )
 #*********** Creating payment manager ***********#
 Employee.create!(
-    email: 'paymentmg@qq.com',
+    email: 'Payment@qq.com',
     password: '123123123',
     password_confirmation: '123123123',
     fname: 'payment',
@@ -152,6 +152,8 @@ Employee.create!(
 Trip.delete_all
 ReimbursementForm.delete_all
 
+# Scenario 1
+
 first_trip = Trip.create!(
     destination_attributes: 
         {
@@ -159,7 +161,7 @@ first_trip = Trip.create!(
          state: "Georgia",
          city: "Thomasville"
         },
-    purpose:  'Going to have fun',
+    purpose:  'Scenario 1 - Going to have fun',
     date_start: '04/30/2019', 
     date_end: '04/31/2019', 
     employee_id: Employee.where(ssn: 111).take.id,
@@ -172,10 +174,9 @@ first_trip = Trip.create!(
         { 
          department_id: Department.where(name: "English").take.id,
          amount: 300,
-         status_id: Status.where(name: "Pending").take.id
+         status_id: Status.where(name: "Approved").take.id
        }
      ],
-
      
     authorization_form_attributes: 
       { 
@@ -293,6 +294,27 @@ second_trip = Trip.create!(
          amount: 400,
          status_id: Status.where(name: "Pending").take.id
        }
+)   
+
+# Scenario 2
+Trip.create!(
+    destination_attributes: 
+        {
+         country: "US",
+         state: "Georgia",
+         city: "Atlanta"
+        },
+    purpose:  'Scenario 2 - Hack GSU',
+    date_start: '04/30/2019', 
+    date_end: '04/31/2019', 
+    employee_id: Employee.where(ssn: 111).take.id,
+    requests_attributes: [
+      { 
+         department_id: Department.where(name: "Computer Science").take.id,
+         amount: 550,
+         status_id: Status.where(name: "Pending").take.id
+       }
+     ],
      ],
 
      
@@ -302,6 +324,206 @@ second_trip = Trip.create!(
          status_id: Status.where(name: "Pending").take.id,
          wishes_attributes: [
               { 
+                 expense_type_id: ExpenseType.where(name: "Hotel").take.id,
+                 cost: 200
+               },
+              { 
+                 expense_type_id: ExpenseType.where(name: "Transportation").take.id,
+                 cost: 100
+               },
+               { 
+                 expense_type_id: ExpenseType.where(name: "Food").take.id,
+                 cost: 250
+               }
+         ],
+         
+       }
+    
+)
+
+# Scenario 3
+Trip.create!(
+    destination_attributes: 
+        {
+         country: "US",
+         state: "Florida",
+         city: "Orlando"
+        },
+    purpose:  'Scenario 3 - STEM Conference',
+    date_start: '04/30/2019', 
+    date_end: '04/31/2019', 
+    employee_id: Employee.where(ssn: 111).take.id,
+    requests_attributes: [
+      { 
+         department_id: Department.where(name: "Computer Science").take.id,
+         amount: 400,
+         status_id: Status.where(name: "Pending").take.id
+       },
+       { 
+         department_id: Department.where(name: "Math").take.id,
+         amount: 350,
+         status_id: Status.where(name: "Approved").take.id
+       }
+     ],
+
+    authorization_form_attributes: 
+      { 
+         employee_id: Employee.where(ssn: 111).take.id,
+         status_id: Status.where(name: "Pending").take.id,
+         wishes_attributes: [
+              { 
+                 expense_type_id: ExpenseType.where(name: "Hotel").take.id,
+                 cost: 400
+               },
+              { 
+                 expense_type_id: ExpenseType.where(name: "Transportation").take.id,
+                 cost: 100
+               },
+               { 
+                 expense_type_id: ExpenseType.where(name: "Food").take.id,
+                 cost: 250
+               }
+         ]
+         
+       }
+)
+
+# Scenario 4
+Trip.create!(
+    destination_attributes: 
+        {
+         country: "UK",
+         state: "England",
+         city: "Liverpool"
+        },
+    purpose:  'Scenario 4 - IT Conference',
+    date_start: '05/11/2019', 
+    date_end: '05/20/2019', 
+    employee_id: Employee.where(ssn: 111).take.id,
+    requests_attributes: [
+      { 
+         department_id: Department.where(name: "Computer Science").take.id,
+         amount: 400,
+         status_id: Status.where(name: "Pending").take.id
+       },
+       { 
+         department_id: Department.where(name: "English").take.id,
+         amount: 450,
+         status_id: Status.where(name: "Approved").take.id
+       }
+     ],
+     
+    authorization_form_attributes: 
+      { 
+         employee_id: Employee.where(ssn: 111).take.id,
+         status_id: Status.where(name: "Pending").take.id,
+         wishes_attributes: [
+              { 
+                 expense_type_id: ExpenseType.where(name: "Hotel").take.id,
+                 cost: 500
+               },
+              { 
+                 expense_type_id: ExpenseType.where(name: "Transportation").take.id,
+                 cost: 100
+               },
+               { 
+                 expense_type_id: ExpenseType.where(name: "Food").take.id,
+                 cost: 250
+               }
+         ]
+         
+       }
+)
+
+# Scenario 5
+Trip.create!(
+    destination_attributes: 
+        {
+         country: "US",
+         state: "AZ",
+         city: "Phoenix"
+        },
+    purpose:  'Scenario 5 - Office Trip',
+    date_start: '07/11/2019', 
+    date_end: '07/18/2019', 
+    employee_id: Employee.where(ssn: 111).take.id,
+    requests_attributes: [
+      { 
+         department_id: Department.where(name: "Math").take.id,
+         amount: 200,
+         status_id: Status.where(name: "Pending").take.id
+       },
+       { 
+         department_id: Department.where(name: "English").take.id,
+         amount: 200,
+         status_id: Status.where(name: "Approved").take.id
+       }
+     ],
+     
+    authorization_form_attributes: 
+      { 
+         employee_id: Employee.where(ssn: 111).take.id,
+         status_id: Status.where(name: "Pending").take.id,
+         wishes_attributes: [
+              { 
+                 expense_type_id: ExpenseType.where(name: "Hotel").take.id,
+                 cost: 200
+               },
+              { 
+                 expense_type_id: ExpenseType.where(name: "Transportation").take.id,
+                 cost: 100
+               },
+               { 
+                 expense_type_id: ExpenseType.where(name: "Food").take.id,
+                 cost: 100
+               }
+         ]
+         
+       }
+)
+
+# Scenario 6
+Trip.create!(
+    destination_attributes: 
+        {
+         country: "US",
+         state: "MD",
+         city: "Silver Springs"
+        },
+    purpose:  'Scenario 6 - Cyber Convention',
+    date_start: '10/04/2019', 
+    date_end: '10/14/2019', 
+    employee_id: Employee.where(ssn: 111).take.id,
+    requests_attributes: [
+      { 
+         department_id: Department.where(name: "Math").take.id,
+         amount: 200,
+         status_id: Status.where(name: "Approved").take.id
+       },
+       { 
+         department_id: Department.where(name: "Computer Science").take.id,
+         amount: 200,
+         status_id: Status.where(name: "Pending").take.id
+       }
+     ],
+     
+    authorization_form_attributes: 
+      { 
+         employee_id: Employee.where(ssn: 111).take.id,
+         status_id: Status.where(name: "Pending").take.id,
+         wishes_attributes: [
+              { 
+                 expense_type_id: ExpenseType.where(name: "Transportation").take.id,
+                 cost: 100
+               },
+               { 
+                 expense_type_id: ExpenseType.where(name: "Food").take.id,
+                 cost: 100
+               }
+         ]
+         
+       }
+)
                  expense_type_id: ExpenseType.where(name: "Ticket Fee").take.id,
                  cost: 400
                },
