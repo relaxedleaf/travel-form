@@ -19,6 +19,8 @@ class Receipt < ApplicationRecord
         @reimbursement_forms = ReimbursementForm.find(self.reimbursement_form_id)
         #Rails.logger.debug "sadasdasd" + @reimbursement_forms.status_id.to_s
         @reimbursement_forms.update_attribute(:status_id, 1)
+        @receipts_request = ReceiptsRequest.find(self.receipts_request_id)
+        @receipts_request.update_attribute(:status_id,1)
     end
 
 end

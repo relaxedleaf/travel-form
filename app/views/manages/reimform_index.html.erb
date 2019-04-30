@@ -18,8 +18,9 @@
 </nav>
 
 
-<% @reimbursement_form.each do |rf| %>
-  <% @trip = Trip.find(rf.trip_id)%>
+<% @receipts_requests.each do |rf| %>
+  <%@reimbursement_form = ReimbursementForm.find(rf.reimbursement_form_id)%>
+  <%@trip = Trip.find(@reimbursement_form.trip_id)%>
   <div class="card shadow mb-4">
     <!-- Card Header - Dropdown -->
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
@@ -34,7 +35,7 @@
             <h6 class="m-0 font-weight-bold text-primary">End Date: <%= @trip.date_end%></h6>
           </div>
           <div class="col">
-            <h6 class="m-0 font-weight-bold text-primary">Form Status: <%= @trip.reimbursement_form.status.name%></h6>
+            <h6 class="m-0 font-weight-bold text-primary">Form Status: <%= rf.status.name %></h6>
           </div>
         </div>
         

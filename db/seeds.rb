@@ -207,13 +207,13 @@ Receipt.delete_all
 
  first_reimburse.receipts_request.create!(
     department_id: Department.where(name: "Computer Science").take.id,
-    total_amount: 600.00,
+    total_amount: 300.00,
     status_id: Status.where(name: "Pending").take.id,
     reimbursement_form_id: first_reimburse.id,
     receipts_attributes: [
         {
             expense_type_id: ExpenseType.where(name: "Hotel").take.id,
-            cost: 200,
+            cost: 120,
             location: 'Holiday Inn',
             receipt_date: '04/30/2019',
             reimbursement_form_id: first_reimburse.id,
@@ -222,7 +222,7 @@ Receipt.delete_all
         },
         {
             expense_type_id: ExpenseType.where(name: "Food").take.id,
-            cost: 400,
+            cost: 90,
             location: 'Steak House',
             receipt_date: '04/30/2019',
             reimbursement_form_id: first_reimburse.id,
@@ -230,41 +230,11 @@ Receipt.delete_all
         },
         {
             expense_type_id: ExpenseType.where(name: "Transportation").take.id,
-            cost: 100,
+            cost: 90,
             location: 'City',
             receipt_date: '04/30/2019',
             reimbursement_form_id: first_reimburse.id,
             image: 'ReceiptSwiss.jpg'
-        },
-    ]
- )
- 
-  first_reimburse.receipts_request.create!(
-    department_id: Department.where(name: "English").take.id,
-    total_amount: 500.00,
-    status_id: Status.where(name: "Pending").take.id,
-    reimbursement_form_id: first_reimburse.id,
-    receipts_attributes: [
-        {
-            expense_type_id: ExpenseType.where(name: "Transportation").take.id,
-            cost: 400,
-            location: 'Taxi',
-            receipt_date: '04/30/2019',
-            reimbursement_form_id: first_reimburse.id
-        },
-        {
-            expense_type_id: ExpenseType.where(name: "Food").take.id,
-            cost: 400,
-            location: 'Seafood',
-            receipt_date: '04/30/2019',
-            reimbursement_form_id: first_reimburse.id
-        },
-        {
-            expense_type_id: ExpenseType.where(name: "Hotel").take.id,
-            cost: 400,
-            location: 'Western Inn',
-            receipt_date: '04/30/2019',
-            reimbursement_form_id: first_reimburse.id
         },
     ]
  )

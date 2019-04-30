@@ -1,48 +1,35 @@
 <%= link_to 'Back', manage_reimform_pending_path, class: "btn btn-primary" %>
 
-<!--Display budget info based on the type of manager-->
-<% if check_paymentmanager %>
-<% else %>
-  <%= render "manages/inc/budget_info_budget_approver"%>
-<% end %>
 
 </br></br>
 
 <div class="row">
-  <div class="col-xl-6 col-md-6 mb-6">
+  <div class="col-xl-12 col-md-12 mb-12">
       <div class="card shadow mb-4">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
           <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Reimbursement Form Receipt Requests Status</div>
-          <div class="dropdown no-arrow">
-            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-            </a>
-            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
-              <div class="dropdown-header">Actions:</div>
-                <%= link_to 'Approve', manage_reimform_update_path(@trip, :status_id => Status.where(name: 'Approved').take.id), data: { confirm: 'You are about to approve this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
-                <%= link_to 'Deny', manage_reimform_update_path(@trip, :status_id => Status.where(name: 'Denied').take.id), data: { confirm: 'You are about to deny this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
+          
+          <% if @trip.reimbursement_form.status.name != "Approved"%>
+            <div class="dropdown no-arrow">
+              <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+              </a>
+              
+                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                  <div class="dropdown-header">Actions:</div>
+                    <%= link_to 'Approve', manage_reimform_update_path(@trip, :status_id => Status.where(name: 'Approved').take.id), data: { confirm: 'You are about to approve this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
+                    <%= link_to 'Deny', manage_reimform_update_path(@trip, :status_id => Status.where(name: 'Denied').take.id), data: { confirm: 'You are about to deny this request. Are you sure?' }, method: :put, class: "dropdown-item" %>
+                </div>
             </div>
-          </div>
+          <%end%>
+
         </div>
         <!-- Card Body -->
           <div class="card-body">
-            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @receipts_request.first.status.name %></div>
+            <div class="h5 mb-0 font-weight-bold text-gray-800"><%= @trip.reimbursement_form.status.name%></div>
           </div>
       </div>
   </div>
-  
-  <div class="col-xl-6 col-md-6 mb-6">
-      <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Authorization Form Status</div>
-        </div>
-        <!-- Card Body -->
-          <div class="card-body">
-            <%= @trip.authorization_form ? (link_to @trip.authorization_form.status.name, manage_auth_path(@trip)) : "Not yet submitted" %>
-          </div>
-      </div>
-  </div>
-  
 </div>
 
 
@@ -187,4 +174,4 @@
       </div>
     </div>
   </div>
-    </div>
+</div>
