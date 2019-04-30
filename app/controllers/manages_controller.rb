@@ -161,8 +161,8 @@ class ManagesController < ApplicationController
         
         @receipts_request = ReceiptsRequest.where(status_id: receipts_status_id, reimbursement_form_id: @trip.reimbursement_form.id)
         
-        @department = Department.where(id: @receipts_request.first.id)
-                                      
+        @total_request_budget = 0
+
         @receipt = @trip.reimbursement_form.receipts
         @receipts_request_total =0;
         
@@ -258,6 +258,13 @@ class ManagesController < ApplicationController
                 end
             end
             
+            if status_id = Status.where(name: "Approved").take.id
+                @receipts_requests.each do |receipts_request|
+                    receipts_request.department.update_attribute(:total_budget, receipts_request.department.total_budget - receipts_request.total_amount)
+                end
+            end
+            
+            
             redirect_to manage_reimform_pending_path, :notice => "Updated Successfully!"
         else
             #for budget approver
@@ -288,7 +295,7 @@ class ManagesController < ApplicationController
                     update_reimburseform_status
                     
                     #*****update department budget*****#
-                    department.update_attribute(:budget_hold, department.budget_hold + receipts_request.total_amount)
+                    department.update_attribute(:budget_hold, receipts_request.total_amount)
                 
                     redirect_to manage_reimform_history_path, :notice => "Updated Successfully!"
                 else

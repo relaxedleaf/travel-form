@@ -3,9 +3,6 @@
     Budget Info
   </button>
 </div>
-
-
-
 <div class="modal fade" id="budgetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -16,25 +13,30 @@
           </button>
         </div>
         <div class="modal-body">
-              <div>
+          
+          <% @receipts_request.each do |receipts_request|%>
+            <% @deparment = receipts_request.department%>
+            <% @total_request_budget += @deparment.total_budget%>
+            <div>
                   <div class="card shadow mb-4">
                     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><%= @department.name %></div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1"><%=@deparment.name %></div>
                     </div>
                     <!-- Card Body -->
                       <div class="card-body">
                           <div>
                               <p class="float-left">Total Budget:</p>
-                              <p class="float-right"><%= number_to_currency @department.total_budget %></p>
+                              <p class="float-right"><%= number_to_currency @deparment.total_budget %></p>
                           </div>
                           </br></br>
                           <div>
                               <p class="float-left">Available Budget If Approved:</p>
-                              <p class="float-right"><%= number_to_currency(@department.total_budget - @department.budget_hold) %></p>
+                              <p class="float-right"><%= number_to_currency(@deparment.total_budget - @deparment.budget_hold) %></p>
                           </div>
                       </div>
                   </div>
               </div>
+          <%end%>
         </div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Okay</button>
@@ -44,6 +46,6 @@
 </div>
 
   <div class="dropdown-menu">
-    <p class="dropdown-item">Total Budget: <%= number_to_currency(current_employee.department.total_budget)%></p>
-    <p class="dropdown-item">Available Budget: <%= number_to_currency(current_employee.department.total_budget - current_employee.department.budget_hold) %></p>
+    <p class="dropdown-item">Total Budget: <%= number_to_currency(@total_request_budget)%></p>
+    <p class="dropdown-item">Available Budget: <%= number_to_currency(@total_request_budget - @receipts_request_total) %></p>
   </div>
